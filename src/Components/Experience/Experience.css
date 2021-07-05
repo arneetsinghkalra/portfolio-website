@@ -1,0 +1,19 @@
+.experience-landing {
+  height: 100vh;
+  justify-content: center;
+  align-items: left;
+  padding-top: 10vh;
+  text-align: center;
+  background-image: url("../../Assets/Backgrounds/experience_background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.experience-landing {
+  color: white !important;
+}
+
+.cards {
+  margin-top: 10vh;
+}

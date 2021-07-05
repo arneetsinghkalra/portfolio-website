@@ -1,0 +1,26 @@
+.my-nav-links {
+  margin-left: -10rem;
+}
+
+.my-nav-bar {
+  height: auto;
+}
+
+.my-brand-image {
+  height: 50px;
+  width: auto;
+  padding-bottom: 0% !important;
+  padding-top: 3px !important;
+  margin-left: 2rem;
+}
+
+.my-nav-brand {
+  width: 200px;
+}
+
+@media screen and (max-width: 768px) {
+  .my-brand-image {
+    padding-top: 3px !important;
+    margin-left: 0rem;
+  }
+}

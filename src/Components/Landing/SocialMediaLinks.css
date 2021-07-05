@@ -1,0 +1,13 @@
+.my-logo {
+  height: 3vh;
+  width: auto;
+  transition: 500ms;
+  margin: 0.3rem;
+}
+
+.my-logo:hover {
+  height: 4vh;
+  transition: 500ms;
+  /* /background-color: white; 
+  border-radius: 5px;*/
+}

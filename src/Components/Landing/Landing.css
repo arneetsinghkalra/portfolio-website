@@ -1,0 +1,30 @@
+.my-landing-container {
+  height: 100vh;
+  justify-content: center;
+  align-items: left;
+  padding-top: 5vh;
+  text-align: center;
+  background-image: url("../../Assets/Backgrounds/landing_background.jpg");
+  background-position: right;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.scrolling_div {
+  padding-top: 2%;
+}
+
+.my-social-media {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+
+.resume-download {
+  margin: 1rem;
+}
+
+#my-btn:hover {
+  background-color: black;
+  color: white;
+  transition: 100ms;
+}
