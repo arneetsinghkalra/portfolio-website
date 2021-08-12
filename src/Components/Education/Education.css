@@ -1,12 +1,16 @@
 .education-landing {
   height: fit-content;
   justify-content: center;
-  align-items: left;
-  padding-top: 10vh;
-  padding-bottom: 10vh;
+  align-items: center;
   text-align: center;
-  background-image: url("../../Assets/Backgrounds/education_background.jpg");
-  background-position: right fixed;
+  padding-top: 10vh;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 75%,
+      rgba(0, 0, 0, 1)
+    ),
+    url("../../Assets/Backgrounds/education_background.jpg");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -15,6 +19,8 @@
   color: white !important;
 }
 
-.cards {
-  margin-top: 10vh;
+.education-date {
+  color: black;
+  font-weight: bold;
+  font-style: italic;
 }

@@ -1,5 +1,5 @@
 .experience-landing {
-  height: 100vh;
+  height: fit-content;
   justify-content: center;
   align-items: left;
   padding-top: 10vh;
@@ -16,4 +16,24 @@
 
 .cards {
   margin-top: 10vh;
+}
+
+.my-element-date {
+  color: white;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.div-after-experience {
+  height: 20vh;
+  background-color: white;
+  padding: 1vh;
+}
+
+.experience-to-project-quote {
+  height: 10vh;
+  margin: 50px;
+  border-radius: 1rem;
+  border: 3px solid black;
+  background-color: red;
 }

@@ -1,10 +1,11 @@
-.projects-landing {
-  height: 100vh;
+.contact-landing {
+  height: fit-content;
   justify-content: center;
   align-items: left;
-  padding-top: 10vh;
+
+  padding-bottom: 5vh;
   text-align: center;
-  background-image: url("../../Assets/Backgrounds/projects_background.jpg");
+  background-image: url("../../Assets/Backgrounds/education_background.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

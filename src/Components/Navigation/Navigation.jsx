@@ -67,30 +67,6 @@ export default function Navigation() {
 
             <Nav.Link
               onClick={() =>
-                scroller.scrollTo("hardskills", {
-                  spy: true,
-                  smooth: true,
-                  duration: 500
-                })
-              }
-            >
-              Technical Skills
-            </Nav.Link>
-
-            <Nav.Link
-              onClick={() =>
-                scroller.scrollTo("softskills", {
-                  spy: true,
-                  smooth: true,
-                  duration: 500
-                })
-              }
-            >
-              Soft Skills
-            </Nav.Link>
-
-            <Nav.Link
-              onClick={() =>
                 scroller.scrollTo("contact", {
                   spy: true,
                   smooth: true,

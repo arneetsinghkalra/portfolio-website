@@ -3,6 +3,7 @@
   width: fit-content;
   border-radius: 100vh;
   padding-bottom: 3rem;
+  justify-content: center;
 }
 
 .my-portrait-card > img {

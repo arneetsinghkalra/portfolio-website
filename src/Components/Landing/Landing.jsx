@@ -32,16 +32,13 @@ export default function Landing() {
   });
 
   return (
-    <Container className=" mx-auto my-landing-container" fluid>
+    <Container className="my-landing-container" fluid>
       <Row>
         <Portrait />
-        <a href={CV} download>
-          <Button />
-        </a>
       </Row>
 
-      <Row className="resume-download">
-        <Col>
+      <Row>
+        <Col className="resume-download justify-content-center">
           <a href={CV} download>
             <Button variant="light" id="my-btn">
               Download Resume
@@ -51,7 +48,7 @@ export default function Landing() {
       </Row>
 
       <Row>
-        <Col>
+        <Col className="justify-content-center">
           <animated.h1 style={headerProps}>Arneet Singh Kalra</animated.h1>
         </Col>
       </Row>
@@ -84,19 +81,3 @@ export default function Landing() {
     </Container>
   );
 }
-/*
- <Container className="my-landing-container mx-auto" fluid>
-      <Row>
-        <Col>
-          <animated.h1 style={animation}>
-            <h1>Arneet Singh Kalra</h1>
-          </animated.h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <h4>Software Engineer</h4>
-        </Col>
-      </Row>
-    </Container>
-  */

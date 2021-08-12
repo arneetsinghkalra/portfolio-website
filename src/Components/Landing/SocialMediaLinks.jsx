@@ -11,7 +11,7 @@ import Github from "../../Assets/SocialMedia/github.png";
 export default function SocialMediaLinks() {
   return (
     <>
-      <Col>
+      <Col className="justify-content-center">
         <a href="https://github.com/arneetsinghkalra">
           <img
             src={Github}

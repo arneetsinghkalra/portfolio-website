@@ -1,11 +1,9 @@
 import React from "react";
-import { Col } from "react-bootstrap";
 
-import "./Card.css";
+import "./Card.scss";
 
 export default function MyCard(props) {
   return (
-    <Col xs={12} md={6}>
       <div className="my-card">
         <img src={props.imgSrc} alt={props.title}></img>
         <div className="my-card-body">
@@ -15,7 +13,6 @@ export default function MyCard(props) {
           <p>{props.time}</p>
         </div>
       </div>
-    </Col>
   );
 }
 
