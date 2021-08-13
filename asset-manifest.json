@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/portfolio-website/static/css/main.9be5e5b4.chunk.css",
+    "main.js": "/portfolio-website/static/js/main.5c143e0d.chunk.js",
+    "main.js.map": "/portfolio-website/static/js/main.5c143e0d.chunk.js.map",
+    "runtime-main.js": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js",
+    "runtime-main.js.map": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js.map",
+    "static/css/2.667362ae.chunk.css": "/portfolio-website/static/css/2.667362ae.chunk.css",
+    "static/js/2.83208762.chunk.js": "/portfolio-website/static/js/2.83208762.chunk.js",
+    "static/js/2.83208762.chunk.js.map": "/portfolio-website/static/js/2.83208762.chunk.js.map",
+    "index.html": "/portfolio-website/index.html",
+    "static/css/2.667362ae.chunk.css.map": "/portfolio-website/static/css/2.667362ae.chunk.css.map",
+    "static/css/main.9be5e5b4.chunk.css.map": "/portfolio-website/static/css/main.9be5e5b4.chunk.css.map",
+    "static/js/2.83208762.chunk.js.LICENSE.txt": "/portfolio-website/static/js/2.83208762.chunk.js.LICENSE.txt",
+    "static/media/CV.e12fdf1b.pdf": "/portfolio-website/static/media/CV.e12fdf1b.pdf",
+    "static/media/index.css": "/portfolio-website/static/media/LeagueSpartan-Bold.caadcad8.otf",
+    "static/media/McGill_logo.7e6e01ca.svg": "/portfolio-website/static/media/McGill_logo.7e6e01ca.svg",
+    "static/media/PublicisSapient.93bee978.png": "/portfolio-website/static/media/PublicisSapient.93bee978.png",
+    "static/media/casualPhoto.cd295ce0.jpg": "/portfolio-website/static/media/casualPhoto.cd295ce0.jpg",
+    "static/media/Contact.css": "/portfolio-website/static/media/education_background.87f58dc2.jpg",
+    "static/media/Experience.css": "/portfolio-website/static/media/experience_background.6952de7e.jpg",
+    "static/media/newSignature.a561f0a1.png": "/portfolio-website/static/media/newSignature.a561f0a1.png",
+    "static/media/Projects.css": "/portfolio-website/static/media/projects_background.c83a96ee.jpg",
+    "static/media/rogers-logo.a7a9c772.svg": "/portfolio-website/static/media/rogers-logo.a7a9c772.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b8c7e1dd.js",
+    "static/css/2.667362ae.chunk.css",
+    "static/js/2.83208762.chunk.js",
+    "static/css/main.9be5e5b4.chunk.css",
+    "static/js/main.5c143e0d.chunk.js"
+  ]
+}
