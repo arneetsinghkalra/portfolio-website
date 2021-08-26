@@ -7,15 +7,23 @@ The box for the timeline content
   border-radius: 3rem !important;
 }
 
+/* Icon extra styling */
+.vertical-timeline-element-icon {
+  overflow: hidden;
+  text-align: center;
+}
+
 .vertical-timeline-element-icon img {
   display: block;
-  width: 40px;
-  height: 40px;
   position: relative;
   left: 50%;
   top: 50%;
   margin-left: -20px;
   margin-top: -20px;
+  object-fit: contain;
+  max-height: 100%;
+  width: 40px;
+  height: 40px;
 }
 
 .landscape-image {
@@ -32,4 +40,13 @@ The box for the timeline content
   font-weight: bold;
   font-style: italic;
   font-size: 40px;
+}
+
+@media only screen and (max-width: 600px) {
+  .vertical-timeline-element-icon img {
+    margin-left: -15px;
+    margin-top: -15px;
+    width: 30px;
+    height: 30px;
+  }
 }

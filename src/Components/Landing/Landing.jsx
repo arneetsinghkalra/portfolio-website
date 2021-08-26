@@ -6,6 +6,7 @@ import "./Landing.css";
 import SocialMediaLinks from "./SocialMediaLinks";
 import Portrait from "./Portrait";
 import CV from "../../Assets/Personal/CV.pdf";
+import "../../index.css";
 
 export default function Landing() {
   //Using react spring to define an animation

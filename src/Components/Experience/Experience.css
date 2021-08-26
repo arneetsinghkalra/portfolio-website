@@ -6,16 +6,13 @@
   text-align: center;
   background-image: linear-gradient(
       to bottom,
-      rgba(195, 205, 214, 0) 80%,
-      rgba(164, 188, 190, 1)
+      rgba(195, 205, 214, 0) 50%,
+      rgba(255, 255, 255, 30)
     ),
     url("../../Assets/Backgrounds/experience_background.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-.experience-landing {
   color: white !important;
 }
 
@@ -35,13 +32,4 @@
   border-radius: 1rem;
   border: 3px solid black;
   background-color: red;
-}
-
-.my-timeline {
-  padding-bottom: 0rem;
-  padding-top: 0rem;
-}
-
-.my-timeline-icon {
-  offset: 30px;
 }

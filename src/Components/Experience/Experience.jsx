@@ -102,9 +102,3 @@ export default function Experience() {
     </div>
   );
 }
-
-/**
- * <div className="div-after-experience">
-        <div className="experience-to-project-quote"></div>
-      </div>
- */
