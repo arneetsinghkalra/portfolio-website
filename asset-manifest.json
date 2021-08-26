@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/portfolio-website/static/css/main.e197de01.chunk.css",
-    "main.js": "/portfolio-website/static/js/main.acb8df00.chunk.js",
-    "main.js.map": "/portfolio-website/static/js/main.acb8df00.chunk.js.map",
+    "main.css": "/portfolio-website/static/css/main.36b6f8c4.chunk.css",
+    "main.js": "/portfolio-website/static/js/main.836e0cfa.chunk.js",
+    "main.js.map": "/portfolio-website/static/js/main.836e0cfa.chunk.js.map",
     "runtime-main.js": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js",
     "runtime-main.js.map": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js.map",
     "static/css/2.667362ae.chunk.css": "/portfolio-website/static/css/2.667362ae.chunk.css",
-    "static/js/2.4a48624e.chunk.js": "/portfolio-website/static/js/2.4a48624e.chunk.js",
-    "static/js/2.4a48624e.chunk.js.map": "/portfolio-website/static/js/2.4a48624e.chunk.js.map",
+    "static/js/2.3152f7f4.chunk.js": "/portfolio-website/static/js/2.3152f7f4.chunk.js",
+    "static/js/2.3152f7f4.chunk.js.map": "/portfolio-website/static/js/2.3152f7f4.chunk.js.map",
     "index.html": "/portfolio-website/index.html",
     "static/css/2.667362ae.chunk.css.map": "/portfolio-website/static/css/2.667362ae.chunk.css.map",
-    "static/css/main.e197de01.chunk.css.map": "/portfolio-website/static/css/main.e197de01.chunk.css.map",
-    "static/js/2.4a48624e.chunk.js.LICENSE.txt": "/portfolio-website/static/js/2.4a48624e.chunk.js.LICENSE.txt",
+    "static/css/main.36b6f8c4.chunk.css.map": "/portfolio-website/static/css/main.36b6f8c4.chunk.css.map",
+    "static/js/2.3152f7f4.chunk.js.LICENSE.txt": "/portfolio-website/static/js/2.3152f7f4.chunk.js.LICENSE.txt",
     "static/media/CV.e12fdf1b.pdf": "/portfolio-website/static/media/CV.e12fdf1b.pdf",
     "static/media/index.css": "/portfolio-website/static/media/LeagueSpartan-Bold.caadcad8.otf",
     "static/media/Marianopolis-landscape.c032f5ec.jpeg": "/portfolio-website/static/media/Marianopolis-landscape.c032f5ec.jpeg",
@@ -24,10 +24,10 @@
     "static/media/Experience.css": "/portfolio-website/static/media/experience_background.6952de7e.jpg",
     "static/media/grey-box.f8f70aa8.jpg": "/portfolio-website/static/media/grey-box.f8f70aa8.jpg",
     "static/media/java.c2d9a0f7.png": "/portfolio-website/static/media/java.c2d9a0f7.png",
+    "static/media/Projects.css": "/portfolio-website/static/media/landing_background.e591a57d.jpg",
     "static/media/marianopolis_logo.00fae185.webp": "/portfolio-website/static/media/marianopolis_logo.00fae185.webp",
     "static/media/mcgill-landscape.ef9945a3.jpeg": "/portfolio-website/static/media/mcgill-landscape.ef9945a3.jpeg",
     "static/media/newSignature.a561f0a1.png": "/portfolio-website/static/media/newSignature.a561f0a1.png",
-    "static/media/Projects.css": "/portfolio-website/static/media/p_background.261f78ab.jpg",
     "static/media/python.73887503.png": "/portfolio-website/static/media/python.73887503.png",
     "static/media/reactjs-icon.6c1d44b8.svg": "/portfolio-website/static/media/reactjs-icon.6c1d44b8.svg",
     "static/media/recyclingpioneers.50486746.png": "/portfolio-website/static/media/recyclingpioneers.50486746.png",
@@ -40,8 +40,8 @@
   "entrypoints": [
     "static/js/runtime-main.b8c7e1dd.js",
     "static/css/2.667362ae.chunk.css",
-    "static/js/2.4a48624e.chunk.js",
-    "static/css/main.e197de01.chunk.css",
-    "static/js/main.acb8df00.chunk.js"
+    "static/js/2.3152f7f4.chunk.js",
+    "static/css/main.36b6f8c4.chunk.css",
+    "static/js/main.836e0cfa.chunk.js"
   ]
 }
