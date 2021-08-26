@@ -38,16 +38,6 @@ export default function Landing() {
       </Row>
 
       <Row>
-        <Col className="resume-download justify-content-center">
-          <a href={CV} download>
-            <Button variant="light" id="my-btn">
-              Download Resume
-            </Button>
-          </a>
-        </Col>
-      </Row>
-
-      <Row>
         <Col className="justify-content-center">
           <animated.h1 style={headerProps}>Arneet Singh Kalra</animated.h1>
         </Col>
@@ -60,7 +50,7 @@ export default function Landing() {
             width: "100%",
             height: 80,
             overflow: "auto",
-            fontSize: "2em"
+            fontSize: "1.8em"
           }}
           scrollTop={scroll}
         >
@@ -73,6 +63,16 @@ export default function Landing() {
             </div>
           ))}
         </animated.div>
+      </Row>
+
+      <Row>
+        <Col className="resume-download justify-content-center">
+          <a href={CV} download>
+            <Button variant="light" id="my-btn">
+              Download Resume
+            </Button>
+          </a>
+        </Col>
       </Row>
 
       <Row className="my-social-media">

@@ -1,8 +1,8 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "LeagueSpartan-Bold", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,6 +14,5 @@ code {
 
 @font-face {
   font-family: "LeagueSpartan-Bold";
-  src: local("LeagueSpartan-Bold"),
-    url(./fonts/LeagueSpartan-Bold.otf) format("opentype");
+  src: local("LeagueSpartan-Bold.ot"), url(fonts/LeagueSpartan-Bold.otf);
 }

@@ -4,7 +4,12 @@
   align-items: left;
   padding-top: 10vh;
   text-align: center;
-  background-image: url("../../Assets/Backgrounds/experience_background.jpg");
+  background-image: linear-gradient(
+      to bottom,
+      rgba(195, 205, 214, 0) 80%,
+      rgba(164, 188, 190, 1)
+    ),
+    url("../../Assets/Backgrounds/experience_background.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -16,12 +21,6 @@
 
 .cards {
   margin-top: 10vh;
-}
-
-.my-element-date {
-  color: white;
-  font-weight: bold;
-  font-style: italic;
 }
 
 .div-after-experience {
@@ -36,4 +35,13 @@
   border-radius: 1rem;
   border: 3px solid black;
   background-color: red;
+}
+
+.my-timeline {
+  padding-bottom: 0rem;
+  padding-top: 0rem;
+}
+
+.my-timeline-icon {
+  offset: 30px;
 }

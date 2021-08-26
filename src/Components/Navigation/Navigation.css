@@ -18,6 +18,21 @@
   width: 200px;
 }
 
+.my-nav-link {
+  font-size: px;
+  color: black !important;
+  transition: 300ms;
+}
+
+.nav-link {
+  color: black !important;
+}
+
+.my-nav-link:hover {
+  color: #5c5c5c !important;
+  transition: 300ms;
+}
+
 @media screen and (max-width: 768px) {
   .my-brand-image {
     padding-top: 3px !important;

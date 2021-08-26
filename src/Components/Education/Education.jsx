@@ -1,86 +1,81 @@
 import { React } from "react";
 import { Container } from "react-bootstrap";
-/*
-import Marianopolis from "../../Assets/Education/Marianopolis.jpg";
-*/
+import { useSpring, animated, config } from "react-spring";
+
 import {
   VerticalTimeline,
   VerticalTimelineElement
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
+import EducationTimelineElement from "./EducationTimelineElement";
 
-import { ReactComponent as McGill } from "../../Assets/Education/McGill_logo.svg";
-import PS from "../../Assets/Experience/PublicisSapient.png";
+import McGill from "../../Assets/Education/McGill.png";
+import Marianopolis from "../../Assets/Education/marianopolis_logo.webp";
+import SaintThomas from "../../Assets/Education/StThomas.jpeg";
+import McGillLandscape from "../../Assets/Education/mcgill-landscape.jpeg";
+import MarianopolisLandscape from "../../Assets/Education/Marianopolis-landscape.jpeg";
+import SaintThomasLandscape from "../../Assets/Education/st.thomas-landscape.jpeg";
+
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Education.css";
 
 export default function Education() {
+  const headerProps = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reverse: false,
+    delay: 200,
+    config: config.molasses
+  });
+
   return (
     <div className="education-landing" id="education">
       <Container className="mx-auto">
-        <h1 className="py-5"> Education </h1>
+        <animated.h1 className="py-5 " style={headerProps}>
+          Education
+        </animated.h1>
 
-        <VerticalTimeline>
-          <VerticalTimelineElement
-            className="vertical-timeline-element--work"
-            contentStyle={{ background: "white", color: "black" }}
-            dateClassName="education-date"
+        <VerticalTimeline className="my-timeline">
+          <EducationTimelineElement
             date="Sepetember 2018 - Present"
-            iconStyle={{ background: "white" }}
-            icon={<McGill />}
-          >
-            <h3 className="vertical-timeline-element-title">
-              B.Eng Software Engineering
-            </h3>
-            <h4 className="vertical-timeline-element-subtitle">
-              McGill University
-            </h4>
-            <p className="vertical-timeline-element-subtitle">
-              Montreal, Quebec
-            </p>
-            <p></p>
-          </VerticalTimelineElement>
+            cardBackground="rgb(237,27,47)"
+            arrowStyle="7px solid rgb(237,27,47)"
+            title="B.Eng Software Engineering"
+            school="McGill University"
+            location="Montreal, Quebec"
+            logo={McGill}
+            iconBackground="white"
+            textColor="white"
+            landscape={McGillLandscape}
+          />
 
-          <VerticalTimelineElement
-            className="vertical-timeline-element--work"
-            contentStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
-            contentArrowStyle={{ borderRight: "7px solid  rgb(33, 150, 243)" }}
-            dateClassName="education-date"
+          <EducationTimelineElement
             date="August 2016 - May 2018"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
-            icon={<img src={PS} alt="PS Logo" height="20px" width="auto" />}
-          >
-            <h3 className="vertical-timeline-element-title">Health Sciences</h3>
-            <h4 className="vertical-timeline-element-subtitle">
-              Marianopolis College
-            </h4>
-            <p className="vertical-timeline-element-subtitle">
-              Westmount, Quebec
-            </p>
-            <p></p>
-          </VerticalTimelineElement>
+            cardBackground="rgba(1,55,154,255)"
+            title="Health Sciences"
+            school="Marianopolis College"
+            location="Westmount, Quebec"
+            logo={Marianopolis}
+            arrowStyle="7px solid rgba(1,55,154,255)"
+            textColor="white"
+            iconBackground="white"
+            landscape={MarianopolisLandscape}
+          />
 
-          <VerticalTimelineElement
-            className="vertical-timeline-element--work"
-            contentStyle={{ background: "white", color: "black" }}
-            dateClassName="education-date"
+          <EducationTimelineElement
             date="August 2011 - June 2016"
-            iconStyle={{ background: "white" }}
-            icon={<img src={PS} alt="PS Logo" height="20px" width="auto" />}
-          >
-            <h3 className="vertical-timeline-element-title">
-              Science IB Program
-            </h3>
-            <h4 className="vertical-timeline-element-subtitle">
-              St. Thomas High School
-            </h4>
-            <p className="vertical-timeline-element-subtitle">
-              Pointe Claire, Quebec
-            </p>
-            <p></p>
-          </VerticalTimelineElement>
+            cardBackground="rgba(45,85,52,255)"
+            title="IB Program & Sciences"
+            school="Saint Thomas High School"
+            location="Pointe Claire, Quebec"
+            logo={SaintThomas}
+            arrowStyle="7px solid rgba(45,85,52,255)"
+            textColor="white"
+            iconBackground="white"
+            landscape={SaintThomasLandscape}
+          />
 
           <VerticalTimelineElement
             className="vertical-timeline-element--work"
@@ -91,29 +86,14 @@ export default function Education() {
             }
           ></VerticalTimelineElement>
         </VerticalTimeline>
+
+        <div className="code-div">
+          <h4>"Strive not to be a success, but rather to be of value."</h4>
+          <p>
+            <i> - Albert Einstein </i>
+          </p>
+        </div>
       </Container>
     </div>
   );
 }
-
-/*
- <Row className="cards">
-          <Col md={6} xs={12}>
-            <MyCard
-              school="McGill University"
-              program="Software Engineering"
-              imgSrc={McGill}
-              time="2018 - 2022"
-            />
-          </Col>
-
-          <Col md={6} xs={12}>
-            <MyCard
-              school="Marianopolis College"
-              program="Health Sciences"
-              imgSrc={Marianopolis}
-              time="2016 - 2018"
-            />
-          </Col>
-        </Row>
- */

@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import emailjs from "emailjs-com";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import "./Contact.css";
+import ContactSVG from "../../Assets/Contact/conversation.png";
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
@@ -42,56 +43,72 @@ export default function Contact() {
       <Container classname="mx-auto">
         <h1 className="py-5"> Contact Me </h1>
 
-        <Row>
-          <Col md={{ span: 6, offset: 3 }} xs={12}>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Arneet Singh Kalra"
-                  name="user_name"
-                />
-              </Form.Group>
+        <Row className="align-items-center">
+          <Col xs={12} md={4}>
+            <div className="icon-div">
+              <img src={ContactSVG} alt="Contact icon" height="200px" />
+            </div>
+          </Col>
 
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  required
-                  type="email"
-                  placeholder="arneetsinghkalra@gmail.com"
-                  name="user_email"
-                />
-                <Form.Text className="text-muted">
-                  I'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+          <Col xs={12} md={8}>
+            <div className="my-contact-card">
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Arneet Singh Kalra"
+                    name="user_name"
+                    className="form-input"
+                  />
+                </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Message</Form.Label>
-                <Form.Control
-                  required
-                  as="textarea"
-                  rows={3}
-                  placeholder="I'd love to hear from you!"
-                  name="message"
-                />
-              </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    required
+                    type="email"
+                    placeholder="arneetsinghkalra@gmail.com"
+                    name="user_email"
+                    className="form-input"
+                  />
+                  <br></br>
+                  <Form.Text className="text-muted">
+                    I'll never share your email with anyone else.
+                  </Form.Text>
+                </Form.Group>
 
-              {validated && (
-                <Alert variant="success">
-                  I got your email! I'll get back to you shortly.
-                </Alert>
-              )}
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Message</Form.Label>
+                  <Form.Control
+                    required
+                    as="textarea"
+                    rows={3}
+                    placeholder="I'd love to hear from you!"
+                    name="message"
+                    className="form-input"
+                  />
+                </Form.Group>
 
-              <Button variant="dark" type="submit">
-                Message
-              </Button>
-            </Form>
+                {validated && (
+                  <Alert variant="success">
+                    I got your email! I'll get back to you shortly.
+                  </Alert>
+                )}
+
+                <Button variant="dark" type="submit">
+                  Message
+                </Button>
+              </Form>
+            </div>
           </Col>
         </Row>
       </Container>
     </div>
   );
 }
+
+/*
+ <Col md={{ span: 6, offset: 3 }} xs={12}>
+ */

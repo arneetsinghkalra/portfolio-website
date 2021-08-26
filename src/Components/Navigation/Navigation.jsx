@@ -2,7 +2,7 @@ import React from "react";
 import "./Navigation.css";
 
 import { scroller, animateScroll as scroll } from "react-scroll";
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar, Button } from "react-bootstrap";
 import Signature from "../../Assets/Personal/newSignature.png";
 
 export default function Navigation() {
@@ -28,7 +28,7 @@ export default function Navigation() {
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse className="my-nav-links" id="responsive-navbar-nav ">
-          <Nav className="mx-auto ">
+          <Nav className="mx-auto">
             <Nav.Link
               onClick={() =>
                 scroller.scrollTo("education", {
@@ -37,6 +37,7 @@ export default function Navigation() {
                   duration: 500
                 })
               }
+              className="my-nav-link"
             >
               Education
             </Nav.Link>
@@ -49,6 +50,7 @@ export default function Navigation() {
                   duration: 500
                 })
               }
+              className="my-nav-link"
             >
               Experience
             </Nav.Link>
@@ -61,21 +63,26 @@ export default function Navigation() {
                   duration: 500
                 })
               }
+              className="my-nav-link"
             >
               Projects
             </Nav.Link>
-
-            <Nav.Link
-              onClick={() =>
-                scroller.scrollTo("contact", {
-                  spy: true,
-                  smooth: true,
-                  duration: 500
-                })
-              }
-            >
-              Contact Me
-            </Nav.Link>
+          </Nav>
+          <Nav>
+            <Button variant="dark" size="sm" className="justify-content-end">
+              <Nav.Link
+                onClick={() =>
+                  scroller.scrollTo("contact", {
+                    spy: true,
+                    smooth: true,
+                    duration: 500
+                  })
+                }
+                className="my-nav-link"
+              >
+                Contact Me
+              </Nav.Link>
+            </Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

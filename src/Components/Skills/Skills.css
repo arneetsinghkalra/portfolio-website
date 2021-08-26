@@ -1,0 +1,49 @@
+.skills-landing {
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 7vh;
+  background-color: #ebf2fa;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.skills-div {
+  background: white;
+  padding: 2rem;
+  border-radius: 2rem;
+  margin: 1rem;
+}
+
+.curveArea {
+  width: 100%;
+  height: 300px;
+}
+
+.mainBox {
+  height: 100%;
+  background: #ebf2fa;
+  overflow: hidden;
+}
+
+.curveSection {
+  width: 200%;
+  height: 100%;
+  border-radius: 100%;
+  background: #427aa1;
+  top: 70%;
+  left: -50%;
+  right: 0;
+  position: relative;
+  border-top: 20px solid #fdedea87;
+}
+
+.sub-skill {
+  background: #ebf2fa;
+  height: fit-content;
+  border-radius: 2rem;
+  min-height: 5rem;
+  padding: 1rem;
+}

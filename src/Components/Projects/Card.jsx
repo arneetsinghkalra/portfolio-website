@@ -1,27 +1,22 @@
 import React from "react";
-
+import { Card, Button, Col } from "react-bootstrap";
 import "./Card.scss";
 
 export default function MyCard(props) {
   return (
-      <div className="my-card">
-        <img src={props.imgSrc} alt={props.title}></img>
-        <div className="my-card-body">
-          <hr></hr>
-          <h3>{props.school}</h3>
-          <h5>{props.program}</h5>
-          <p>{props.time}</p>
-        </div>
-      </div>
-  );
-}
-
-/*
- <Card className="myCard">
-        <Card.Img variant="top" src={props.imgSrc} />
+    <Col xs="12" md="4">
+      <Card className="my-card">
+        <Card.Img variant="top" src={props.src} height="auto" />
         <Card.Body>
           <Card.Title>{props.title}</Card.Title>
-          <Card.Text>{props.program}</Card.Text>
+          <Card.Text>{props.date}</Card.Text>
+          <Card.Text>{props.description}</Card.Text>
+          <Button variant="dark" className="my-2">
+            {props.button1}
+          </Button>
+          <Button variant="dark">{props.button2}</Button>
         </Card.Body>
       </Card>
-      */
+    </Col>
+  );
+}

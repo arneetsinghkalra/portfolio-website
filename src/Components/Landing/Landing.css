@@ -5,10 +5,11 @@
   padding-top: 5vh;
   text-align: center;
   background-image: linear-gradient(
-    to bottom,
-    rgba(248, 249, 250, 255),
-    rgba(195, 205, 214, 255)
-  );
+      to bottom,
+      rgba(248, 249, 250, 1),
+      rgba(195, 205, 214, 0)
+    ),
+    url(../../Assets/Backgrounds/education_background.jpg);
   background-position: right;
   background-size: cover;
   background-repeat: no-repeat;
