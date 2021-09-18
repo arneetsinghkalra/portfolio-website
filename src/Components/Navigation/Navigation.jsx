@@ -67,9 +67,25 @@ export default function Navigation() {
             >
               Projects
             </Nav.Link>
+            <Nav.Link
+              onClick={() =>
+                scroller.scrollTo("skills", {
+                  spy: true,
+                  smooth: true,
+                  duration: 500
+                })
+              }
+              className="my-nav-link"
+            >
+              Skills
+            </Nav.Link>
           </Nav>
           <Nav>
-            <Button variant="dark" size="sm" className="justify-content-end">
+            <Button
+              size="sm"
+              variant="dark"
+              className="justify-content-end my-contact-btn"
+            >
               <Nav.Link
                 onClick={() =>
                   scroller.scrollTo("contact", {

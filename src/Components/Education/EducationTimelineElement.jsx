@@ -13,7 +13,7 @@ export default function EducationTimelineElement(props) {
         color: props.textColor
       }}
       dateClassName="my-element-date"
-      date={props.date}
+      //date={props.date}
       iconStyle={{ background: props.iconBackground }}
       contentArrowStyle={{ borderRight: props.arrowStyle }}
       icon={
@@ -39,8 +39,16 @@ export default function EducationTimelineElement(props) {
       <div className="education-element-text-content">
         <h3 className="vertical-timeline-element-title">{props.title}</h3>
         <h4 className="vertical-timeline-element-subtitle">{props.school}</h4>
-        <p className="vertical-timeline-element-subtitle">{props.location}</p>
-        <p>{props.description}</p>
+
+        <h5 className="pt-3">{props.date}</h5>
+        <p className="vertical-timeline-element-subtitle">
+          <i>{props.location}</i>
+        </p>
+      </div>
+      <div className="education-description">
+        {props.activities.map((activity, index) => (
+          <p>{activity}</p>
+        ))}
       </div>
     </VerticalTimelineElement>
   );

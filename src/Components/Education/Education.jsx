@@ -37,7 +37,7 @@ export default function Education() {
           Education
         </animated.h1>
 
-        <VerticalTimeline className="my-timeline">
+        <VerticalTimeline className="education-timeline">
           <EducationTimelineElement
             date="Sepetember 2018 - Present"
             cardBackground="rgb(237,27,47)"
@@ -49,6 +49,11 @@ export default function Education() {
             iconBackground="white"
             textColor="white"
             landscape={McGillLandscape}
+            activities={[
+              "Vice President Finance of McGill Biodesign",
+              "Previously VP Sponsorship of MEC",
+              "Previously Finance Coordinator of McGill Biodesign"
+            ]}
           />
 
           <EducationTimelineElement
@@ -62,6 +67,10 @@ export default function Education() {
             textColor="white"
             iconBackground="white"
             landscape={MarianopolisLandscape}
+            activities={[
+              "Active Member of Marianopolis MedLife: Peru Chapter",
+              "Marianopolis Rugby Team"
+            ]}
           />
 
           <EducationTimelineElement
@@ -75,6 +84,11 @@ export default function Education() {
             textColor="white"
             iconBackground="white"
             landscape={SaintThomasLandscape}
+            activities={[
+              "Honours Top 20 Student",
+              "Home and Life Award Recipient",
+              "Member of Student Council"
+            ]}
           />
 
           <VerticalTimelineElement

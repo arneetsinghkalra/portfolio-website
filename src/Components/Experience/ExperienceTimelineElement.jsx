@@ -13,7 +13,7 @@ export default function ExperienceTimelineElement(props) {
         color: props.textColor
       }}
       dateClassName="my-element-date"
-      date={props.date}
+      //date={props.date}
       iconStyle={{ background: props.iconBackground }}
       contentArrowStyle={{ borderRight: props.arrowStyle }}
       icon={
@@ -28,13 +28,25 @@ export default function ExperienceTimelineElement(props) {
       }
     >
       <h3 className="vertical-timeline-element-title">{props.title}</h3>
-      <h4 className="vertical-timeline-element-subtitle">{props.company}</h4>
+      <h4 className="vertical-timeline-element-subtitle mt-1">
+        {props.company}
+      </h4>
       <p className="vertical-timeline-element-subtitle">{props.location}</p>
+      <p className="vertical-timeline-element-subtitle">
+        <i>{props.date}</i>
+      </p>
       <p>{props.description}</p>
+      <hr></hr>
       <div className="tech-used">
-        <p>
-          <i>Technologies Used: </i>
-        </p>
+        {props.tech.map((technology, index) => (
+          <img
+            src={technology}
+            alt={technology}
+            height="40px"
+            width="auto"
+            className="tech-image"
+          />
+        ))}
       </div>
     </VerticalTimelineElement>
   );

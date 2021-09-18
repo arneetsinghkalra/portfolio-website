@@ -14,3 +14,15 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.my-card {
+  margin: 1rem;
+  border-radius: 3rem !important;
+}
+
+.my-card > img {
+  height: auto;
+  max-height: 200px;
+  width: auto;
+  border-radius: 3rem !important;
+}

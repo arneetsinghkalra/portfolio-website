@@ -1,5 +1,17 @@
 .tech-used {
   height: fit-content;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+/*
+The box for the timeline content
+*/
+.experience-timeline > .vertical-timeline-element > div {
+  padding: 2rem !important;
+  border-radius: 1rem !important;
+}
+
+.tech-image {
+  margin: 7px;
 }

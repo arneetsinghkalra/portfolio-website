@@ -1,5 +1,5 @@
 .my-nav-links {
-  margin-left: -10rem;
+  margin-left: 0rem;
 }
 
 .my-nav-bar {
@@ -7,11 +7,11 @@
 }
 
 .my-brand-image {
-  height: 50px;
+  height: 40px;
   width: auto;
   padding-bottom: 0% !important;
   padding-top: 3px !important;
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .my-nav-brand {
@@ -20,12 +20,17 @@
 
 .my-nav-link {
   font-size: px;
-  color: black !important;
+  color: black;
   transition: 300ms;
 }
 
 .nav-link {
-  color: black !important;
+  color: black;
+}
+
+.my-contact-btn {
+  background-color: black !important;
+  color: white !important;
 }
 
 .my-nav-link:hover {
