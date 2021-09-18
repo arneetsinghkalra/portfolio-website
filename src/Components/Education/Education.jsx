@@ -68,8 +68,9 @@ export default function Education() {
             iconBackground="white"
             landscape={MarianopolisLandscape}
             activities={[
-              "Active Member of Marianopolis MedLife: Peru Chapter",
-              "Marianopolis Rugby Team"
+              "Marianopolis MedLife: Peru Chapter",
+              "Marianopolis Global Brigades",
+              "Marianopolis Rugby Team (2016-2018)"
             ]}
           />
 
@@ -87,7 +88,9 @@ export default function Education() {
             activities={[
               "Honours Top 20 Student",
               "Home and Life Award Recipient",
-              "Member of Student Council"
+              "Member of Student Council",
+              "Men's Rugby Team (Sec. 5)",
+              "Men's Soccer Team (Sec. 5)"
             ]}
           />
 
@@ -101,7 +104,7 @@ export default function Education() {
           ></VerticalTimelineElement>
         </VerticalTimeline>
 
-        <div className="code-div">
+        <div className="quote-div">
           <h4>"Strive not to be a success, but rather to be of value."</h4>
           <p>
             <i> - Albert Einstein </i>

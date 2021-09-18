@@ -17,12 +17,11 @@
 
 .my-card {
   margin: 1rem;
-  border-radius: 3rem !important;
+  border-radius: 2rem !important;
+  overflow: hidden;
 }
 
 .my-card > img {
-  height: auto;
-  max-height: 200px;
   width: auto;
-  border-radius: 3rem !important;
+  border-radius: 2rem !important;
 }

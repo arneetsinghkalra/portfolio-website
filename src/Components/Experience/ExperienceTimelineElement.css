@@ -12,6 +12,14 @@ The box for the timeline content
   border-radius: 1rem !important;
 }
 
+/*
+The box for the timeline content
+
+.vertical-timeline-element-content {
+  box-shadow: 0 10px 0 blue !important;
+}
+*/
+
 .tech-image {
   margin: 7px;
 }

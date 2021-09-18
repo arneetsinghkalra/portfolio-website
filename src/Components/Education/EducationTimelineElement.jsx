@@ -47,7 +47,7 @@ export default function EducationTimelineElement(props) {
       </div>
       <div className="education-description">
         {props.activities.map((activity, index) => (
-          <p>{activity}</p>
+          <p className="my-0">{activity}</p>
         ))}
       </div>
     </VerticalTimelineElement>

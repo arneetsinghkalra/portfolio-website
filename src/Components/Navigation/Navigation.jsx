@@ -3,19 +3,12 @@ import "./Navigation.css";
 
 import { scroller, animateScroll as scroll } from "react-scroll";
 import { Nav, Navbar, Button } from "react-bootstrap";
-import Signature from "../../Assets/Personal/newSignature.png";
+import Signature from "../../Assets/Personal/newSignatureWhite.png";
 
 export default function Navigation() {
   return (
     <>
-      <Navbar
-        collapseOnSelect
-        expand="lg"
-        bg="light"
-        variant="light"
-        sticky="top"
-        className="my-nav-bar"
-      >
+      <Navbar collapseOnSelect expand="lg" sticky="top" className="my-nav-bar">
         <div className="my-nav-brand" onClick={scroll.scrollToTop}>
           <Navbar.Brand to="landing">
             <img
@@ -83,8 +76,8 @@ export default function Navigation() {
           <Nav>
             <Button
               size="sm"
-              variant="dark"
-              className="justify-content-end my-contact-btn"
+              variant="outline-light"
+              className="my-contact-btn"
             >
               <Nav.Link
                 onClick={() =>
