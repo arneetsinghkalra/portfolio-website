@@ -14,7 +14,9 @@ export default function Skills() {
   return (
     <div className="skills-landing" id="skills">
       <Container classname="mx-auto">
-        <h1 className="py-3"> Skills </h1>
+        <h1 className="py-3" style={{ color: "white" }}>
+          Skills{" "}
+        </h1>
 
         <Row>
           <Col xs={12} md={6}>
@@ -80,22 +82,47 @@ export default function Skills() {
           </Col>
 
           <Col xs={12} md={6}>
-            <div className="skills-div">
-              <h1 className="py-1"> Soft Skills</h1>
-              <hr></hr>
-              <br></br>
+            <Row>
+              <Col xs={12}>
+                <div className="skills-div">
+                  <h1 className="py-1"> Soft Skills</h1>
+                  <hr></hr>
+                  <br></br>
 
-              <h5 className="py-1">Communication</h5>
-              <ProgressBar animated now={95} />
+                  <h5 className="py-1">Communication</h5>
+                  <ProgressBar animated now={95} />
 
-              <FontAwesomeIcon icon={["fab", "fa-react"]} />
+                  <FontAwesomeIcon icon={["fab", "fa-react"]} />
 
-              <h5 className="py-1">Teamwork</h5>
-              <ProgressBar animated now={85} />
+                  <h5 className="py-1">Teamwork</h5>
+                  <ProgressBar animated now={85} />
 
-              <h5 className="py-1">Leadership</h5>
-              <ProgressBar animated now={75} />
-            </div>
+                  <h5 className="py-1">Leadership</h5>
+                  <ProgressBar animated now={75} />
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={12}>
+                <div className="skills-div">
+                  <h1 className="py-1">Languages</h1>
+                  <hr></hr>
+                  <br></br>
+
+                  <h5 className="py-1">English</h5>
+                  <ProgressBar animated now={100} />
+
+                  <FontAwesomeIcon icon={["fab", "fa-react"]} />
+
+                  <h5 className="py-1">French</h5>
+                  <ProgressBar animated now={90} />
+
+                  <h5 className="py-1">Punjabi & Hindi</h5>
+                  <ProgressBar animated now={95} />
+                </div>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Container>

@@ -118,6 +118,13 @@ export default function Experience() {
             }
           ></VerticalTimelineElement>
         </VerticalTimeline>
+
+        <div className="experience-quote-div">
+          <h4>"The best way to predict the future is to invent it."</h4>
+          <p>
+            <i> - Alan Kay </i>
+          </p>
+        </div>
       </Container>
     </div>
   );

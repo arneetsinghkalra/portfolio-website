@@ -79,6 +79,12 @@ export default function Landing() {
       <Row className="my-social-media">
         <SocialMediaLinks />
       </Row>
+
+      <Row>
+        <div className="landing-quote-div">
+          <h4>Welcome to my Portfolio. </h4>
+        </div>
+      </Row>
     </Container>
   );
 }

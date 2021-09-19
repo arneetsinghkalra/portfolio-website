@@ -104,7 +104,7 @@ export default function Education() {
           ></VerticalTimelineElement>
         </VerticalTimeline>
 
-        <div className="quote-div">
+        <div className="education-quote-div">
           <h4>"Strive not to be a success, but rather to be of value."</h4>
           <p>
             <i> - Albert Einstein </i>

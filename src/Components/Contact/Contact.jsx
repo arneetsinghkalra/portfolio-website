@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import emailjs from "emailjs-com";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import "./Contact.css";
-import ContactSVG from "../../Assets/Contact/conversation.png";
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
@@ -43,14 +42,8 @@ export default function Contact() {
       <Container classname="mx-auto">
         <h1 className="py-5"> Contact Me </h1>
 
-        <Row className="align-items-center">
-          <Col xs={12} md={4}>
-            <div className="icon-div">
-              <img src={ContactSVG} alt="Contact icon" height="200px" />
-            </div>
-          </Col>
-
-          <Col xs={12} md={8}>
+        <Row className="justify-content-center">
+          <Col xs={12} md={10}>
             <div className="my-contact-card">
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -97,7 +90,7 @@ export default function Contact() {
                   </Alert>
                 )}
 
-                <Button variant="dark" type="submit">
+                <Button variant="light" type="submit" className="m-2">
                   Message
                 </Button>
               </Form>
@@ -110,5 +103,9 @@ export default function Contact() {
 }
 
 /*
- <Col md={{ span: 6, offset: 3 }} xs={12}>
+  <Col xs={12} md={4}>
+            <div className="icon-div">
+              <img src={ContactSVG} alt="Contact icon" height="200px" />
+            </div>
+          </Col>
  */
