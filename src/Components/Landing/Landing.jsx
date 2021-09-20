@@ -82,7 +82,7 @@ export default function Landing() {
 
       <Row>
         <div className="landing-quote-div">
-          <h4>Welcome to my Portfolio. </h4>
+          <h2>Welcome to my Portfolio. </h2>
         </div>
       </Row>
     </Container>

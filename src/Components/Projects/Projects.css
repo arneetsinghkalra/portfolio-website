@@ -9,21 +9,21 @@
       rgb(255, 255, 255, 0.7) 50%,
       rgba(0, 0, 0, 1)
     ),
-    url("../../Assets/Backgrounds/p_background.jpg");
-  background-position: right;
+    url("../../Assets/Backgrounds/winter.jpg");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .my-card {
   margin: 1rem;
-  border-radius: 2rem !important;
-  overflow: hidden;
+  border-radius: 1rem !important;
 }
 
 .my-card > img {
+  height: 220px;
   width: auto;
-  border-radius: 2rem !important;
+  border-radius: 1rem !important;
 }
 
 .projects-quote-div {

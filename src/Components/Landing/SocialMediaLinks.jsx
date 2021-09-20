@@ -11,27 +11,29 @@ import Github from "../../Assets/SocialMedia/github.png";
 export default function SocialMediaLinks() {
   return (
     <>
-      <Col className="justify-content-center">
-        <a href="https://github.com/arneetsinghkalra">
-          <img
-            src={Github}
-            alt="Github Logo"
-            className="my-logo"
-            id="github"
-          ></img>
-        </a>
+      <Col xs={2}>
+        <div className="mx-auto social-media-background">
+          <a href="https://github.com/arneetsinghkalra">
+            <img
+              src={Github}
+              alt="Github Logo"
+              className="my-logo"
+              id="github"
+            ></img>
+          </a>
 
-        <a href="https://instagram.com">
-          <img src={Instagram} alt="Instagram Logo" className="my-logo"></img>
-        </a>
+          <a href="https://instagram.com">
+            <img src={Instagram} alt="Instagram Logo" className="my-logo"></img>
+          </a>
 
-        <a href="https://www.linkedin.com/in/arneetsinghkalra/">
-          <img src={Linkedin} alt="Linkedin Logo" className="my-logo"></img>
-        </a>
+          <a href="https://www.linkedin.com/in/arneetsinghkalra/">
+            <img src={Linkedin} alt="Linkedin Logo" className="my-logo"></img>
+          </a>
 
-        <a href="https://www.facebook.com/arneet.kalra">
-          <img src={Facebook} alt="Facebook Logo" className="my-logo"></img>
-        </a>
+          <a href="https://www.facebook.com/arneet.kalra">
+            <img src={Facebook} alt="Facebook Logo" className="my-logo"></img>
+          </a>
+        </div>
       </Col>
     </>
   );

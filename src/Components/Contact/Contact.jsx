@@ -43,7 +43,7 @@ export default function Contact() {
         <h1 className="py-5"> Contact Me </h1>
 
         <Row className="justify-content-center">
-          <Col xs={12} md={10}>
+          <Col xs={12} md={8}>
             <div className="my-contact-card">
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

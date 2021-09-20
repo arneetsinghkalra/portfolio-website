@@ -1,6 +1,5 @@
 import { React } from "react";
 import { Container } from "react-bootstrap";
-import { useSpring, animated, config } from "react-spring";
 
 import {
   VerticalTimeline,
@@ -22,21 +21,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Education.css";
 
 export default function Education() {
-  const headerProps = useSpring({
-    to: { opacity: 1 },
-    from: { opacity: 0 },
-    reverse: false,
-    delay: 200,
-    config: config.molasses
-  });
-
   return (
     <div className="education-landing" id="education">
       <Container className="mx-auto">
-        <animated.h1 className="py-5 " style={headerProps}>
-          Education
-        </animated.h1>
-
+        <h1 className="py-5">Education</h1>
         <VerticalTimeline className="education-timeline">
           <EducationTimelineElement
             date="Sepetember 2018 - Present"
@@ -103,7 +91,6 @@ export default function Education() {
             }
           ></VerticalTimelineElement>
         </VerticalTimeline>
-
         <div className="education-quote-div">
           <h4>"Strive not to be a success, but rather to be of value."</h4>
           <p>

@@ -13,7 +13,8 @@ export default function Projects() {
     <div className="projects-landing" id="projects">
       <Container classname="mx-auto">
         <h1> Projects </h1>
-        <Row xs={1} md={4} className="g-4 justify-content-center">
+
+        <Row xs={1} md={4} className="justify-content-center p-0 mx-0">
           <Card className="my-card">
             <Card.Img variant="top" src={mcgill} />
             <Card.Body>
@@ -83,7 +84,7 @@ export default function Projects() {
               <Card.Text>
                 Continued working on the Recycling Pioneer project after I
                 finished my internship. The project aims to bring a network of
-                smart moitoring devices capable of recording the weight and
+                smart monitoring devices capable of recording the weight and
                 fullness level of the waste bins at McGill University. The
                 project is still underway, and has been recognized by University
                 Advancment at McGill with a couple published articles.
@@ -110,9 +111,20 @@ export default function Projects() {
                   window.location.href =
                     "https://github.com/arneetsinghkalra/recycling-pioneers-esp32";
                 }}
-                className="mx-1"
+                className="m-1"
               >
                 ESP32 Repo
+              </Button>
+
+              <Button
+                variant="dark"
+                onClick={e => {
+                  e.preventDefault();
+                  window.location.href = "https://recyclingpioneers.ca";
+                }}
+                className="m-1"
+              >
+                RP Website
               </Button>
             </Card.Footer>
           </Card>

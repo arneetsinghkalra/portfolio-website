@@ -9,7 +9,7 @@
       rgba(195, 205, 214, 0) 60%,
       rgba(195, 205, 214, 255)
     ),
-    url(../../Assets/Backgrounds/test.jpg);
+    url(../../Assets/Backgrounds/landing_background.jpg);
   background-position: right;
   background-size: cover;
   background-repeat: no-repeat;
@@ -21,18 +21,24 @@
 }
 
 .my-social-media {
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-bottom: 5rem;
+  justify-content: center;
 }
 
 .resume-download {
-  margin: 1rem;
 }
 
+#my-btn {
+  background-color: white;
+  color: black;
+  font-size: large;
+  transition: 200ms !important;
+}
 #my-btn:hover {
   background-color: black;
   color: white;
-  transition: 100ms;
+  transition: 200ms !important;
 }
 
 .landing-quote-div {

@@ -11,3 +11,11 @@
   /* /background-color: white; 
   border-radius: 5px;*/
 }
+
+.social-media-background {
+  height: fit-content;
+  width: fit-content;
+  background-color: white;
+  border-radius: 1rem;
+  margin-left: 1rem;
+}

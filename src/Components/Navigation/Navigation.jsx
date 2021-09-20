@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./Navigation.css";
 
 import { scroller, animateScroll as scroll } from "react-scroll";
@@ -6,9 +6,47 @@ import { Nav, Navbar, Button } from "react-bootstrap";
 import Signature from "../../Assets/Personal/newSignatureWhite.png";
 
 export default function Navigation() {
+  let listener = null;
+  const [scrollState, setScrollState] = useState("blackNavBar");
+
+  useEffect(() => {
+    listener = document.addEventListener("scroll", e => {
+      var scrolled = document.scrollingElement.scrollTop;
+      if (scrolled >= 9425) {
+        if (scrollState !== "whiteNavBar") {
+          setScrollState("whiteNavBar");
+        }
+      } else {
+        if (scrollState !== "blackNavBar") {
+          setScrollState("blackNavBar");
+        }
+      }
+    });
+    return () => {
+      document.removeEventListener("scroll", listener);
+    };
+  }, [scrollState]);
+
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" sticky="top" className="my-nav-bar">
+      <p
+        style={{
+          backgroundColor: scrollState === "blackNavBar" ? "red" : "green",
+          color: scrollState === "blackNavBar" ? "white" : "blue",
+          position: "fixed"
+        }}
+      >
+        TESSTTTER
+      </p>
+      <Navbar
+        collapseOnSelect
+        expand="md"
+        sticky="top"
+        variant={scrollState === "blackNavBar" ? "dark" : "light"}
+        bg={scrollState === "blackNavBar" ? "black" : "white"}
+        color="red"
+        className="my-nav-bar"
+      >
         <div className="my-nav-brand" onClick={scroll.scrollToTop}>
           <Navbar.Brand to="landing">
             <img
@@ -21,7 +59,7 @@ export default function Navigation() {
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse className="my-nav-links" id="responsive-navbar-nav ">
-          <Nav className="mx-auto">
+          <Nav className="mx-auto text-center">
             <Nav.Link
               onClick={() =>
                 scroller.scrollTo("education", {
