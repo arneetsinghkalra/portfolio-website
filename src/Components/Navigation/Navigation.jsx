@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React } from "react";
 import "./Navigation.css";
 
 import { scroller, animateScroll as scroll } from "react-scroll";
@@ -6,6 +6,9 @@ import { Nav, Navbar, Button } from "react-bootstrap";
 import Signature from "../../Assets/Personal/newSignatureWhite.png";
 
 export default function Navigation() {
+  /*
+  Code to add feature of changing navigation bar color: will come back to this later
+
   let listener = null;
   const [scrollState, setScrollState] = useState("blackNavBar");
 
@@ -26,24 +29,18 @@ export default function Navigation() {
       document.removeEventListener("scroll", listener);
     };
   }, [scrollState]);
+  */
 
   return (
     <>
-      <p
-        style={{
-          backgroundColor: scrollState === "blackNavBar" ? "red" : "green",
-          color: scrollState === "blackNavBar" ? "white" : "blue",
-          position: "fixed"
-        }}
-      >
-        TESSTTTER
-      </p>
       <Navbar
         collapseOnSelect
         expand="md"
         sticky="top"
-        variant={scrollState === "blackNavBar" ? "dark" : "light"}
-        bg={scrollState === "blackNavBar" ? "black" : "white"}
+        variant="dark"
+        bg="black"
+        //variant={scrollState === "blackNavBar" ? "dark" : "light"}
+        //bg={scrollState === "blackNavBar" ? "black" : "white"}
         color="red"
         className="my-nav-bar"
       >
@@ -136,3 +133,13 @@ export default function Navigation() {
     </>
   );
 }
+
+/*
+ <p
+        style={{
+          backgroundColor: scrollState === "blackNavBar" ? "red" : "green",
+          color: scrollState === "blackNavBar" ? "white" : "blue",
+          position: "fixed"
+        }}
+      ></p>
+      */

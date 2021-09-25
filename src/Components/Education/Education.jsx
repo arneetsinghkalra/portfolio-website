@@ -38,9 +38,10 @@ export default function Education() {
             textColor="white"
             landscape={McGillLandscape}
             activities={[
-              "Vice President Finance of McGill Biodesign",
-              "Previously VP Sponsorship of MEC",
-              "Previously Finance Coordinator of McGill Biodesign"
+              "VP Finance McGill Biodesign (2021-22)",
+              "VP Sponsorship MEC (2020-21)",
+              "Finance Coordinator McGill Biodesign (2020-21)",
+              "Software Engineer McGill Biodesign (2019-20)"
             ]}
           />
 
@@ -56,9 +57,9 @@ export default function Education() {
             iconBackground="white"
             landscape={MarianopolisLandscape}
             activities={[
-              "Marianopolis MedLife: Peru Chapter",
-              "Marianopolis Global Brigades",
-              "Marianopolis Rugby Team (2016-2018)"
+              "Marianopolis Rugby Team (2016-18)",
+              "Marianopolis MedLife: Peru Chapter (2017-18)",
+              "Marianopolis Global Brigades (2016-17)"
             ]}
           />
 

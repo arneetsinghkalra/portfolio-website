@@ -12,7 +12,12 @@ export default function Landing() {
   //Using react spring to define an animation
   const [flip, set] = useState(false);
 
-  const words = ["Software Engineer", "Student", "Athlete", "Tech Enthusiast"];
+  const words = [
+    "Software Engineer",
+    "Athlete",
+    "Lifelong Student",
+    "Tech Enthusiast"
+  ];
 
   const { scroll } = useSpring({
     scroll: (words.length - 1) * 100,

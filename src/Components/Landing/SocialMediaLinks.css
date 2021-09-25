@@ -1,12 +1,12 @@
 .my-logo {
-  height: 3vh;
+  height: 1.5rem;
   width: auto;
   transition: 500ms;
   margin: 0.3rem;
 }
 
 .my-logo:hover {
-  height: 4vh;
+  height: 2rem;
   transition: 500ms;
   /* /background-color: white; 
   border-radius: 5px;*/
@@ -17,5 +17,4 @@
   width: fit-content;
   background-color: white;
   border-radius: 1rem;
-  margin-left: 1rem;
 }

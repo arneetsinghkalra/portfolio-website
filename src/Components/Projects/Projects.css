@@ -6,7 +6,7 @@
   text-align: center;
   background-image: linear-gradient(
       to bottom,
-      rgb(255, 255, 255, 0.7) 50%,
+      rgba(245, 245, 245, 0.5) 50%,
       rgba(0, 0, 0, 1)
     ),
     url("../../Assets/Backgrounds/winter.jpg");
@@ -16,14 +16,15 @@
 }
 
 .my-card {
-  margin: 1rem;
+  margin: 1.5rem;
   border-radius: 1rem !important;
 }
 
 .my-card > img {
-  height: 220px;
+  height: 15rem;
   width: auto;
   border-radius: 1rem !important;
+  object-fit: contain;
 }
 
 .projects-quote-div {
@@ -35,4 +36,13 @@
   color: white;
   justify-content: center;
   align-items: center;
+}
+
+#cover_background {
+  object-fit: cover !important;
+}
+
+.my-footer-text {
+  color: black;
+  font-weight: bold;
 }

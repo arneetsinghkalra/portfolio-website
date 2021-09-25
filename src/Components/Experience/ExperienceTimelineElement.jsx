@@ -27,18 +27,24 @@ export default function ExperienceTimelineElement(props) {
         />
       }
     >
-      <h3 className="vertical-timeline-element-title">{props.title}</h3>
-      <h4 className="vertical-timeline-element-subtitle mt-1">
+      <h3 className="vertical-timeline-element-title">
+        <b>{props.title}</b>
+      </h3>
+      <h5 className="vertical-timeline-element-subtitle mt-1">
         {props.company}
-      </h4>
-      <p className="vertical-timeline-element-subtitle">{props.location}</p>
+      </h5>
+
       <p className="vertical-timeline-element-subtitle">
-        <i>{props.date}</i>
+        <b>{props.date}</b>
       </p>
+      <p className="vertical-timeline-element-subtitle">
+        <i>{props.location}</i>
+      </p>
+
       <p>{props.description}</p>
       <hr></hr>
       <div className="tech-used">
-        {props.tech.map((technology, index) => (
+        {props.tech.map((technology, _) => (
           <img
             src={technology}
             alt={technology}

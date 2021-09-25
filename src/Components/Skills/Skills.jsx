@@ -1,5 +1,12 @@
 import { React } from "react";
-import { Container, Col, Row, ProgressBar } from "react-bootstrap";
+import {
+  Container,
+  Col,
+  Row,
+  ProgressBar,
+  Card,
+  Button
+} from "react-bootstrap";
 
 import "./Skills.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -124,6 +131,28 @@ export default function Skills() {
               </Col>
             </Row>
           </Col>
+        </Row>
+
+        <Row xs={1} md={4} className="justify-content-center p-0 mx-0">
+          <Card className="my-card ">
+            <Card.Body>
+              <Card.Title>Technical Skills</Card.Title>
+              <Card.Text>Front End Development</Card.Text>
+            </Card.Body>
+            <Card.Footer className="my-footer">
+              <Button
+                variant="dark"
+                onClick={e => {
+                  e.preventDefault();
+                  window.location.href =
+                    "https://github.com/arneetsinghkalra/portfolio-website";
+                }}
+                disabled
+              >
+                Restricted Repository
+              </Button>
+            </Card.Footer>
+          </Card>
         </Row>
       </Container>
 

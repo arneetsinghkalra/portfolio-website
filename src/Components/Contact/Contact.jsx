@@ -40,7 +40,7 @@ export default function Contact() {
   return (
     <div className="contact-landing" id="contact">
       <Container classname="mx-auto">
-        <h1 className="py-5"> Contact Me </h1>
+        <h1 className="py-2"> Contact Me </h1>
 
         <Row className="justify-content-center">
           <Col xs={12} md={8}>
@@ -98,6 +98,12 @@ export default function Contact() {
           </Col>
         </Row>
       </Container>
+
+      <div class="curveAreaContact">
+        <div class="mainBoxContact">
+          <div class="curveSectionContact"></div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import Github from "../../Assets/SocialMedia/github.png";
 export default function SocialMediaLinks() {
   return (
     <>
-      <Col xs={2}>
+      <Col xs={12}>
         <div className="mx-auto social-media-background">
           <a href="https://github.com/arneetsinghkalra">
             <img
