@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/portfolio-website/static/css/main.f05a2edc.chunk.css",
-    "main.js": "/portfolio-website/static/js/main.61e58483.chunk.js",
-    "main.js.map": "/portfolio-website/static/js/main.61e58483.chunk.js.map",
+    "main.css": "/portfolio-website/static/css/main.6ee419d2.chunk.css",
+    "main.js": "/portfolio-website/static/js/main.706bf5eb.chunk.js",
+    "main.js.map": "/portfolio-website/static/js/main.706bf5eb.chunk.js.map",
     "runtime-main.js": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js",
     "runtime-main.js.map": "/portfolio-website/static/js/runtime-main.b8c7e1dd.js.map",
     "static/css/2.667362ae.chunk.css": "/portfolio-website/static/css/2.667362ae.chunk.css",
-    "static/js/2.3daa96b3.chunk.js": "/portfolio-website/static/js/2.3daa96b3.chunk.js",
-    "static/js/2.3daa96b3.chunk.js.map": "/portfolio-website/static/js/2.3daa96b3.chunk.js.map",
+    "static/js/2.4dc42328.chunk.js": "/portfolio-website/static/js/2.4dc42328.chunk.js",
+    "static/js/2.4dc42328.chunk.js.map": "/portfolio-website/static/js/2.4dc42328.chunk.js.map",
     "index.html": "/portfolio-website/index.html",
     "static/css/2.667362ae.chunk.css.map": "/portfolio-website/static/css/2.667362ae.chunk.css.map",
-    "static/css/main.f05a2edc.chunk.css.map": "/portfolio-website/static/css/main.f05a2edc.chunk.css.map",
-    "static/js/2.3daa96b3.chunk.js.LICENSE.txt": "/portfolio-website/static/js/2.3daa96b3.chunk.js.LICENSE.txt",
+    "static/css/main.6ee419d2.chunk.css.map": "/portfolio-website/static/css/main.6ee419d2.chunk.css.map",
+    "static/js/2.4dc42328.chunk.js.LICENSE.txt": "/portfolio-website/static/js/2.4dc42328.chunk.js.LICENSE.txt",
     "static/media/CV.b04fc9aa.pdf": "/portfolio-website/static/media/CV.b04fc9aa.pdf",
     "static/media/index.css": "/portfolio-website/static/media/LeagueSpartan-Bold.caadcad8.otf",
     "static/media/Marianopolis-landscape.c032f5ec.jpeg": "/portfolio-website/static/media/Marianopolis-landscape.c032f5ec.jpeg",
@@ -24,6 +24,8 @@
     "static/media/bootstrap.d180fe4c.svg": "/portfolio-website/static/media/bootstrap.d180fe4c.svg",
     "static/media/c.dc74216d.png": "/portfolio-website/static/media/c.dc74216d.png",
     "static/media/casualPhoto.cd295ce0.jpg": "/portfolio-website/static/media/casualPhoto.cd295ce0.jpg",
+    "static/media/cucumber.c6398e65.svg": "/portfolio-website/static/media/cucumber.c6398e65.svg",
+    "static/media/django.0779fca2.svg": "/portfolio-website/static/media/django.0779fca2.svg",
     "static/media/Education.css": "/portfolio-website/static/media/education_background.87f58dc2.jpg",
     "static/media/excel.76cf6036.png": "/portfolio-website/static/media/excel.76cf6036.png",
     "static/media/Experience.css": "/portfolio-website/static/media/experience_background.6952de7e.jpg",
@@ -38,6 +40,7 @@
     "static/media/mssql.2b14e66f.svg": "/portfolio-website/static/media/mssql.2b14e66f.svg",
     "static/media/newSignatureWhite.d6670723.png": "/portfolio-website/static/media/newSignatureWhite.d6670723.png",
     "static/media/portfolio.83fba234.png": "/portfolio-website/static/media/portfolio.83fba234.png",
+    "static/media/postgresql.29aef667.svg": "/portfolio-website/static/media/postgresql.29aef667.svg",
     "static/media/python.063da199.svg": "/portfolio-website/static/media/python.063da199.svg",
     "static/media/python.73887503.png": "/portfolio-website/static/media/python.73887503.png",
     "static/media/quoridor.8f998e38.png": "/portfolio-website/static/media/quoridor.8f998e38.png",
@@ -45,10 +48,12 @@
     "static/media/recyclingpioneers.50486746.png": "/portfolio-website/static/media/recyclingpioneers.50486746.png",
     "static/media/rogers-logo.a7a9c772.svg": "/portfolio-website/static/media/rogers-logo.a7a9c772.svg",
     "static/media/rp_article.f98aae68.png": "/portfolio-website/static/media/rp_article.f98aae68.png",
+    "static/media/Skills.css": "/portfolio-website/static/media/skills_background.656727ec.jpg",
     "static/media/spring.20c30e27.png": "/portfolio-website/static/media/spring.20c30e27.png",
     "static/media/spring.840a3a0a.png": "/portfolio-website/static/media/spring.840a3a0a.png",
     "static/media/sql.efb7363b.svg": "/portfolio-website/static/media/sql.efb7363b.svg",
     "static/media/st.thomas-landscape.9e44f2ff.jpeg": "/portfolio-website/static/media/st.thomas-landscape.9e44f2ff.jpeg",
+    "static/media/uml.16bef33d.png": "/portfolio-website/static/media/uml.16bef33d.png",
     "static/media/victory.1d8ce878.svg": "/portfolio-website/static/media/victory.1d8ce878.svg",
     "static/media/webTools.aab59987.png": "/portfolio-website/static/media/webTools.aab59987.png",
     "static/media/Projects.css": "/portfolio-website/static/media/winter.99288b88.jpg"
@@ -56,8 +61,8 @@
   "entrypoints": [
     "static/js/runtime-main.b8c7e1dd.js",
     "static/css/2.667362ae.chunk.css",
-    "static/js/2.3daa96b3.chunk.js",
-    "static/css/main.f05a2edc.chunk.css",
-    "static/js/main.61e58483.chunk.js"
+    "static/js/2.4dc42328.chunk.js",
+    "static/css/main.6ee419d2.chunk.css",
+    "static/js/main.706bf5eb.chunk.js"
   ]
 }
