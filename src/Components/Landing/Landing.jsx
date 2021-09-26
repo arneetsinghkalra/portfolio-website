@@ -5,7 +5,7 @@ import { useSpring, animated, config } from "react-spring";
 import "./Landing.css";
 import SocialMediaLinks from "./SocialMediaLinks";
 import Portrait from "./Portrait";
-import CV from "../../Assets/Personal/CV.pdf";
+import ArneetSinghKalraCV from "../../Assets/Personal/CV.pdf";
 import "../../index.css";
 
 export default function Landing() {
@@ -73,7 +73,11 @@ export default function Landing() {
 
       <Row>
         <Col className="resume-download justify-content-center">
-          <a href={CV} download>
+          <a
+            href={ArneetSinghKalraCV}
+            download="ArneetSinghKalraCV.pdf"
+            target="_blank"
+          >
             <Button variant="light" id="my-btn">
               Download Resume
             </Button>
