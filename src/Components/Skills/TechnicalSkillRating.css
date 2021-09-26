@@ -1,0 +1,27 @@
+/* relevant styles */
+.img__wrap {
+  position: relative;
+  height: 50px;
+  width: fit-content;
+}
+
+.img__description {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 1);
+  color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  border-radius: 1rem;
+
+  /* transition effect. not necessary */
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.img__wrap:hover .img__description {
+  visibility: visible;
+  opacity: 1;
+}

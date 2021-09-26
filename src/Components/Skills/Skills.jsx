@@ -1,21 +1,31 @@
 import { React } from "react";
-import {
-  Container,
-  Col,
-  Row,
-  ProgressBar,
-  Card,
-  Button
-} from "react-bootstrap";
+import { Container, Row, ProgressBar, Card, Col } from "react-bootstrap";
 
 import "./Skills.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import reactLogo from "../../Assets/Skills/react-logo.png";
-import webTools from "../../Assets/Skills/webTools.png";
-import firebase from "../../Assets/Skills/firebase.png";
-import spring from "../../Assets/Skills/spring.png";
-import java from "../../Assets/Skills/java.png";
-import python from "../../Assets/Skills/python.png";
+
+import ReactLogo from "../../Assets/Experience/reactjs-icon.svg";
+import Java from "../../Assets/Experience/java.svg";
+import Python from "../../Assets/Experience/python.svg";
+import C from "../../Assets/Experience/c.png";
+import Bootstrap from "../../Assets/Experience/bootstrap.svg";
+import AndroidStudio from "../../Assets/Experience/androidstudio.png";
+import Firebase from "../../Assets/Experience/firebase.png";
+import Arduino from "../../Assets/Experience/arduino.svg";
+import Postgresql from "../../Assets/Experience/postgresql.svg";
+import Spring from "../../Assets/Experience/spring.png";
+import Django from "../../Assets/Experience/django.svg";
+import Nodejs from "../../Assets/Experience/nodejs.svg";
+import SQL from "../../Assets/Experience/sql.svg";
+import Javascript from "../../Assets/Experience/javascript.svg";
+import Vuejs from "../../Assets/Experience/vuejs.svg";
+import MSSQL from "../../Assets/Experience/mssql.svg";
+import Axios from "../../Assets/Experience/axios.svg";
+import Emailjs from "../../Assets/Experience/emailjs.png";
+import Cucumber from "../../Assets/Experience/cucumber.svg";
+import Uml from "../../Assets/Experience/uml.png";
+
+import TechnicalSkillRating from "./TechnicalSkillRating";
+import SoftSkill from "./SoftSkills";
 
 export default function Skills() {
   return (
@@ -25,133 +35,165 @@ export default function Skills() {
           Skills{" "}
         </h1>
 
-        <Row>
-          <Col xs={12} md={6}>
-            <div className="skills-div">
-              <h1 className="py-1"> Technical Skills</h1>
-              <hr></hr>
-              <br></br>
-
-              <div className="mb-3">
-                <img
-                  src={reactLogo}
-                  alt="PS Logo"
-                  height="60px"
-                  width="auto"
-                  className="mx-1"
-                />
-                <img
-                  src={webTools}
-                  alt="PS Logo"
-                  height="60px"
-                  width="auto"
-                  className="mx-1"
-                />
-              </div>
-              <ProgressBar animated now={90} />
-
-              <div className="my-3">
-                <img
-                  src={firebase}
-                  alt="PS Logo"
-                  height="60px"
-                  width="auto"
-                  className="mx-1"
-                />
-                <img
-                  src={spring}
-                  alt="PS Logo"
-                  height="50px"
-                  width="auto"
-                  className="mx-1"
-                />
-              </div>
-              <ProgressBar animated now={70} variant="danger" />
-
-              <div className="my-3">
-                <img
-                  src={java}
-                  alt="PS Logo"
-                  height="60px"
-                  width="auto"
-                  className="mx-1"
-                />
-                <img
-                  src={python}
-                  alt="PS Logo"
-                  height="60px"
-                  width="auto"
-                  className="mx-1"
-                />
-              </div>
-              <ProgressBar animated now={95} variant="success" />
-            </div>
-          </Col>
-
-          <Col xs={12} md={6}>
-            <Row>
-              <Col xs={12}>
-                <div className="skills-div">
-                  <h1 className="py-1"> Soft Skills</h1>
-                  <hr></hr>
-                  <br></br>
-
-                  <h5 className="py-1">Communication</h5>
-                  <ProgressBar animated now={95} />
-
-                  <FontAwesomeIcon icon={["fab", "fa-react"]} />
-
-                  <h5 className="py-1">Teamwork</h5>
-                  <ProgressBar animated now={85} />
-
-                  <h5 className="py-1">Leadership</h5>
-                  <ProgressBar animated now={75} />
-                </div>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col xs={12}>
-                <div className="skills-div">
-                  <h1 className="py-1">Languages</h1>
-                  <hr></hr>
-                  <br></br>
-
-                  <h5 className="py-1">English</h5>
-                  <ProgressBar animated now={100} />
-
-                  <FontAwesomeIcon icon={["fab", "fa-react"]} />
-
-                  <h5 className="py-1">French</h5>
-                  <ProgressBar animated now={90} />
-
-                  <h5 className="py-1">Punjabi & Hindi</h5>
-                  <ProgressBar animated now={95} />
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-
-        <Row xs={1} md={4} className="justify-content-center p-0 mx-0">
-          <Card className="my-card ">
+        <Row xs={1} className="justify-content-center p-0 mx-0">
+          <Card className="my-card">
             <Card.Body>
-              <Card.Title>Technical Skills</Card.Title>
-              <Card.Text>Front End Development</Card.Text>
+              <Card.Title>
+                <h2>Technical Skills</h2>
+                <hr></hr>
+              </Card.Title>
+
+              <Card.Text>
+                <Row>
+                  <Col xs={12} md={6}>
+                    <h4>Front End</h4>
+                    <TechnicalSkillRating
+                      tech={ReactLogo}
+                      techName="React"
+                      percent="85"
+                    />
+                    <TechnicalSkillRating
+                      tech={Vuejs}
+                      techName="VueJS"
+                      percent="70"
+                    />
+                    <TechnicalSkillRating
+                      tech={Bootstrap}
+                      techName="Bootstrap"
+                      percent="90"
+                    />
+                    <TechnicalSkillRating
+                      tech={Axios}
+                      techName="Axios"
+                      percent="83"
+                    />
+                    <TechnicalSkillRating
+                      tech={Emailjs}
+                      techName="Email JS"
+                      percent="92"
+                    />
+                  </Col>
+
+                  <Col xs={12} md={6}>
+                    <h4>Back End</h4>
+                    <TechnicalSkillRating
+                      tech={Firebase}
+                      techName="Firebase"
+                      percent="85"
+                    />
+                    <TechnicalSkillRating
+                      tech={Postgresql}
+                      techName="PostgreSQL"
+                      percent="70"
+                    />
+                    <TechnicalSkillRating
+                      tech={Django}
+                      techName="Django"
+                      percent="55"
+                    />
+
+                    <TechnicalSkillRating
+                      tech={Nodejs}
+                      techName="Node JS"
+                      percent="80"
+                    />
+
+                    <TechnicalSkillRating
+                      tech={Spring}
+                      techName="Spring Boot"
+                      percent="85"
+                    />
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col xs={12} md={6}>
+                    <h4 className="mt-3">Languages</h4>
+
+                    <TechnicalSkillRating
+                      tech={Java}
+                      techName="Java"
+                      percent="90"
+                    />
+                    <TechnicalSkillRating
+                      tech={Python}
+                      techName="Python"
+                      percent="80"
+                    />
+                    <TechnicalSkillRating tech={C} techName="C" percent="70" />
+                    <TechnicalSkillRating
+                      tech={Javascript}
+                      techName="Javascript"
+                      percent="78"
+                    />
+                    <TechnicalSkillRating
+                      tech={SQL}
+                      techName="SQL"
+                      percent="70"
+                    />
+                  </Col>
+                  <Col xs={12} md={6}>
+                    <h4 className="mt-3">Others</h4>
+
+                    <TechnicalSkillRating
+                      tech={AndroidStudio}
+                      techName="Android Studio"
+                      percent="88"
+                    />
+                    <TechnicalSkillRating
+                      tech={Arduino}
+                      techName="Arduino"
+                      percent="82"
+                    />
+                    <TechnicalSkillRating
+                      tech={MSSQL}
+                      techName="MSSQL"
+                      percent="74"
+                    />
+                    <TechnicalSkillRating
+                      tech={Cucumber}
+                      techName="Cucumber"
+                      percent="78"
+                    />
+                    <TechnicalSkillRating
+                      tech={Uml}
+                      techName="UML"
+                      percent="86"
+                    />
+                  </Col>
+                </Row>
+              </Card.Text>
             </Card.Body>
-            <Card.Footer className="my-footer">
-              <Button
-                variant="dark"
-                onClick={e => {
-                  e.preventDefault();
-                  window.location.href =
-                    "https://github.com/arneetsinghkalra/portfolio-website";
-                }}
-                disabled
-              >
-                Restricted Repository
-              </Button>
-            </Card.Footer>
+          </Card>
+
+          <Card className="my-card">
+            <Card.Body>
+              <Card.Title>
+                <h2>Soft Skills</h2>
+                <hr></hr>
+              </Card.Title>
+
+              <Card.Text>
+                <Row>
+                  <Col xs={12} md={6}>
+                    <h4 className="mt-1 mb-3">Skills</h4>
+                    <SoftSkill skill="Communication" percent="94" />
+                    <SoftSkill skill="Team Work" percent="95" />
+                    <SoftSkill skill="Leadership" percent="97" />
+                    <SoftSkill skill="Researching" percent="98" />
+                    <SoftSkill skill="Colloboration" percent="96" />
+                  </Col>
+                  <Col xs={12} md={6}>
+                    <h4 className="mb-3 mt-1">Languages</h4>
+                    <SoftSkill skill="English" percent="99" />
+                    <SoftSkill skill="French" percent="92" />
+                    <SoftSkill skill="Punjabi" percent="90" />
+                    <SoftSkill skill="Hindi" percent="85" />
+                    <SoftSkill skill="Spanish" percent="60" />
+                  </Col>
+                </Row>
+              </Card.Text>
+            </Card.Body>
           </Card>
         </Row>
       </Container>
