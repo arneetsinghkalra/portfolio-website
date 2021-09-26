@@ -58,6 +58,7 @@ export default function Navigation() {
         <Navbar.Collapse className="my-nav-links" id="responsive-navbar-nav ">
           <Nav className="mx-auto text-center">
             <Nav.Link
+              eventKey="1"
               onClick={() =>
                 scroller.scrollTo("education", {
                   spy: true,
@@ -71,6 +72,7 @@ export default function Navigation() {
             </Nav.Link>
 
             <Nav.Link
+              eventKey="2"
               onClick={() =>
                 scroller.scrollTo("experience", {
                   spy: true,
@@ -84,6 +86,7 @@ export default function Navigation() {
             </Nav.Link>
 
             <Nav.Link
+              eventKey="3"
               onClick={() =>
                 scroller.scrollTo("projects", {
                   spy: true,
@@ -96,6 +99,7 @@ export default function Navigation() {
               Projects
             </Nav.Link>
             <Nav.Link
+              eventKey="4"
               onClick={() =>
                 scroller.scrollTo("skills", {
                   spy: true,
@@ -115,6 +119,7 @@ export default function Navigation() {
               className="my-contact-btn"
             >
               <Nav.Link
+                eventKey="5"
                 onClick={() =>
                   scroller.scrollTo("contact", {
                     spy: true,
