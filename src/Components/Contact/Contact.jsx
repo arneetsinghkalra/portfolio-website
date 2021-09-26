@@ -51,7 +51,7 @@ export default function Contact() {
                   <Form.Control
                     required
                     type="text"
-                    placeholder="Arneet Singh Kalra"
+                    placeholder="Your name here"
                     name="user_name"
                     className="form-input"
                   />
@@ -62,7 +62,7 @@ export default function Contact() {
                   <Form.Control
                     required
                     type="email"
-                    placeholder="arneetsinghkalra@gmail.com"
+                    placeholder="your_email_here@me.com"
                     name="user_email"
                     className="form-input"
                   />
@@ -91,7 +91,7 @@ export default function Contact() {
                 )}
 
                 <Button variant="light" type="submit" className="m-2">
-                  Message
+                  Send
                 </Button>
               </Form>
             </div>
@@ -107,11 +107,3 @@ export default function Contact() {
     </div>
   );
 }
-
-/*
-  <Col xs={12} md={4}>
-            <div className="icon-div">
-              <img src={ContactSVG} alt="Contact icon" height="200px" />
-            </div>
-          </Col>
- */

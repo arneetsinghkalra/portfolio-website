@@ -153,12 +153,12 @@ export default function Projects() {
               </Card.Title>
               <Card.Text>
                 Another one of my projects is in fact this website! I developed
-                this in order to learn React, and develop my CSS skills. The
-                website uses the React Bootstrap library. EmailJs is integrated
-                to allow emails to be sent directly to my email address using
-                the contact form located at the bottom of the page (feel free to
-                use it!). I also learnt about new CSS libraries such as React
-                Spring for smooth animations.
+                this in order develop my React and CSS skills. The website uses
+                the React-Bootstrap library. EmailJs is integrated to allow
+                emails to be sent directly to my email address using the contact
+                form located at the bottom of the page (feel free to use it!). I
+                also made use of external CSS libraries for animation such as
+                React Spring.
               </Card.Text>
               {portfolio_tech.map((technology, _) => (
                 <img

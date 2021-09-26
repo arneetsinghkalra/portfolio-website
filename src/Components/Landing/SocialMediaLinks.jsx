@@ -22,16 +22,8 @@ export default function SocialMediaLinks() {
             ></img>
           </a>
 
-          <a href="https://instagram.com">
-            <img src={Instagram} alt="Instagram Logo" className="my-logo"></img>
-          </a>
-
           <a href="https://www.linkedin.com/in/arneetsinghkalra/">
             <img src={Linkedin} alt="Linkedin Logo" className="my-logo"></img>
-          </a>
-
-          <a href="https://www.facebook.com/arneet.kalra">
-            <img src={Facebook} alt="Facebook Logo" className="my-logo"></img>
           </a>
         </div>
       </Col>

@@ -21,13 +21,13 @@
 }
 
 .my-nav-link {
-  font-size: px;
   color: white !important;
   transition: 300ms;
+  margin: auto;
 }
 
 .my-nav-link:hover {
-  color: #5c5c5c !important;
+  font-size: x-large;
   transition: 300ms;
 }
 
@@ -38,8 +38,8 @@
 }
 
 .my-contact-btn:hover {
-  background: white !important;
-  color: black !important;
+  background: black !important;
+  color: white !important;
 }
 
 @media screen and (max-width: 768px) {

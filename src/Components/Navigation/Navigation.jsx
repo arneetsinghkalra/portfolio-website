@@ -6,31 +6,6 @@ import { Nav, Navbar, Button } from "react-bootstrap";
 import Signature from "../../Assets/Personal/newSignatureWhite.png";
 
 export default function Navigation() {
-  /*
-  Code to add feature of changing navigation bar color: will come back to this later
-
-  let listener = null;
-  const [scrollState, setScrollState] = useState("blackNavBar");
-
-  useEffect(() => {
-    listener = document.addEventListener("scroll", e => {
-      var scrolled = document.scrollingElement.scrollTop;
-      if (scrolled >= 9425) {
-        if (scrollState !== "whiteNavBar") {
-          setScrollState("whiteNavBar");
-        }
-      } else {
-        if (scrollState !== "blackNavBar") {
-          setScrollState("blackNavBar");
-        }
-      }
-    });
-    return () => {
-      document.removeEventListener("scroll", listener);
-    };
-  }, [scrollState]);
-  */
-
   return (
     <>
       <Navbar
@@ -39,9 +14,6 @@ export default function Navigation() {
         sticky="top"
         variant="dark"
         bg="black"
-        //variant={scrollState === "blackNavBar" ? "dark" : "light"}
-        //bg={scrollState === "blackNavBar" ? "black" : "white"}
-        color="red"
         className="my-nav-bar"
       >
         <div className="my-nav-brand" onClick={scroll.scrollToTop}>
@@ -113,25 +85,21 @@ export default function Navigation() {
             </Nav.Link>
           </Nav>
           <Nav>
-            <Button
-              size="sm"
-              variant="outline-light"
-              className="my-contact-btn"
+            <Nav.Link
+              eventKey="5"
+              onClick={() =>
+                scroller.scrollTo("contact", {
+                  spy: true,
+                  smooth: true,
+                  duration: 500
+                })
+              }
+              className="my-nav-link"
             >
-              <Nav.Link
-                eventKey="5"
-                onClick={() =>
-                  scroller.scrollTo("contact", {
-                    spy: true,
-                    smooth: true,
-                    duration: 500
-                  })
-                }
-                className="my-nav-link"
-              >
+              <Button variant="light" className="my-contact-btn">
                 Contact Me
-              </Nav.Link>
-            </Button>
+              </Button>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
