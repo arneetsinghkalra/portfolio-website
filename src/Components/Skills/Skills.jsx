@@ -31,8 +31,8 @@ export default function Skills() {
   return (
     <div className="skills-landing" id="skills">
       <Container classname="mx-auto">
-        <h1 className="py-3" style={{ color: "white" }}>
-          Skills{" "}
+        <h1 className="py-5" style={{ color: "white" }}>
+          Skills
         </h1>
 
         <Row xs={1} className="justify-content-center p-0 mx-0">

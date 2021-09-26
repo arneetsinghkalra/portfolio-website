@@ -10,4 +10,5 @@
   height: 40vh;
   width: auto;
   border-radius: 100%;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.618);
 }
