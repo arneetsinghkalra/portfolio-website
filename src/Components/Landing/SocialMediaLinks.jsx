@@ -2,9 +2,7 @@ import React from "react";
 import { Col } from "react-bootstrap";
 import "./SocialMediaLinks.css";
 
-import Instagram from "../../Assets/SocialMedia/instagram.png";
 import Linkedin from "../../Assets/SocialMedia/linkedin.png";
-import Facebook from "../../Assets/SocialMedia/facebook.png";
 import Github from "../../Assets/SocialMedia/github.png";
 //import GithubHidden from "../../Assets/SocialMedia/githubHidden.png";
 
