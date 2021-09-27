@@ -114,6 +114,7 @@ export default function Projects() {
               <hr></hr>
               <Button
                 variant="dark"
+                className="repo-btn"
                 onClick={e => {
                   e.preventDefault();
                   window.location.href =
@@ -125,18 +126,19 @@ export default function Projects() {
 
               <Button
                 variant="dark"
+                className="m-1 repo-btn"
                 onClick={e => {
                   e.preventDefault();
                   window.location.href =
                     "https://github.com/arneetsinghkalra/recycling-pioneers-esp32";
                 }}
-                className="m-1"
               >
                 ESP32 Repo
               </Button>
 
               <Button
                 variant="dark"
+                className="repo-btn"
                 onClick={e => {
                   e.preventDefault();
                   window.location.href = "https://recyclingpioneers.ca";
@@ -179,6 +181,7 @@ export default function Projects() {
               <hr></hr>
               <Button
                 variant="dark"
+                className="repo-btn"
                 onClick={e => {
                   e.preventDefault();
                   window.location.href =
@@ -220,6 +223,7 @@ export default function Projects() {
               <hr></hr>
               <Button
                 variant="dark"
+                className="repo-btn"
                 href="https://github.com/arneetsinghkalra/BluBand"
               >
                 Repository
@@ -259,6 +263,7 @@ export default function Projects() {
               <hr></hr>
               <Button
                 variant="dark"
+                className="repo-btn"
                 href="https://github.com/arneetsinghkalra/Quoridor"
               >
                 Repository

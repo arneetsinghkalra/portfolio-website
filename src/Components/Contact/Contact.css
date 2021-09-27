@@ -44,3 +44,8 @@
   position: relative;
   border-top: 10px solid white;
 }
+
+.contact-send-btn:hover {
+  background: black !important;
+  color: white !important;
+}

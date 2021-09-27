@@ -46,3 +46,12 @@
   color: black;
   font-weight: bold;
 }
+
+.repo-btn {
+  background: black !important;
+}
+
+.repo-btn:hover {
+  background: white !important;
+  color: black !important;
+}

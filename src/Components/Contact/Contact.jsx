@@ -51,7 +51,7 @@ export default function Contact() {
                   <Form.Control
                     required
                     type="text"
-                    placeholder="Your name here"
+                    placeholder="Your Name"
                     name="user_name"
                     className="form-input"
                   />
@@ -62,7 +62,7 @@ export default function Contact() {
                   <Form.Control
                     required
                     type="email"
-                    placeholder="your_email_here@me.com"
+                    placeholder="your.email@me.com"
                     name="user_email"
                     className="form-input"
                   />
@@ -90,7 +90,11 @@ export default function Contact() {
                   </Alert>
                 )}
 
-                <Button variant="light" type="submit" className="m-2">
+                <Button
+                  variant="light"
+                  type="submit"
+                  className="m-2 contact-send-btn"
+                >
                   Send
                 </Button>
               </Form>
