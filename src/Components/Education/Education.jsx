@@ -9,7 +9,7 @@ import "react-vertical-timeline-component/style.min.css";
 import EducationTimelineElement from "./EducationTimelineElement";
 
 import McGill from "../../Assets/Education/McGill.png";
-import Marianopolis from "../../Assets/Education/marianopolis_logo.webp";
+import Marianopolis from "../../Assets/Education/Marianopolis.webp";
 import SaintThomas from "../../Assets/Education/StThomas.jpeg";
 import McGillLandscape from "../../Assets/Education/mcgill-landscape.jpeg";
 import MarianopolisLandscape from "../../Assets/Education/Marianopolis-landscape.jpeg";

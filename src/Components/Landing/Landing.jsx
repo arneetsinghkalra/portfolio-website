@@ -76,6 +76,7 @@ export default function Landing() {
           <a
             href={ArneetSinghKalraCV}
             download="ArneetSinghKalraCV.pdf"
+            rel="noreferrer"
             target="_blank"
           >
             <Button variant="light" id="my-btn">

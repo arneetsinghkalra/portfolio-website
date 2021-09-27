@@ -7,6 +7,7 @@ import rpArticle from "../../Assets/Projects/rp_article.png";
 import quoridor from "../../Assets/Projects/quoridor.png";
 import mcgill from "../../Assets/Education/McGill.png";
 import portfolio from "../../Assets/Projects/portfolio.png";
+import stthomas from "../../Assets/Projects/stthomasApp.png";
 
 import ReactLogo from "../../Assets/Experience/reactjs-icon.svg";
 import Java from "../../Assets/Experience/java.svg";
@@ -29,6 +30,7 @@ export default function Projects() {
   const portfolio_tech = [ReactLogo, Bootstrap, Emailjs];
   const biodesign_tech = [Java, AndroidStudio, Firebase];
   const quoridor_tech = [Java, Cucumber, Uml];
+  const stthomas_tech = [Java, AndroidStudio];
 
   return (
     <div className="projects-landing" id="projects">
@@ -260,6 +262,46 @@ export default function Projects() {
                 href="https://github.com/arneetsinghkalra/Quoridor"
               >
                 Repository
+              </Button>
+            </Card.Footer>
+          </Card>
+
+          <Card className="my-card">
+            <Card.Img variant="top" src={stthomas} />
+            <Card.Body>
+              <Card.Title>
+                <b>St. Thomas Android App</b>
+              </Card.Title>
+              <Card.Text>
+                My first project ever that involved coding. For the
+                International Baccalaureate final year project, I decided to
+                code an Android application that would present the data
+                avaliable on the official school website in an Android
+                application. While showcasing text based information, it was
+                capable of pulling the daily announcements and presenting it in
+                a PDF format each day.
+              </Card.Text>
+              {stthomas_tech.map((technology, _) => (
+                <img
+                  src={technology}
+                  alt={technology}
+                  height="40px"
+                  width="auto"
+                  className="tech-image"
+                />
+              ))}
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted my-footer-text">
+                September 2015 - June 2016
+              </small>
+              <hr></hr>
+              <Button
+                variant="dark"
+                href="https://github.com/arneetsinghkalra/Quoridor"
+                disabled
+              >
+                Repository Unavaliable
               </Button>
             </Card.Footer>
           </Card>

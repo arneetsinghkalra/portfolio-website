@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Container, Row, ProgressBar, Card, Col } from "react-bootstrap";
+import { Container, Row, Card, Col } from "react-bootstrap";
 
 import "./Skills.css";
 
