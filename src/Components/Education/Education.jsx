@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 import {
   VerticalTimeline,
@@ -15,7 +15,7 @@ import McGillLandscape from "../../Assets/Education/mcgill-landscape.jpeg";
 import MarianopolisLandscape from "../../Assets/Education/Marianopolis-landscape.jpeg";
 import SaintThomasLandscape from "../../Assets/Education/st.thomas-landscape.jpeg";
 
-import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
+import faGraduationCap from "@fortawesome/free-solid-svg-icons/faGraduationCap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Education.css";

@@ -1,5 +1,8 @@
 import { React, useState } from "react";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import { useSpring, animated, config } from "react-spring";
 
 import "./Landing.css";

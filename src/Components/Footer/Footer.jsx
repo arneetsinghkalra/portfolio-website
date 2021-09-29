@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import SocialMedia from "../Landing/SocialMediaLinks.jsx";
-import { Row } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
 
 export default function Footer() {
   return (

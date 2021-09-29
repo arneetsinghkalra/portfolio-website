@@ -1,6 +1,12 @@
 import { React, useState } from "react";
 import emailjs from "emailjs-com";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+
 import "./Contact.css";
 
 export default function Contact() {

@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 import PS from "../../Assets/Experience/PublicisSapient.png";
 import Greybox from "../../Assets/Experience/grey-box.jpg";
@@ -23,7 +23,7 @@ import Arduino from "../../Assets/Experience/arduino.svg";
 import MSSQL from "../../Assets/Experience/mssql.svg";
 import Axios from "../../Assets/Experience/axios.svg";
 
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import faBriefcase from "@fortawesome/free-solid-svg-icons/faBriefcase";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

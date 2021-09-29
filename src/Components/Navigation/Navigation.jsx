@@ -1,8 +1,10 @@
-import { React } from "react";
+import React from "react";
 import "./Navigation.css";
 
 import { scroller, animateScroll as scroll } from "react-scroll";
-import { Nav, Navbar, Button } from "react-bootstrap";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Button from "react-bootstrap/Button";
 import Signature from "../../Assets/Personal/newSignatureWhite.png";
 
 export default function Navigation() {
