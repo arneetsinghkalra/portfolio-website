@@ -36,6 +36,7 @@ import ExeprienceTimelineElement from "./ExperienceTimelineElement";
 
 import "./Experience.css";
 import "./ExperienceTimelineElement.css";
+import Quote from "../RepeatedComponents/Quote";
 
 export default function Experience() {
   return (
@@ -117,12 +118,11 @@ export default function Experience() {
           ></VerticalTimelineElement>
         </VerticalTimeline>
 
-        <div className="experience-quote-div">
-          <h4>"The best way to predict the future is to invent it."</h4>
-          <p>
-            <i> - Alan Kay </i>
-          </p>
-        </div>
+        <Quote
+          className="quote-white-background"
+          quote="The best way to predict the future is to invent it."
+          author="Alan Kay"
+        />
       </Container>
     </div>
   );

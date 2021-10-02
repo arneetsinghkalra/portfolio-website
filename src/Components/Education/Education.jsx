@@ -19,6 +19,7 @@ import { faGraduationCap } from "@fortawesome/free-solid-svg-icons/faGraduationC
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Education.css";
+import Quote from "../RepeatedComponents/Quote";
 
 export default function Education() {
   return (
@@ -92,12 +93,12 @@ export default function Education() {
             }
           ></VerticalTimelineElement>
         </VerticalTimeline>
-        <div className="education-quote-div">
-          <h4>"Strive not to be a success, but rather to be of value."</h4>
-          <p>
-            <i> - Albert Einstein </i>
-          </p>
-        </div>
+
+        <Quote
+          className="quote-black-background"
+          quote="Strive not to be a success, but rather to be of value."
+          author="Albert Einstein"
+        />
       </Container>
     </div>
   );
