@@ -23,3 +23,11 @@
 .last-element {
   height: 0px !important;
 }
+
+/* this is the vertical line */
+.vertical-timeline::before {
+  position: absolute;
+  top: 2rem;
+  left: 18px;
+  height: 97%;
+}

@@ -47,7 +47,7 @@ The box for the timeline content
   align-items: left !important;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1169px) {
   .vertical-timeline-element-icon img {
     margin-left: -15px;
     margin-top: -15px;
