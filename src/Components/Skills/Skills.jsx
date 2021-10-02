@@ -33,7 +33,7 @@ import SoftSkill from "./SoftSkills";
 export default function Skills() {
   return (
     <div className="skills-landing" id="skills">
-      <Container classname="mx-auto">
+      <Container className="mx-auto">
         <h1 className="py-5" style={{ color: "white" }}>
           Skills
         </h1>
@@ -201,9 +201,9 @@ export default function Skills() {
         </Row>
       </Container>
 
-      <div class="curveArea">
-        <div class="mainBox">
-          <div class="curveSection"></div>
+      <div className="curveArea">
+        <div className="mainBox">
+          <div className="curveSection"></div>
         </div>
       </div>
     </div>

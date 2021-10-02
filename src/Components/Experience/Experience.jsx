@@ -23,7 +23,7 @@ import Arduino from "../../Assets/Experience/arduino.svg";
 import MSSQL from "../../Assets/Experience/mssql.svg";
 import Axios from "../../Assets/Experience/axios.svg";
 
-import faBriefcase from "@fortawesome/free-solid-svg-icons/faBriefcase";
+import { faLaptop } from "@fortawesome/free-solid-svg-icons/faLaptop";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -113,9 +113,7 @@ export default function Experience() {
           <VerticalTimelineElement
             className="last-element"
             iconStyle={{ background: "black" }}
-            icon={
-              <FontAwesomeIcon icon={faBriefcase} size="lg" color="white" />
-            }
+            icon={<FontAwesomeIcon icon={faLaptop} size="lg" color="white" />}
           ></VerticalTimelineElement>
         </VerticalTimeline>
 

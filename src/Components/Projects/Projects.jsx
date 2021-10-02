@@ -37,7 +37,7 @@ export default function Projects() {
 
   return (
     <div className="projects-landing" id="projects">
-      <Container classname="mx-auto" fluid>
+      <Container className="mx-auto" fluid>
         <h1 className="py-5"> Projects </h1>
 
         <Row xs={1} md={4} className="justify-content-center p-0 mx-0">

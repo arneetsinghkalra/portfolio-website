@@ -11,6 +11,7 @@ import "./Contact.css";
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
 
   function sendEmail(e) {
     e.preventDefault();
@@ -40,12 +41,13 @@ export default function Contact() {
     }
 
     setValidated(true);
+    setMessageSent(true);
     sendEmail(event);
   };
 
   return (
     <div className="contact-landing" id="contact">
-      <Container classname="mx-auto">
+      <Container className="mx-auto">
         <h1 className="py-5"> Contact Me </h1>
 
         <Row className="justify-content-center">
@@ -100,6 +102,7 @@ export default function Contact() {
                   variant="light"
                   type="submit"
                   className="m-2 contact-send-btn"
+                  disabled={messageSent}
                 >
                   Send
                 </Button>
@@ -109,9 +112,9 @@ export default function Contact() {
         </Row>
       </Container>
 
-      <div class="curveAreaContact">
-        <div class="mainBoxContact">
-          <div class="curveSectionContact"></div>
+      <div className="curveAreaContact">
+        <div className="mainBoxContact">
+          <div className="curveSectionContact"></div>
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ import McGillLandscape from "../../Assets/Education/mcgill-landscape.jpeg";
 import MarianopolisLandscape from "../../Assets/Education/Marianopolis-landscape.jpeg";
 import SaintThomasLandscape from "../../Assets/Education/st.thomas-landscape.jpeg";
 
-import faGraduationCap from "@fortawesome/free-solid-svg-icons/faGraduationCap";
+import { faGraduationCap } from "@fortawesome/free-solid-svg-icons/faGraduationCap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Education.css";
