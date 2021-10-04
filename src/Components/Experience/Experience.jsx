@@ -58,6 +58,9 @@ export default function Experience() {
             textColor="black"
             iconBackground="white"
             tech={[ReactLogo, Bootstrap, Victory, Axios, Spring, MSSQL, SQL]}
+            iconClickLink={() =>
+              window.open("https://www.publicissapient.com/", "_blank")
+            }
           />
 
           <ExeprienceTimelineElement
@@ -74,6 +77,9 @@ export default function Experience() {
             arrowStyle="7px solid  rgba(129,129,129,255)"
             iconBackground="rgba(129,129,129,255)"
             tech={[Java, Python, Javascript, AndroidStudio]}
+            iconClickLink={() =>
+              window.open("https://www.grey-box.ca/", "_blank")
+            }
           />
 
           <ExeprienceTimelineElement
@@ -93,6 +99,9 @@ export default function Experience() {
             arrowStyle="7px solid white"
             iconBackground="white"
             tech={[ReactLogo, Victory, Bootstrap, Firebase, Arduino, C]}
+            iconClickLink={() =>
+              window.open("https://recyclingpioneers.ca/", "_blank")
+            }
           />
 
           <ExeprienceTimelineElement
@@ -109,6 +118,9 @@ export default function Experience() {
             arrowStyle="7px solid rgb(218,41,28)"
             iconBackground="white"
             tech={[Excel, PowerBi, SQL]}
+            iconClickLink={() =>
+              window.open("https://www.rogers.com/", "_blank")
+            }
           />
 
           <VerticalTimelineElement

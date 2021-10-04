@@ -10,6 +10,13 @@ The box for the timeline content
 .vertical-timeline-element-icon {
   overflow: hidden;
   text-align: center;
+  transition: 300ms;
+}
+
+.vertical-timeline-element-icon:hover {
+  box-shadow: 0 0 0 7px black !important;
+  cursor: pointer;
+  transition: 300ms;
 }
 
 .vertical-timeline-element-icon img {

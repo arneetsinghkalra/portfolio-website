@@ -16,6 +16,7 @@ export default function ExperienceTimelineElement(props) {
       //date={props.date}
       iconStyle={{ background: props.iconBackground }}
       contentArrowStyle={{ borderRight: props.arrowStyle }}
+      iconOnClick={props.iconClickLink}
       icon={
         <img
           src={props.logo}

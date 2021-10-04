@@ -35,6 +35,9 @@ export default function Education() {
             school="McGill University"
             location="Montreal, Quebec"
             logo={McGill}
+            iconClickLink={() =>
+              window.open("https://www.mcgill.ca/", "_blank")
+            }
             iconBackground="white"
             textColor="white"
             landscape={McGillLandscape}
@@ -56,6 +59,9 @@ export default function Education() {
             arrowStyle="7px solid rgba(1,55,154,255)"
             textColor="white"
             iconBackground="white"
+            iconClickLink={() =>
+              window.open("https://www.marianopolis.edu/", "_blank")
+            }
             landscape={MarianopolisLandscape}
             activities={[
               "Marianopolis Rugby Team (2016-18)",
@@ -74,6 +80,9 @@ export default function Education() {
             arrowStyle="7px solid rgba(45,85,52,255)"
             textColor="white"
             iconBackground="white"
+            iconClickLink={() =>
+              window.open("https://stthomas.lbpsb.qc.ca/", "_blank")
+            }
             landscape={SaintThomasLandscape}
             activities={[
               "Honours Top 20 Student",
