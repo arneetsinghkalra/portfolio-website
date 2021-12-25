@@ -70,8 +70,8 @@ export default function Experience() {
             company="Greybox"
             location="Montreal, Quebec"
             description="Worked at a social tech startup aiming to bring online resources
-              to rural communities through an Android box. Added to the Java codebase by implementing a
-            file manager system. Also began the production of a web scraping tool to contribute to the database of educational resources."
+            to rural communities through an Android box. Added to the Java codebase by implementing a
+            file management system. Also began the production of a web scraping tool to contribute to the database of educational resources."
             cardBackground="rgba(129,129,129,255)"
             textColor="white"
             arrowStyle="7px solid  rgba(129,129,129,255)"
@@ -88,11 +88,11 @@ export default function Experience() {
             title="Software Engineer Intern"
             company="Recycling Pioneers"
             location="Montreal, Quebec"
-            description="  Interned at a startup led by McGill students aiming to bring a
-              smart waste platform to the McGill campus. Worked with an ESP32
-              microcontroller to read data from sensors and store wirelessly in
+            description="Interned at a startup led by McGill students aiming to bring a
+              smart waste platform to McGill campus. Worked with an ESP32
+              microcontroller to read data from sensors and store it wirelessly in
               a Firebase Realtime database. Developed a React website to
-              integrate with database and display data in an efficent and
+              integrate with the database and display data in an efficent and
               informative manner. Stayed on the team as a volunteer to continue the project."
             cardBackground="white"
             textColor="black"
@@ -110,7 +110,7 @@ export default function Experience() {
             title="Demand Analytics Intern"
             company="Rogers Communications"
             location="Toronto, Ontario"
-            description="  Worked as an analyst to develop an internal tool capable of
+            description="Worked as an analyst to develop an internal tool capable of
               categorizing the call volume at Rogers' call centers. Tool to be
               used in coordination with Machine Learning algorithms to determine the most efficient scheduling and training of call center employees."
             cardBackground="rgb(218,41,28)"

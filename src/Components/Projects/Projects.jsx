@@ -43,7 +43,7 @@ export default function Projects() {
           <ProjectCard
             image={mcgill}
             title="St. Mary's Physician to Volunteer Network"
-            description=" For the final year Engineer project, my team and I are working
+            description="For my final year Engineer project, my team and I are working
                 with the McGill Chair of Family and Community Medicine at St.
                 Mary's Hospital. The goal of the project is to continue the
                 development of a web application which coordinates referrals
@@ -71,7 +71,7 @@ export default function Projects() {
                 University. The goal is to educate the community and reduce the
                 waste generated on campus. The project is still underway, and
                 has been recognized by University Advancment at McGill with a
-                couple published articles."
+                couple of published articles."
             tech={[ReactLogo, Victory, Bootstrap, Firebase, Arduino, C]}
             date="June 2020 - Present"
             gitRepos={[
@@ -94,7 +94,7 @@ export default function Projects() {
             imageCoverBackground
             title="Personal Portfolio Website"
             description="  Another one of my projects is in fact this website! I developed
-                this in order develop my React and CSS skills. The website uses
+                this in order to develop my React and CSS skills. The website uses
                 the React-Bootstrap library. EmailJs is integrated to allow
                 emails to be sent directly to my email address using the contact
                 form located at the bottom of the page (feel free to use it!). I
@@ -117,7 +117,7 @@ export default function Projects() {
             description="As part of McGill Biodesign, I worked on a project called
                 BluBand. Our end goal was to develop a watch which monitors the
                 blood glucose level of type-1 diabetic children. As part of the
-                software team, I assisted in the development of the Andriod
+                software team, I assisted in the development of the Android
                 application which had a Firebase backend."
             tech={[Java, AndroidStudio, Firebase]}
             date="  September 2019 - August 2020"
@@ -133,7 +133,7 @@ export default function Projects() {
           <ProjectCard
             image={quoridor}
             title="Quoridor Board Game Application"
-            description=" Developed a Java application of the famous strategic boardgame,
+            description="Developed a Java version of the famous strategic boardgame,
                 Quoridor. Started the project by developing a UML Domain Model
                 and State Machine with Umple. Followed a MVC (Model, View,
                 Controller) architecture and a Behavior Drive Development
@@ -154,12 +154,12 @@ export default function Projects() {
           <ProjectCard
             image={stthomas}
             title="St. Thomas Android App"
-            description="   My first project ever that involved coding. For the
+            description="My first project ever! For the
                 International Baccalaureate final year project, I decided to
-                code an Android application that would present the data
+                code an application that would present the data
                 avaliable on the official school website in an Android
                 application. While showcasing text based information, it was
-                capable of pulling the daily announcements and presenting it in
+                capable of pulling the daily announcements and presenting them in
                 a PDF format each day."
             tech={[Java, AndroidStudio]}
             date="September 2015 - June 2016"

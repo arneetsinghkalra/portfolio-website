@@ -42,6 +42,7 @@ export default function Education() {
             textColor="white"
             landscape={McGillLandscape}
             activities={[
+              "Teaching Assistant for COMP 421: Database Systems (Winter 2022)",
               "VP Finance McGill Biodesign (2021-22)",
               "VP Sponsorship MEC (2020-21)",
               "Finance Coordinator McGill Biodesign (2020-21)",
