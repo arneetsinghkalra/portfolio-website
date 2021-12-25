@@ -1,0 +1,28 @@
+[debug] [2021-12-25T22:59:06.064Z] ----------------------------------------------------------------------
+[debug] [2021-12-25T22:59:06.066Z] Command:       /usr/local/Cellar/node@14/14.18.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2021-12-25T22:59:06.067Z] CLI Version:   10.0.1
+[debug] [2021-12-25T22:59:06.067Z] Platform:      darwin
+[debug] [2021-12-25T22:59:06.067Z] Node Version:  v14.18.1
+[debug] [2021-12-25T22:59:06.069Z] Time:          Sat Dec 25 2021 17:59:06 GMT-0500 (Eastern Standard Time)
+[debug] [2021-12-25T22:59:06.069Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-12-25T22:59:06.131Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-12-25T22:59:06.131Z] > authorizing via signed-in user (a.s.kalra1999@gmail.com)
+[debug] [2021-12-25T22:59:06.131Z] [iam] checking project portfoliowebsite-e3beb for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-12-25T22:59:06.136Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/portfoliowebsite-e3beb:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-12-25T22:59:06.540Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Dec 2021 22:59:06 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=180","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-12-25T22:59:06.543Z] > refreshing access token with scopes: []
+[debug] [2021-12-25T22:59:06.544Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-12-25T22:59:06.689Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Sat, 25 Dec 2021 22:59:06 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-12-25T22:59:06.747Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/portfoliowebsite-e3beb [none]
+[debug] [2021-12-25T22:59:07.163Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/portfoliowebsite-e3beb 200
+[debug] [2021-12-25T22:59:07.163Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/portfoliowebsite-e3beb {"projectId":"portfoliowebsite-e3beb","projectNumber":"653082963765","displayName":"PortfolioWebsite","name":"projects/portfoliowebsite-e3beb","resources":{"hostingSite":"portfoliowebsite-e3beb"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'portfoliowebsite-e3beb'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2021-12-25T22:59:07.166Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-12-25T22:59:07.166Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
