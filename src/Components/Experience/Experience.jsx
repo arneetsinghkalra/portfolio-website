@@ -1,6 +1,7 @@
 import { React } from "react";
 import Container from "react-bootstrap/Container";
 
+import Meta from "../../Assets/Experience/meta.png";
 import PS from "../../Assets/Experience/PublicisSapient.png";
 import Greybox from "../../Assets/Experience/grey-box.jpg";
 import RecyclingPioneers from "../../Assets/Experience/recyclingpioneers.png";
@@ -45,6 +46,22 @@ export default function Experience() {
         <h1 className="py-5"> Experience </h1>
 
         <VerticalTimeline className="experience-timeline">
+          <ExeprienceTimelineElement
+            logo={Meta}
+            date="August 2022"
+            title="Software Engineer"
+            company="Meta (Facebook)"
+            location="Menlo Park, California"
+            description="I will be kicking off my professional career upon graduating McGill University this summer!"
+            cardBackground="rgba(1,128,255,255)"
+            textColor="white"
+            iconBackground="white"
+            tech={[]}
+            iconClickLink={() =>
+              window.open("https://about.facebook.com/meta/", "_blank")
+            }
+          />
+
           <ExeprienceTimelineElement
             logo={PS}
             date="June 2021 - August 2021"
