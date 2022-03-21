@@ -4,7 +4,7 @@ import "./SocialMediaLinks.css";
 
 import Linkedin from "../../Assets/SocialMedia/linkedin.png";
 import Github from "../../Assets/SocialMedia/github.png";
-import Instagram from "../../Assets/SocialMedia/insta.png";
+import Instagram from "../../Assets/SocialMedia/instagram.png";
 
 //import GithubHidden from "../../Assets/SocialMedia/githubHidden.png";
 
