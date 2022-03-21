@@ -4,6 +4,8 @@ import "./SocialMediaLinks.css";
 
 import Linkedin from "../../Assets/SocialMedia/linkedin.png";
 import Github from "../../Assets/SocialMedia/github.png";
+import Instagram from "../../Assets/SocialMedia/insta.png";
+
 //import GithubHidden from "../../Assets/SocialMedia/githubHidden.png";
 
 export default function SocialMediaLinks() {
@@ -18,6 +20,10 @@ export default function SocialMediaLinks() {
               className="my-logo"
               id="github"
             ></img>
+          </a>
+
+          <a href="https://www.instagram.com/arneetsinghk/">
+            <img src={Instagram} alt="Instagram Logo" className="my-logo"></img>
           </a>
 
           <a href="https://www.linkedin.com/in/arneetsinghkalra/">
