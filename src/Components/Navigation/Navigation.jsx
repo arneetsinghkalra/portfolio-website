@@ -47,7 +47,7 @@ export default function Navigation() {
 
             <Nav.Link
               eventKey="2"
-              onClick={() =>
+              onSelect={() =>
                 scroller.scrollTo("experience", {
                   spy: true,
                   smooth: true,
@@ -89,7 +89,7 @@ export default function Navigation() {
           <Nav>
             <Nav.Link
               eventKey="5"
-              onClick={() =>
+              onSelect={() =>
                 scroller.scrollTo("contact", {
                   spy: true,
                   smooth: true,

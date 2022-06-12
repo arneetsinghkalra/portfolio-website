@@ -28,7 +28,7 @@ export default function Education() {
         <h1 className="py-5">Education</h1>
         <VerticalTimeline className="education-timeline">
           <EducationTimelineElement
-            date="Sepetember 2018 - Present"
+            date="Sepetember 2018 - May 2022"
             cardBackground="rgb(237,27,47)"
             arrowStyle="7px solid rgb(237,27,47)"
             title="B.Eng Software Engineering"
