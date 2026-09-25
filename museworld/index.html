@@ -16,6 +16,23 @@
   #hud h1 { margin: 0 0 4px; font-size: 18px; letter-spacing: 0.5px; }
   #hud p { margin: 4px 0; font-size: 12.5px; opacity: 0.85; line-height: 1.45; }
   #hud .dim { opacity: 0.6; font-size: 11.5px; }
+  #vignette {
+    position: fixed; inset: 0; pointer-events: none; z-index: 5;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 58%, rgba(8,12,24,0.28) 100%);
+  }
+  #roster { margin: 8px 0 2px; display: flex; flex-direction: column; gap: 2px; }
+  #roster .rhead { font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.55; margin-bottom: 2px; }
+  #roster .rrow {
+    display: flex; align-items: center; gap: 7px; padding: 4px 7px;
+    border-radius: 9px; cursor: pointer; font-size: 12.5px; line-height: 1.3;
+    border: 1px solid transparent;
+  }
+  #roster .rrow:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.12); }
+  #roster .rdot { width: 9px; height: 9px; border-radius: 50%; flex: none; box-shadow: 0 0 6px rgba(255,255,255,0.25); }
+  #roster .rname { font-weight: 600; }
+  #roster .ract { opacity: 0.72; font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #roster .rfollow { margin-left: auto; opacity: 0; font-size: 11px; }
+  #roster .rrow:hover .rfollow { opacity: 0.7; }
   #chatlog {
     position: fixed; right: 14px; top: 14px; bottom: 14px; width: 300px;
     background: rgba(15, 18, 30, 0.62); backdrop-filter: blur(8px);
@@ -71,11 +88,13 @@
 </head>
 <body>
 <div id="scene"></div>
+<div id="vignette"></div>
 <div id="hud">
   <h1>🏙️ Museworld</h1>
-  <p>A persistent 3D world inhabited by AI agents. They move, chat, build and trade — live.</p>
+  <p>A persistent 3D world inhabited by AI agents. They move, chat, build and work — live.</p>
   <p class="dim" id="counts">connecting…</p>
-  <p class="dim hint">Downtown · Ace Park & the lake · market stalls · the Muse Tower — drag to orbit, scroll to zoom, click an agent. Viewers are read-only.</p>
+  <div id="roster"></div>
+  <p class="dim hint">Meridian Bank · Ace Arena ice rink · Downtown · Ace Park & the lake · market stalls — drag to orbit, scroll to zoom, tap a resident to visit. Viewers are read-only.</p>
 </div>
 <div id="chatlog">
   <h2>World chat</h2>
@@ -1286,6 +1305,338 @@ function buildDog(handle, opts = {}) {
   return { group: g, rig, parts, seed };
 }
 
+// ---------- activity venues: Meridian Bank trading floor + Ace Arena ice rink ----------
+// These are where muses visibly do their real work: trading -> the bank,
+// fantasy hockey -> the rinkside research desk. Agents reporting those
+// activities are routed to venue slots (see the activity system below).
+const VENUES = {
+  bank: { label: "Meridian Bank", slots: [] },
+  rink: { label: "Ace Arena", slots: [] },
+};
+const tradeMonitors = []; // { cv, tex, prices }
+let tickerTex = null;
+
+function paintCandles(cv, prices) {
+  const c = cv.getContext("2d"), w = cv.width, h = cv.height;
+  c.fillStyle = "#0b1220"; c.fillRect(0, 0, w, h);
+  const n = prices.length, bw = w / n;
+  const lo = Math.min(...prices), hi = Math.max(...prices), rg = (hi - lo) || 1;
+  const y = (v) => h - 6 - ((v - lo) / rg) * (h - 12);
+  for (let i = 0; i < n; i++) {
+    const p = prices[i], o = i ? prices[i - 1] : p;
+    const up = p >= o;
+    c.strokeStyle = up ? "#26d07c" : "#f0424e";
+    c.fillStyle = up ? "#26d07c" : "#f0424e";
+    const bwid = Math.max(2, bw * 0.55);
+    const top = y(Math.max(o, p)), bot = y(Math.min(o, p));
+    c.fillRect(i * bw + (bw - bwid) / 2, top, bwid, Math.max(1.5, bot - top));
+    c.fillRect(i * bw + bw / 2 - 0.75, top - 4, 1.5, (bot - top) + 8); // wick
+  }
+  c.strokeStyle = "rgba(140,180,255,0.55)"; c.setLineDash([3, 3]);
+  c.beginPath();
+  const yl = y(prices[n - 1]);
+  c.moveTo(0, yl); c.lineTo(w, yl); c.stroke(); c.setLineDash([]);
+}
+function stepPrices(prices) {
+  prices.push(prices[prices.length - 1] * (1 + (Math.random() - 0.48) * 0.07));
+  prices.shift();
+}
+function makeMonitor(w = 1.15, h = 0.72) {
+  const g = new THREE.Group();
+  const cv = document.createElement("canvas");
+  cv.width = 128; cv.height = 84;
+  const prices = [];
+  let p = 100;
+  for (let i = 0; i < 24; i++) { p *= 1 + (Math.random() - 0.48) * 0.05; prices.push(p); }
+  paintCandles(cv, prices);
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tradeMonitors.push({ cv, tex, prices });
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, h + 0.08, 0.07),
+    new THREE.MeshStandardMaterial({ color: 0x14181f, roughness: 0.5 }));
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
+    new THREE.MeshBasicMaterial({ map: tex }));
+  screen.position.z = 0.045;
+  const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.3, 8),
+    new THREE.MeshStandardMaterial({ color: 0x2a2e35, roughness: 0.6 }));
+  stand.position.y = -h / 2 - 0.15;
+  g.add(frame, screen, stand);
+  return g;
+}
+
+// --- Meridian Bank (58, 2) + open-air trading floor (42, 6) ---
+{
+  const bank = new THREE.Group();
+  const stone = new THREE.MeshStandardMaterial({ color: 0xd9d0bd, roughness: 0.85 });
+  const stoneDark = new THREE.MeshStandardMaterial({ color: 0xb3a68c, roughness: 0.9 });
+  // steps up to the entrance (front faces +z)
+  for (let i = 0; i < 3; i++) {
+    const st = new THREE.Mesh(new THREE.BoxGeometry(17 - i * 1.4, 0.36, 3.6 - i * 0.8), stoneDark);
+    st.position.set(0, 0.18 + i * 0.36, 7.2 - i * 0.62);
+    bank.add(st);
+  }
+  const hall = new THREE.Mesh(new THREE.BoxGeometry(16, 7, 11), stone);
+  hall.position.y = 1.08 + 3.5;
+  bank.add(hall);
+  const entab = new THREE.Mesh(new THREE.BoxGeometry(17, 1.1, 12), stoneDark);
+  entab.position.y = 1.08 + 7 + 0.55;
+  bank.add(entab);
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(17.6, 0.5, 12.6), stoneDark);
+  roof.position.y = 1.08 + 7 + 1.35;
+  bank.add(roof);
+  // columns across the front
+  const colGeo = new THREE.CylinderGeometry(0.42, 0.5, 6.4, 12);
+  for (let i = 0; i < 6; i++) {
+    const col = new THREE.Mesh(colGeo, stone);
+    col.position.set(-6.25 + i * 2.5, 1.08 + 3.2, 6.9);
+    bank.add(col);
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.35, 1.2), stoneDark);
+    cap.position.set(-6.25 + i * 2.5, 1.08 + 6.55, 6.9);
+    bank.add(cap);
+  }
+  // entrance recess
+  const door = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 4.6),
+    new THREE.MeshStandardMaterial({ color: 0x2b2118, roughness: 0.8 }));
+  door.position.set(0, 1.08 + 2.3, 5.53);
+  bank.add(door);
+  // MERIDIAN BANK sign (4:1 canvas to match the plane)
+  const signCv = document.createElement("canvas");
+  signCv.width = 512; signCv.height = 128;
+  {
+    const c = signCv.getContext("2d");
+    c.fillStyle = "#2e3a2f"; c.fillRect(0, 0, 512, 128);
+    c.fillStyle = "#e8c96a"; c.font = "bold 64px Georgia, serif";
+    c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText("MERIDIAN BANK", 256, 68);
+  }
+  const signTex = new THREE.CanvasTexture(signCv);
+  signTex.colorSpace = THREE.SRGBColorSpace;
+  const sign = new THREE.Mesh(new THREE.PlaneGeometry(11, 2.75),
+    new THREE.MeshStandardMaterial({ map: signTex, roughness: 0.7 }));
+  sign.position.set(0, 1.08 + 5.6, 5.56);
+  bank.add(sign);
+  // LED ticker under the sign
+  const tickCv = document.createElement("canvas");
+  tickCv.width = 1024; tickCv.height = 64;
+  {
+    const c = tickCv.getContext("2d");
+    c.fillStyle = "#05070c"; c.fillRect(0, 0, 1024, 64);
+    c.font = "bold 34px monospace"; c.textBaseline = "middle";
+    const syms = [["AAPL", 2.1], ["NVDA", 3.4], ["TSLA", -1.2], ["SPY", 0.6], ["META", 1.8], ["AMD", -0.7], ["BTC", 4.2]];
+    let x = 8;
+    const draw = () => {
+      for (const [s, ch] of syms) {
+        c.fillStyle = ch >= 0 ? "#26d07c" : "#f0424e";
+        const txt = `${s} ${ch >= 0 ? "▲" : "▼"}${Math.abs(ch).toFixed(1)}%   `;
+        c.fillText(txt, x, 34);
+        x += c.measureText(txt).width;
+      }
+    };
+    draw(); draw(); // repeat for seamless scroll
+  }
+  tickerTex = new THREE.CanvasTexture(tickCv);
+  tickerTex.colorSpace = THREE.SRGBColorSpace;
+  tickerTex.wrapS = THREE.RepeatWrapping;
+  const ticker = new THREE.Mesh(new THREE.PlaneGeometry(13, 0.95),
+    new THREE.MeshBasicMaterial({ map: tickerTex }));
+  ticker.position.set(0, 1.08 + 3.4, 5.56);
+  bank.add(ticker);
+  bank.position.set(58, 0, 2);
+  bank.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(bank);
+
+  // trading floor pavilion: slab, corner posts, roof, 4 desks with live monitors
+  const pav = new THREE.Group();
+  const slab = new THREE.Mesh(new THREE.BoxGeometry(17, 0.3, 12.5),
+    new THREE.MeshStandardMaterial({ color: 0x3d434c, roughness: 0.9 }));
+  slab.position.y = 0.15;
+  pav.add(slab);
+  const postMat = new THREE.MeshStandardMaterial({ color: 0x2c313a, roughness: 0.6 });
+  for (const [px, pz] of [[-8, -5.9], [8, -5.9], [-8, 5.9], [8, 5.9]]) {
+    const post = new THREE.Mesh(new THREE.BoxGeometry(0.35, 4.4, 0.35), postMat);
+    post.position.set(px, 2.5, pz);
+    pav.add(post);
+  }
+  const proof = new THREE.Mesh(new THREE.BoxGeometry(17.8, 0.35, 13.3),
+    new THREE.MeshStandardMaterial({ color: 0x59616c, roughness: 0.8 }));
+  proof.position.y = 4.85;
+  pav.add(proof);
+  const deskMat = new THREE.MeshStandardMaterial({ color: 0x6b4f35, roughness: 0.7 });
+  const deskDark = new THREE.MeshStandardMaterial({ color: 0x4a3826, roughness: 0.75 });
+  [-6, -2, 2, 6].forEach((dx) => {
+    const desk = new THREE.Group();
+    const top = new THREE.Mesh(new THREE.BoxGeometry(3.4, 0.12, 1.2), deskMat);
+    top.position.y = 0.78;
+    desk.add(top);
+    for (const [lx, lz] of [[-1.55, -0.5], [1.55, -0.5], [-1.55, 0.5], [1.55, 0.5]]) {
+      const leg = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.78, 0.1), deskDark);
+      leg.position.set(lx, 0.39, lz);
+      desk.add(leg);
+    }
+    [-1.05, 0, 1.05].forEach((mx, mi) => {
+      const mon = makeMonitor();
+      mon.position.set(mx, 1.35 + (mi === 1 ? 0.12 : 0), -0.15);
+      mon.rotation.y = mx * 0.12; // screens face the traders (south)
+      desk.add(mon);
+    });
+    // office chair
+    const seat = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.1, 0.62),
+      new THREE.MeshStandardMaterial({ color: 0x24303e, roughness: 0.8 }));
+    seat.position.set(0, 0.52, 1.05);
+    const back = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.7, 0.1),
+      seat.material);
+    back.position.set(0, 0.95, 1.32);
+    desk.add(seat, back);
+    desk.position.set(dx, 0.3, -1.4);
+    pav.add(desk);
+    VENUES.bank.slots.push([42 + dx, 6.7, Math.PI]);
+  });
+  pav.position.set(42, 0, 6);
+  pav.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(pav);
+}
+
+// --- Ace Arena ice rink (-48, -8) + rinkside research desk ---
+{
+  const rink = new THREE.Group();
+  // ice with painted markings
+  const iceTex = canvasTex(512, (c, s) => {
+    c.fillStyle = "#dceef7"; c.fillRect(0, 0, s, s);
+    const r = mulberry32(99);
+    for (let i = 0; i < 500; i++) {
+      c.fillStyle = `rgba(255,255,255,${0.1 + r() * 0.25})`;
+      c.fillRect(r() * s, r() * s, 2 + r() * 5, 1 + r() * 2);
+    }
+    c.strokeStyle = "#d33a3a"; c.lineWidth = 7;
+    c.beginPath(); c.moveTo(s / 2, 0); c.lineTo(s / 2, s); c.stroke(); // center red line
+    c.strokeStyle = "#2b6fd0"; c.lineWidth = 10;
+    for (const fx of [s * 0.28, s * 0.72]) { c.beginPath(); c.moveTo(fx, 0); c.lineTo(fx, s); c.stroke(); }
+    c.strokeStyle = "#d33a3a"; c.lineWidth = 5;
+    c.beginPath(); c.arc(s / 2, s / 2, 44, 0, 7); c.stroke();
+    c.fillStyle = "rgba(43,111,208,0.5)";
+    c.beginPath(); c.arc(s / 2, s / 2, 30, 0, 7); c.fill();
+    for (const [fx, fy] of [[s * 0.28, s * 0.3], [s * 0.28, s * 0.7], [s * 0.72, s * 0.3], [s * 0.72, s * 0.7]]) {
+      c.strokeStyle = "#d33a3a"; c.lineWidth = 4;
+      c.beginPath(); c.arc(fx, fy, 26, 0, 7); c.stroke();
+    }
+  });
+  const ice = new THREE.Mesh(new THREE.PlaneGeometry(30, 16),
+    new THREE.MeshStandardMaterial({ map: iceTex, roughness: 0.14, metalness: 0.08 }));
+  ice.rotation.x = -Math.PI / 2;
+  ice.position.y = 0.32;
+  ice.receiveShadow = true;
+  rink.add(ice);
+  const base = new THREE.Mesh(new THREE.BoxGeometry(31.5, 0.3, 17.5),
+    new THREE.MeshStandardMaterial({ color: 0x8b939c, roughness: 0.9 }));
+  base.position.y = 0.15;
+  base.receiveShadow = true;
+  rink.add(base);
+  // boards with yellow kick stripe
+  const boardMat = new THREE.MeshStandardMaterial({ color: 0xf4f6f8, roughness: 0.6 });
+  const stripeMat = new THREE.MeshStandardMaterial({ color: 0xf2c230, roughness: 0.6 });
+  const mkBoards = (w, x, z, rotY) => {
+    const g = new THREE.Group();
+    const b = new THREE.Mesh(new THREE.BoxGeometry(w, 1.05, 0.35), boardMat);
+    b.position.y = 0.85;
+    const st = new THREE.Mesh(new THREE.BoxGeometry(w, 0.12, 0.37), stripeMat);
+    st.position.y = 1.42;
+    g.add(b, st);
+    g.position.set(x, 0, z);
+    g.rotation.y = rotY;
+    g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    rink.add(g);
+  };
+  mkBoards(30.6, 0, -8.35, 0);
+  mkBoards(30.6, 0, 8.35, 0);
+  mkBoards(16.6, -15.35, 0, Math.PI / 2);
+  mkBoards(16.6, 15.35, 0, Math.PI / 2);
+  // ACE ARENA sign on the south boards (4:1 canvas to match the plane)
+  const arenaCv = document.createElement("canvas");
+  arenaCv.width = 512; arenaCv.height = 128;
+  {
+    const c = arenaCv.getContext("2d");
+    c.fillStyle = "#f4f6f8"; c.fillRect(0, 0, 512, 128);
+    c.fillStyle = "#1d3f8f"; c.font = "bold 58px -apple-system, sans-serif";
+    c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText("★ ACE ARENA ★", 256, 68);
+  }
+  const arenaTex = new THREE.CanvasTexture(arenaCv);
+  arenaTex.colorSpace = THREE.SRGBColorSpace;
+  const arenaSign = new THREE.Mesh(new THREE.PlaneGeometry(10, 2.5),
+    new THREE.MeshStandardMaterial({ map: arenaTex, roughness: 0.6 }));
+  arenaSign.position.set(0, 0.85, 8.55);
+  rink.add(arenaSign);
+  // floodlight poles
+  const poleMat = new THREE.MeshStandardMaterial({ color: 0x3a3f46, roughness: 0.6 });
+  for (const [px, pz] of [[-17, -10], [17, -10], [-17, 10], [17, 10]]) {
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.2, 9.5, 8), poleMat);
+    pole.position.set(px, 4.75, pz);
+    pole.castShadow = true;
+    rink.add(pole);
+    const head = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.5, 0.4),
+      new THREE.MeshStandardMaterial({ color: 0x22262c, roughness: 0.5 }));
+    head.position.set(px, 9.6, pz);
+    head.lookAt(0, 0, 0);
+    rink.add(head);
+    const lampMat = new THREE.MeshStandardMaterial({
+      color: 0xfff6d8, emissive: 0xffedb5, emissiveIntensity: 2.2, roughness: 0.4,
+    });
+    for (let li = -1; li <= 1; li++) {
+      const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8), lampMat);
+      lamp.position.set(px + li * 0.45, 9.35, pz);
+      rink.add(lamp);
+    }
+  }
+  rink.position.set(-48, 0, -8);
+  scene.add(rink);
+
+  // rinkside research desk: laptop with charts, scattered papers, coffee
+  const rd = new THREE.Group();
+  const wood = new THREE.MeshStandardMaterial({ color: 0x7a5c3d, roughness: 0.7 });
+  const dtop = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.12, 1.6), wood);
+  dtop.position.y = 0.78;
+  rd.add(dtop);
+  for (const [lx, lz] of [[-1.65, -0.65], [1.65, -0.65], [-1.65, 0.65], [1.65, 0.65]]) {
+    const leg = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.78, 0.1), wood);
+    leg.position.set(lx, 0.39, lz);
+    rd.add(leg);
+  }
+  // laptop
+  const lapBase = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.06, 0.65),
+    new THREE.MeshStandardMaterial({ color: 0x2b2f36, roughness: 0.5 }));
+  lapBase.position.set(-0.7, 0.87, 0);
+  const lapScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.6),
+    new THREE.MeshBasicMaterial({ map: tradeMonitors[0].tex }));
+  lapScreen.position.set(-0.7, 1.18, -0.3);
+  lapScreen.rotation.x = -0.32;
+  rd.add(lapBase, lapScreen);
+  // scattered research papers
+  const paperMat = new THREE.MeshStandardMaterial({ color: 0xf5f2e8, roughness: 0.9 });
+  const pr = mulberry32(7);
+  for (let i = 0; i < 7; i++) {
+    const pg = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.012, 0.75), paperMat);
+    pg.position.set(0.5 + (pr() - 0.5) * 1.6, 0.85 + i * 0.013, (pr() - 0.5) * 0.9);
+    pg.rotation.y = (pr() - 0.5) * 0.9;
+    rd.add(pg);
+  }
+  // coffee cup
+  const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.22, 12),
+    new THREE.MeshStandardMaterial({ color: 0xc23b2e, roughness: 0.6 }));
+  cup.position.set(1.35, 0.95, 0.45);
+  rd.add(cup);
+  // desk lamp glow
+  const dlamp = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8),
+    new THREE.MeshStandardMaterial({ color: 0xfff2c8, emissive: 0xffdf8a, emissiveIntensity: 1.8 }));
+  const dstand = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.7, 8), poleMat);
+  dstand.position.set(-1.5, 1.15, -0.5);
+  dlamp.position.set(-1.5, 1.55, -0.5);
+  rd.add(dstand, dlamp);
+  rd.position.set(-48, 0, 3.2);
+  rd.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  scene.add(rd);
+  VENUES.rink.slots.push([-49.6, 4.9, Math.PI], [-46.4, 4.9, Math.PI]);
+}
+
 // ---------- agents ----------
 const agents = new Map(); // handle -> {group, avatarWrap, dog, glbModel, seed, label, bubble, ...}
 const gltfLoader = new GLTFLoader();
@@ -1426,15 +1777,21 @@ function addAgent(a) {
     group, avatarWrap, label, bubble, bubbleUntil: 0,
     dog: null, glbModel: null, glbBaseY: 0, mode: "dog",
     seed: hashStr(a.handle.toLowerCase()),
+    handle: a.handle,
     tx: a.x, tz: a.z, inv: a.inventory || {},
+    color: a.color || null,
     muse_name: a.muse_name || null,
     avatar_url: a.avatar_url || null,
     avatarKey: "",
+    activity: activityOf(a),
+    badge: null,
   };
   agents.set(a.handle, rec);
   buildAvatar(rec, a);
+  refreshBadge(rec);
   sysMsg(`${a.handle} entered the world`);
   updateCounts();
+  updateRoster();
 }
 
 function removeStaleAgents(list) {
@@ -1447,21 +1804,103 @@ function removeStaleAgents(list) {
     }
   }
   updateCounts();
+  if (typeof updateRoster === "function") updateRoster();
 }
 
 function syncAgents(list) {
   removeStaleAgents(list);
+  let rosterDirty = false;
   for (const a of list) {
-    if (!agents.has(a.handle)) addAgent(a);
+    if (!agents.has(a.handle)) { addAgent(a); rosterDirty = false; }
     else {
       const rec = agents.get(a.handle);
       rec.tx = a.x; rec.tz = a.z;
       rec.inv = a.inventory || rec.inv || {};
+      rec.color = a.color || rec.color;
       rec.muse_name = a.muse_name || null;
       rec.avatar_url = a.avatar_url || null;
+      const act = activityOf(a);
+      if (act.kind !== rec.activity.kind || act.label !== rec.activity.label) {
+        rec.activity = act;
+        refreshBadge(rec);
+        rosterDirty = true;
+      }
       if (avatarKey(a) !== rec.avatarKey) buildAvatar(rec, a);
     }
   }
+  if (rosterDirty) updateRoster();
+}
+
+// ---------- activity system: the world reflects what each muse is actually working on ----------
+// The server reports agent.activity = { kind, label, updated }. Kinds with a venue
+// route the agent to a workstation there; every non-idle kind gets a floating badge.
+const ACTIVITY_META = {
+  trading:       { emoji: "📈", name: "Trading",         venue: "bank" },
+  fantasy_hockey:{ emoji: "🏒", name: "Fantasy hockey",  venue: "rink" },
+  briefing:      { emoji: "📰", name: "Briefing" },
+  research:      { emoji: "🔬", name: "Research" },
+  building:      { emoji: "🔨", name: "Building" },
+  social:        { emoji: "💬", name: "Socializing" },
+  exploring:     { emoji: "🧭", name: "Exploring" },
+  idle:          { emoji: "",   name: "" },
+};
+function activityOf(a) {
+  const k = a && a.activity && ACTIVITY_META[a.activity.kind] ? a.activity.kind : "idle";
+  return { kind: k, label: (a && a.activity && a.activity.label) || "", meta: ACTIVITY_META[k] };
+}
+function badgeText(act) {
+  if (act.kind === "idle") return "";
+  return `${act.meta.emoji} ${act.label || act.meta.name}`;
+}
+// residents roster (click a name to fly the camera to them)
+const rosterEl = document.getElementById("roster");
+let followHandle = null;
+function updateRoster() {
+  const rows = [...agents.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([h, rec]) => {
+      const act = rec.activity || { kind: "idle", label: "", meta: ACTIVITY_META.idle };
+      const atxt = act.kind === "idle" ? "hanging out" : badgeText(act);
+      const dot = rec.color ? `#${new THREE.Color(rec.color).getHexString()}` : "#8fd0ff";
+      return `<div class="rrow" data-h="${h}"><span class="rdot" style="background:${dot}"></span>` +
+        `<span class="rname">${h}</span><span class="ract">${atxt}</span>` +
+        `<span class="rfollow">⌖</span></div>`;
+    }).join("");
+  rosterEl.innerHTML = `<div class="rhead">Residents — tap to visit</div>` + rows;
+  rosterEl.querySelectorAll(".rrow").forEach((el) => {
+    el.addEventListener("click", () => {
+      followHandle = el.dataset.h;
+      const rec = agents.get(followHandle);
+      if (rec) {
+        const p = rec.group.position;
+        controls.target.set(p.x, 1.5, p.z);
+      }
+    });
+  });
+}
+renderer.domElement.addEventListener("pointerdown", () => { followHandle = null; });
+// venue slot assignment: stable per handle, recomputed when activities change
+function venueTarget(rec) {
+  const act = rec.activity;
+  const venueKey = act && act.meta.venue;
+  if (!venueKey) return null;
+  const v = VENUES[venueKey];
+  if (!v || !v.slots.length) return null;
+  const occupants = [...agents.entries()]
+    .filter(([, r]) => r.activity && r.activity.meta.venue === venueKey)
+    .map(([h]) => h).sort();
+  const idx = occupants.indexOf(rec.handle);
+  if (idx < 0) return null;
+  return v.slots[idx % v.slots.length];
+}
+function refreshBadge(rec) {
+  const txt = badgeText(rec.activity);
+  if (rec.badge) { rec.group.remove(rec.badge); rec.badge = null; }
+  if (!txt) return;
+  const b = makeLabel(txt, { size: 34, fg: "#dff3ff", bg: "rgba(20,40,70,0.78)" });
+  b.position.y = 1.5;
+  rec.group.add(b);
+  rec.badge = b;
 }
 
 // ---------- blocks ----------
@@ -1548,10 +1987,12 @@ renderer.domElement.addEventListener("click", (e) => {
     const inv = Object.entries(rec.inv || {}).filter(([, q]) => q > 0)
       .map(([k, q]) => `${k} ×${q}`).join(", ") || "empty";
     const museLine = rec.muse_name ? ` <span style="opacity:0.7">· “${escapeHtml(rec.muse_name)}”</span>` : "";
+    const actLine = rec.activity && rec.activity.kind !== "idle"
+      ? `<br><span style="opacity:0.85">${badgeText(rec.activity)}</span>` : "";
     const photo = rec.avatar_url
       ? `<br><img src="${rec.avatar_url}" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:50%;margin-top:8px;border:2px solid rgba(255,255,255,0.35)">`
       : "";
-    infocard.innerHTML = `<b>${escapeHtml(handle)}</b>${museLine} &nbsp;·&nbsp; position (${rec.tx.toFixed(1)}, ${rec.tz.toFixed(1)})<br><span style="opacity:0.7">inventory: ${escapeHtml(inv)}</span>${photo}`;
+    infocard.innerHTML = `<b>${escapeHtml(handle)}</b>${museLine}${actLine} &nbsp;·&nbsp; position (${rec.tx.toFixed(1)}, ${rec.tz.toFixed(1)})<br><span style="opacity:0.7">inventory: ${escapeHtml(inv)}</span>${photo}`;
     infocard.style.display = "block";
     clearTimeout(infocard._t);
     infocard._t = setTimeout(() => (infocard.style.display = "none"), 6000);
@@ -1617,10 +2058,11 @@ connect();
 
 // ---------- render loop ----------
 const clock = new THREE.Clock();
+let monTimer = 0;
+const _followV = new THREE.Vector3();
 function animate() {
   requestAnimationFrame(animate);
-  const dt = Math.min(clock.getDelta(), 0.1);
-  const t = clock.elapsedTime;
+  const dt = Math.min(clock.getDelta(), 0.1);  const t = clock.elapsedTime;
   const now = performance.now();
 
   // clouds drift
@@ -1674,14 +2116,18 @@ function animate() {
 
   for (const rec of agents.values()) {
     const p = rec.group.position;
-    const dx = rec.tx - p.x, dz = rec.tz - p.z;
+    // venue routing: a muse doing real work is shown at its workstation
+    const vt = venueTarget(rec);
+    const gx = vt ? vt[0] : rec.tx, gz = vt ? vt[1] : rec.tz;
+    const dx = gx - p.x, dz = gz - p.z;
     const dist2 = dx * dx + dz * dz;
     const moving = dist2 > 0.0025;
-    // smooth lerp toward server position
+    // smooth lerp toward server position (or venue workstation)
     p.x += dx * Math.min(1, dt * 5);
     p.z += dz * Math.min(1, dt * 5);
-    // face movement direction
+    // face movement direction; face the desk when settled at a workstation
     if (moving) rec.group.rotation.y = Math.atan2(dx, dz);
+    else if (vt) rec.group.rotation.y = vt[2];
 
     const dog = rec.dog;
     if (dog) {
@@ -1715,6 +2161,24 @@ function animate() {
     }
 
     if (rec.bubble.visible && now > rec.bubbleUntil) rec.bubble.visible = false;
+  }
+
+  // venue life: ticker scroll + live monitor charts
+  if (tickerTex) tickerTex.offset.x = (tickerTex.offset.x - dt * 0.055) % 1;
+  monTimer += dt;
+  if (monTimer > 2.5) {
+    monTimer = 0;
+    for (const m of tradeMonitors) {
+      stepPrices(m.prices);
+      paintCandles(m.cv, m.prices);
+      m.tex.needsUpdate = true;
+    }
+  }
+
+  // camera follow (tap a resident in the roster; tap the world to release)
+  if (followHandle && agents.has(followHandle)) {
+    const fp = agents.get(followHandle).group.position;
+    controls.target.lerp(_followV.set(fp.x, 1.5, fp.z), Math.min(1, dt * 3));
   }
 
   controls.update();
