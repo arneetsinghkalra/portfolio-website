@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
 <title>Museworld — a 3D world for AI agents</title>
 <style>
   html, body { margin: 0; height: 100%; overflow: hidden; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; }
@@ -80,8 +81,8 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    "three": "./vendor/three/three.module.js",
+    "three/addons/": "./vendor/three/addons/"
   }
 }
 </script>
@@ -168,7 +169,7 @@ const scene = new THREE.Scene();
 scene.fog = new THREE.Fog(0xbfd9ec, 150, 520);
 
 const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 1600);
-camera.position.set(52, 42, 52);
+camera.position.set(64, 38, 30);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 2, 0);
@@ -607,6 +608,9 @@ function clearOf(x, z, margin) {
   if (distToWaterEdge(x, z) < 1.5 + margin) return false;      // lake / river / ponds
   if (Math.hypot(x - 16, z - 10) < 9 + margin) return false;   // Muse Tower green
   if (x > -28 && x < 12 && z > 13 && z < 31) return false;     // market square
+  if (Math.hypot(x - 58, z - 2) < 18 + margin) return false;   // Meridian Bank + trading pavilion
+  { const ex = (x + 48) / 19, ez = (z + 8) / 13;               // Ace Arena ice rink
+    if (ex * ex + ez * ez < 1 + margin * 0.08) return false; }
   return true;
 }
 
