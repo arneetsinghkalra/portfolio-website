@@ -2007,7 +2007,7 @@ document.getElementById("chatToggle").addEventListener("click", () => {
   chatlogEl.classList.toggle("open");
 });
 
-// ---------- websocket ----------
+// ---------- connection: websocket primary, HTTPS polling fallback ----------
 // Backend discovery: when this viewer is hosted away from the world server
 // (e.g. https://arneetsinghkalra.com/museworld/), backend.json in the same
 // directory holds the current backend URL. Falls back to same-origin.
@@ -2016,42 +2016,85 @@ function toWsUrl(u) {
   // Accept https:// or http:// backend URLs; WebSocket needs ws(s)://
   return String(u || "").replace(/^http/i, "ws");
 }
-async function resolveWsUrl() {
+async function resolveBackend() {
   try {
     const r = await fetch("backend.json", { cache: "no-store" });
     if (r.ok) {
       const j = await r.json();
-      if (j.ws) return toWsUrl(j.ws);
+      if (j.ws) {
+        const http = String(j.https || j.ws).replace(/^ws/i, "http");
+        return { ws: toWsUrl(j.ws), http };
+      }
     }
   } catch (e) { /* fall through to same-origin */ }
-  const proto = location.protocol === "https:" ? "wss:" : "ws:";
-  return proto + "//" + location.host + "/ws";
+  const wproto = location.protocol === "https:" ? "wss:" : "ws:";
+  return { ws: wproto + "//" + location.host + "/ws", http: location.origin };
+}
+const seenChat = new Set();
+function renderChat(list) {
+  for (const c of list || []) {
+    const key = c.t || (c.from + "|" + c.text);
+    if (seenChat.has(key)) continue;
+    seenChat.add(key);
+    chatMsg(c.from, c.text);
+  }
+  while (seenChat.size > 200) seenChat.delete(seenChat.values().next().value);
+}
+function applyFull(m) {
+  syncAgents(m.agents || []);
+  syncBlocks(m.blocks || {});
+  renderChat(m.chat || []);
+}
+let wsLive = false, pollTimer = null, httpBase = null;
+function setLive(how) {
+  statusEl.textContent = how === "poll" ? "● live (relay)" : "● live";
+  statusEl.style.opacity = 0.85;
+}
+async function pollWorld() {
+  if (wsLive || !httpBase) return;
+  try {
+    const r = await fetch(httpBase + "/api/world", { cache: "no-store" });
+    if (!r.ok) throw 0;
+    applyFull(await r.json());
+    setLive("poll");
+  } catch (e) {
+    statusEl.textContent = "● reconnecting…";
+  }
+}
+function schedulePoll() {
+  if (!pollTimer) { pollWorld(); pollTimer = setInterval(pollWorld, 3000); }
+}
+function stopPoll() {
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
 }
 function connect() {
-  resolveWsUrl().then((wsUrl) => {
-  let ws;
-  try { ws = new WebSocket(wsUrl); }
-  catch (e) { statusEl.textContent = "● reconnecting…"; setTimeout(connect, 3000); return; }
-  ws.onopen = () => { statusEl.textContent = "● live"; statusEl.style.opacity = 0.85; };
-  ws.onclose = () => {
-    statusEl.textContent = "● reconnecting…";
-    setTimeout(connect, 3000);
-  };
-  ws.onmessage = (ev) => {
-    let m;
-    try { m = JSON.parse(ev.data); } catch { return; }
-    if (m.t === "full") {
-      syncAgents(m.agents || []);
-      syncBlocks(m.blocks || {});
-      (m.chat || []).forEach((c) => chatMsg(c.from, c.text));
-    } else if (m.t === "agents") {
-      syncAgents(m.agents || []);
-    } else if (m.t === "blocks") {
-      syncBlocks(m.blocks || {});
-    } else if (m.t === "chat") {
-      chatMsg(m.msg.from, m.msg.text);
-    }
-  };
+  resolveBackend().then(({ ws: wsUrl, http }) => {
+    httpBase = http;
+    let ws;
+    try { ws = new WebSocket(wsUrl); }
+    catch (e) { statusEl.textContent = "● reconnecting…"; schedulePoll(); setTimeout(connect, 3000); return; }
+    // if the socket never opens (flaky tunnel), fall back to HTTPS polling
+    const openTimer = setTimeout(() => { if (!wsLive) schedulePoll(); }, 8000);
+    ws.onopen = () => { clearTimeout(openTimer); wsLive = true; stopPoll(); setLive("ws"); };
+    ws.onclose = () => {
+      wsLive = false;
+      statusEl.textContent = "● reconnecting…";
+      schedulePoll();
+      setTimeout(connect, 3000);
+    };
+    ws.onmessage = (ev) => {
+      let m;
+      try { m = JSON.parse(ev.data); } catch { return; }
+      if (m.t === "full") {
+        applyFull(m);
+      } else if (m.t === "agents") {
+        syncAgents(m.agents || []);
+      } else if (m.t === "blocks") {
+        syncBlocks(m.blocks || {});
+      } else if (m.t === "chat") {
+        renderChat([m.msg]);
+      }
+    };
   });
 }
 connect();
