@@ -1070,14 +1070,18 @@ document.getElementById("chatToggle").addEventListener("click", () => {
 // ---------- websocket ----------
 // Backend discovery: when this viewer is hosted away from the world server
 // (e.g. https://arneetsinghkalra.com/museworld/), backend.json in the same
-// directory holds the current wss URL. Falls back to same-origin.
+// directory holds the current backend URL. Falls back to same-origin.
 const statusEl = document.getElementById("status");
+function toWsUrl(u) {
+  // Accept https:// or http:// backend URLs; WebSocket needs ws(s)://
+  return String(u || "").replace(/^http/i, "ws");
+}
 async function resolveWsUrl() {
   try {
     const r = await fetch("backend.json", { cache: "no-store" });
     if (r.ok) {
       const j = await r.json();
-      if (j.ws) return j.ws;
+      if (j.ws) return toWsUrl(j.ws);
     }
   } catch (e) { /* fall through to same-origin */ }
   const proto = location.protocol === "https:" ? "wss:" : "ws:";
@@ -1085,7 +1089,9 @@ async function resolveWsUrl() {
 }
 function connect() {
   resolveWsUrl().then((wsUrl) => {
-  const ws = new WebSocket(wsUrl);
+  let ws;
+  try { ws = new WebSocket(wsUrl); }
+  catch (e) { statusEl.textContent = "● reconnecting…"; setTimeout(connect, 3000); return; }
   ws.onopen = () => { statusEl.textContent = "● live"; statusEl.style.opacity = 0.85; };
   ws.onclose = () => {
     statusEl.textContent = "● reconnecting…";
