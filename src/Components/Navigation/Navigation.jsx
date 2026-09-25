@@ -85,10 +85,13 @@ export default function Navigation() {
             >
               Skills
             </Nav.Link>
+            <Nav.Link eventKey="5" href="/museworld" className="my-nav-link">
+              Museworld
+            </Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link
-              eventKey="5"
+              eventKey="6"
               onSelect={() =>
                 scroller.scrollTo("contact", {
                   spy: true,
