@@ -840,6 +840,66 @@ function scatterLots(rect, count, make, minGap = 2.5) {
     n++;
   }
 }
+// ---------- resident homes: real houses at the engine's HOME_SPOTS ----------
+// Placed BEFORE the decorative scatter so scattered houses steer clear of them.
+const HOME_SPOTS = [
+  [-70, -10], [-60, 10], [-70, 15], [-45, 15],
+  [-75, 0], [-5, 45], [16, 45], [45, 45],
+];
+const homePlates = new Map(); // "x,z" -> { group, plate }
+{
+  const hr = mulberry32(20260926);
+  for (const [hx, hz] of HOME_SPOTS) {
+    const { group, half } = makeHouse(hr);
+    group.position.set(hx, 0, hz);
+    group.rotation.y = (hr() < 0.5 ? 0 : Math.PI / 2) + (hr() - 0.5) * 0.1;
+    scene.add(group);
+    placedLots.push({ x: hx, z: hz, half: half + 1 });
+    homePlates.set(hx + "," + hz, { group, plate: null });
+  }
+}
+// ---------- Muse Café + The Workshop: engine venues, now actually built ----------
+{
+  const cr = mulberry32(77);
+  const { group: cafeG, half: cafeHalf } = makeShop(cr);
+  cafeG.position.set(-14, 0, -36);
+  cafeG.rotation.y = 0.06;
+  scene.add(cafeG);
+  placedLots.push({ x: -14, z: -36, half: cafeHalf + 1 });
+  const cafeLabel = makeLabel("Muse Café", { size: 40 });
+  cafeLabel.position.set(-14, 6.6, -36);
+  scene.add(cafeLabel);
+
+  const wg = new THREE.Group();
+  const wallMat = new THREE.MeshStandardMaterial({ color: 0x9a5f43, roughness: 0.9 });
+  const hall = new THREE.Mesh(new THREE.BoxGeometry(9, 4.2, 7), wallMat);
+  hall.position.y = 2.1;
+  const wroof = new THREE.Mesh(new THREE.BoxGeometry(9.8, 0.5, 7.8), roofFlatMat);
+  wroof.position.y = 4.45;
+  const chim = new THREE.Mesh(new THREE.BoxGeometry(1.2, 3.4, 1.2),
+    new THREE.MeshStandardMaterial({ color: 0x6e4a38, roughness: 0.9 }));
+  chim.position.set(2.8, 5.6, -1.6);
+  const wdoor = new THREE.Mesh(new THREE.BoxGeometry(2.2, 3, 0.2),
+    new THREE.MeshStandardMaterial({ color: 0x4a3226, roughness: 0.85 }));
+  wdoor.position.set(0, 1.5, 3.55);
+  const winMat = new THREE.MeshStandardMaterial({
+    color: 0xffe2a8, emissive: 0xffbe5a, emissiveIntensity: 0.9, roughness: 0.4,
+  });
+  wg.add(hall, wroof, chim, wdoor);
+  for (const wx of [-3, 3]) {
+    const win = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.2, 0.15), winMat);
+    win.position.set(wx, 2.4, 3.55);
+    wg.add(win);
+  }
+  wg.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  wg.position.set(34, 0, 22);
+  wg.rotation.y = -0.08;
+  scene.add(wg);
+  placedLots.push({ x: 34, z: 22, half: 6 });
+  const wsLabel = makeLabel("The Workshop", { size: 40 });
+  wsLabel.position.set(34, 8.4, 22);
+  scene.add(wsLabel);
+}
 scatterLots({ x0: 32, x1: 78, z0: -78, z1: -32, seed: 11 }, 16, makeTower, 3);   // downtown
 scatterLots({ x0: -80, x1: -38, z0: -18, z1: 22, seed: 22 }, 24, makeHouse);    // residential
 scatterLots({ x0: -15, x1: 55, z0: 38, z1: 52, seed: 33 }, 8, makeHouse);       // meadow cottages
@@ -1831,8 +1891,21 @@ function syncAgents(list) {
       }
       if (avatarKey(a) !== rec.avatarKey) buildAvatar(rec, a);
     }
+    assignHomePlate(a);
   }
   if (rosterDirty) updateRoster();
+}
+
+// name plate on a resident's front door, once we know who lives where
+function assignHomePlate(a) {
+  if (!a.home) return;
+  const key = a.home[0] + "," + a.home[1];
+  const h = homePlates.get(key);
+  if (!h || h.plate) return;
+  const name = a.muse_name || a.handle;
+  h.plate = makeLabel(`${name}'s home`, { size: 36, fg: "#ffe9c4", bg: "rgba(60,40,20,0.75)" });
+  h.plate.position.set(a.home[0], 6.4, a.home[1]);
+  scene.add(h.plate);
 }
 
 // ---------- activity system: the world reflects what each muse is actually working on ----------
