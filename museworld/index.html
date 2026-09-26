@@ -44,8 +44,7 @@
     border-bottom:2px dashed var(--line);display:flex;align-items:center;gap:6px;}
   #townline{padding:8px 12px;font-size:12.5px;font-weight:600;color:#6b5f45;display:flex;gap:8px;flex-wrap:wrap;}
   #townline .tchip{background:#f3ecd9;border:1.5px solid var(--line);border-radius:8px;padding:2px 8px;}
-  #roster{max-height:30vh;overflow-y:auto;padding:6px;}
-  .muse{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:10px;cursor:pointer;border:2px solid transparent;}
+  #roster{max-height:30vh;overflow-y:auto;padding:6px;}  .muse{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:10px;cursor:pointer;border:2px solid transparent;}
   .muse:hover{background:#f6efdd;}
   .muse.following{border-color:var(--amber);background:#fff6e0;}
   .mdot{width:26px;height:26px;border-radius:8px;flex:0 0 auto;box-shadow:inset 0 -3px 0 #00000022, 0 2px 0 #00000018;}
@@ -53,6 +52,14 @@
   .muse .nm .crown{font-size:12px;}
   .muse .ac{font-size:11.5px;color:#8a7c5f;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;}
   .muse .bal{margin-left:auto;font-size:11px;font-weight:800;color:var(--amber-d);background:#fdf0d3;
+    border-radius:7px;padding:2px 7px;white-space:nowrap;}
+  /* ---------- jobs board ---------- */
+  #jobs{padding:6px;display:flex;flex-direction:column;gap:6px;}
+  .job{display:flex;align-items:center;gap:8px;background:#f6efdd;border:1.5px solid var(--line);
+    border-radius:10px;padding:7px 10px;}
+  .job .jt{font-weight:800;font-size:13px;}
+  .job .jv{font-size:11px;color:#8a7c5f;font-weight:600;text-transform:capitalize;}
+  .job .jw{margin-left:auto;font-size:11px;font-weight:800;color:var(--amber-d);background:#fdf0d3;
     border-radius:7px;padding:2px 7px;white-space:nowrap;}
   /* ---------- chat ---------- */
   #chatcard{flex:1;display:flex;flex-direction:column;min-height:0;margin-bottom:10px;}
@@ -97,6 +104,7 @@
     <aside id="panel">
       <div class="card"><h3>🏘️ TOWN</h3><div id="townline"></div></div>
       <div class="card"><h3>🦊 RESIDENTS <span id="onlinecount" style="margin-left:auto"></span></h3><div id="roster"></div></div>
+      <div class="card" id="jobscard" style="display:none"><h3>💼 JOBS BOARD</h3><div id="jobs"></div></div>
       <div class="card" id="chatcard"><h3>💬 TOWN CHAT</h3>
         <div id="chatlog"></div>
         <form id="chatform"><input id="chatinput" placeholder="Say hi to the town…" autocomplete="off" maxlength="300">
@@ -551,6 +559,15 @@ function venueLabel(text,x,z,y=11){
 }
 
 /* ---------- voxel house ---------- */
+const homePlates=new Map();
+function setHomePlate(hx,hz,name){
+  const key=hx+","+hz, old=homePlates.get(key);
+  if(old){ scene.remove(old); old.material.map.dispose(); old.material.dispose(); }
+  if(!name){ homePlates.set(key,null); return; }
+  const plate=makeLabel("🏠 "+name,{size:12,bg:"rgba(84,58,20,0.85)"});
+  plate.position.set(hx,9.5,hz); plate.userData.name=name;
+  scene.add(plate); homePlates.set(key,plate);
+}
 function makeVoxelHouse(r, wall=0xf2e4c8){
   const g=new THREE.Group(), W=7+Math.floor(r()*2), D=6+Math.floor(r()*2), H=4;
   vxl(g, 0,H/2,0, W,H,D, wall);
@@ -575,6 +592,7 @@ function makeVoxelHouse(r, wall=0xf2e4c8){
     group.position.set(hx,0,hz);
     group.rotation.y=(hr()<0.5?0:Math.PI/2)+(hr()-0.5)*0.15;
     scene.add(group);
+    homePlates.set(hx+","+hz, null);
   }
 }
 
@@ -668,6 +686,45 @@ function makeTower(x,z,r){
   vxl(g, 0,8.4,0, 5,1.2,4, 0xc9a53d, {glow:true, glowColor:0xffd97a});                                 // gold crest
   vxl(g, 0,1.6,4.32, 2.2,3.2,0.2, 0x3d3226, {shadow:false});
   venueLabel("🏦 Meridian Bank", x, z);
+  scene.add(g);
+}
+
+/* ---------- butterflies ---------- */
+const butterflies=[];
+{
+  const r=mulberry32(777), cols=[0xff9ecf,0xffd166,0x9ed8ff,0xc5a3ff,0xffb38a];
+  for(let i=0;i<10;i++){
+    const g=new THREE.Group(), c=cols[i%cols.length];
+    const wgeo=new THREE.BoxGeometry(0.55,0.08,0.4);
+    const wmat=new THREE.MeshBasicMaterial({color:c});
+    const wl=new THREE.Mesh(wgeo,wmat); wl.position.x=-0.28; g.add(wl);
+    const wr=new THREE.Mesh(wgeo,wmat); wr.position.x=0.28; g.add(wr);
+    const body=new THREE.Mesh(new THREE.BoxGeometry(0.12,0.12,0.5),
+      new THREE.MeshBasicMaterial({color:0x3d3226}));
+    g.add(body);
+    const px=-56+(r()-0.5)*36, pz=-44+(r()-0.5)*28;
+    g.userData={cx:px,cz:pz,rx:4+r()*7,rz:3+r()*5,a:r()*6.28,sp:0.25+r()*0.4,p:r()*6.28};
+    g.position.set(px,3,pz);
+    scene.add(g); butterflies.push(g);
+  }
+}
+
+/* ---------- Town Hall (governance) ---------- */
+{
+  const x=-18, z=-12, g=new THREE.Group(); g.position.set(x,0,z);
+  vxl(g, 0,0.5,0, 15,1,12, 0xb9b2a2);                       // steps
+  vxl(g, 0,1.2,0, 13,1.4,10, 0xd8d2c2);
+  vxl(g, 0,4.5,0, 11,6.5,8.5, 0xe9e2d0);                    // main hall
+  for(let k=0;k<6;k++) vxl(g, -5+k*2,4.2,4.9, 1,6.5,1, 0xf7f2e8);  // columns
+  vxl(g, 0,8.3,0, 12.5,1.5,10, 0x7a7466);                   // entablature
+  vxl(g, 0,9.6,0, 8,1.6,6.5, 0x9a9486);                     // pediment base
+  vxl(g, 0,10.9,0, 4.5,2,3.5, 0xc9a53d, {glow:true, glowColor:0xffd97a}); // golden dome
+  vxl(g, 0,12.4,0, 0.8,1.6,0.8, 0x8a8474);
+  vxl(g, 0,13.5,0, 1.4,0.7,1.4, 0xffd97a, {glow:true, glowColor:0xffe9a8}); // beacon
+  vxl(g, 0,2.2,4.32, 2.4,3.4,0.2, 0x3d3226, {shadow:false}); // doors
+  // warm windows
+  for(const wx of [-3.5,0,3.5]) vxl(g, wx,4.5,4.32, 1.4,1.8,0.15, 0xffe9a8, {glow:true, glowColor:0xffd97a, shadow:false});
+  venueLabel("🏛️ Town Hall", x, z, 14);
   scene.add(g);
 }
 
@@ -860,6 +917,18 @@ function syncAgents(list){
     } else if(!isLeader&&rec.crown){ rec.group.remove(rec.crown); rec.crown=null; }
   }
   for(const [h,rec] of agents){ if(!want.has(h)){ scene.remove(rec.group); agents.delete(h); if(following===h) following=null; } }
+  // house nameplates: map each resident's home to their name
+  const seenHomes=new Set();
+  for(const a of list){
+    if(!a||!a.handle||!a.home) continue;
+    const key=a.home[0]+","+a.home[1];
+    if(!homePlates.has(key)) continue;
+    seenHomes.add(key);
+    const cur=homePlates.get(key);
+    const curName=cur&&cur.userData.name;
+    if(curName!==a.handle) { setHomePlate(a.home[0],a.home[1],a.handle); homePlates.get(key).userData.name=a.handle; }
+  }
+  for(const [key,plate] of homePlates){ if(plate&&!seenHomes.has(key)) setHomePlate(...key.split(",").map(Number), null); }
   renderRoster();
 }
 function bubbleFor(handle,text){
@@ -920,12 +989,19 @@ function syncEconomy(e){
   if(!e) return;
   if(e.leader&&e.leader.handle) leaderHandle=e.leader.handle; else if(e.leader===null) leaderHandle=null;
   lastBalances=e.balances||{};
-  const jobs=(e.jobs||[]).filter(j=>!j.takenBy).length;
+  const jobs=e.openJobs||[];
   document.getElementById("townline").innerHTML=
     `<span class="tchip">◈ ${e.name||"Muse"}</span>`+
     (leaderHandle?`<span class="tchip">👑 ${leaderHandle}</span>`:"")+
-    (jobs?`<span class="tchip">💼 ${jobs} open</span>`:"")+
+    (jobs.length?`<span class="tchip">💼 ${jobs.length} open</span>`:"")+
     `<span class="tchip">🦊 ${agents.size} muses</span>`;
+  const jc=document.getElementById("jobscard"), jl=document.getElementById("jobs");
+  if(jobs.length){
+    jc.style.display="";
+    jl.innerHTML=jobs.map(j=>
+      `<div class="job"><div><div class="jt">${j.title}</div><div class="jv">${j.venue||""}</div></div>`+
+      `<div class="jw">◈${j.wage}/day</div></div>`).join("");
+  } else jc.style.display="none";
   renderRoster();
 }
 function renderRoster(){
@@ -1001,7 +1077,7 @@ let frame=0;
 const _v=new THREE.Vector3();
 function animate(){
   requestAnimationFrame(animate);
-window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDisc,agents,setHour:h=>{manualHour=h;},THREE};
+window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDisc,agents,handleMsg,syncEconomy,setHour:h=>{manualHour=h;},THREE};
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime; frame++;
   if(frame%15===0) updateSky(manualHour??etHour());
   for(const c of clouds){ c.position.x+=c.userData.speed*dt; if(c.position.x>200) c.position.x=-200; }
@@ -1011,6 +1087,17 @@ window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDis
   for(let i=0;i<FLY_N;i++){ const s=flySeed[i];
     fp.array[i*3]+=Math.sin(t*s.s+s.p)*dt*0.7; fp.array[i*3+1]+=Math.cos(t*s.s*0.7+s.p)*dt*0.45; }
   fp.needsUpdate=true;
+  // butterflies over the park
+  for(const bf of butterflies){
+    const s=bf.userData;
+    s.a+=dt*s.sp;
+    bf.position.x=s.cx+Math.cos(s.a)*s.rx+Math.sin(t*2+s.p)*1.2;
+    bf.position.z=s.cz+Math.sin(s.a*1.3)*s.rz;
+    bf.position.y=3+Math.sin(t*3+s.p)*0.8+Math.sin(s.a*2)*0.5;
+    bf.rotation.y=s.a;
+    const flap=0.35+Math.abs(Math.sin(t*14+s.p))*0.65;
+    bf.children[0].rotation.y=flap; bf.children[1].rotation.y=-flap;
+  }
   const now=performance.now();
   for(const rec of agents.values()){
     const dx=rec.tx-rec.x, dz=rec.tz-rec.z, d=Math.hypot(dx,dz);
