@@ -67,6 +67,16 @@
   .job .jv{font-size:11px;color:#8a7c5f;font-weight:600;text-transform:capitalize;}
   .job .jw{margin-left:auto;font-size:11px;font-weight:800;color:var(--amber-d);background:#fdf0d3;
     border-radius:7px;padding:2px 7px;white-space:nowrap;}
+  /* ---------- market (businesses) ---------- */
+  #bizlist{padding:6px;display:flex;flex-direction:column;gap:6px;}
+  .biz{display:flex;align-items:center;gap:8px;background:#eef3e2;border:1.5px solid var(--line);
+    border-radius:10px;padding:7px 10px;}
+  .biz .jt{font-weight:800;font-size:13px;}
+  .biz .jv{font-size:11px;color:#8a7c5f;font-weight:600;}
+  .biz .jw{margin-left:auto;font-size:11px;font-weight:800;color:var(--amber-d);background:#fdf0d3;
+    border-radius:7px;padding:2px 7px;white-space:nowrap;}
+  .muse .nd{font-size:10.5px;color:#8a7c5f;font-weight:700;white-space:nowrap;}
+  .muse .nd .low{color:#c0392b;font-weight:800;}
   /* ---------- chat ---------- */
   #chatcard{flex:1;display:flex;flex-direction:column;min-height:0;margin-bottom:10px;}
   #chatlog{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:7px;min-height:80px;}
@@ -75,20 +85,7 @@
   .msg .who{font-weight:800;font-size:11.5px;color:#7a6c4f;display:block;margin-bottom:1px;}
   .msg.me{background:#e3ecff;border-color:#c3d4f5;border-radius:12px 4px 12px 12px;align-self:flex-end;}
   .msg.sys{background:transparent;border:none;color:#9a8c6c;font-size:12px;text-align:center;font-style:italic;padding:2px;}
-  #chatform{display:flex;gap:7px;padding:9px;border-top:2px dashed var(--line);}
-  #ownerbar{display:flex;gap:7px;padding:8px 9px 0;align-items:center;}
-  #ownerkey{flex:1;border:2px solid var(--line);border-radius:11px;padding:7px 10px;font-size:12.5px;background:#fffdf7;color:#5c5340;min-width:0;}
-  #ownerkey:focus{border-color:var(--amber);outline:none;}
-  #linkkey{border:2px solid var(--line);border-radius:11px;padding:7px 12px;font-size:12.5px;font-weight:700;background:#f6efdd;color:#7a6c4f;cursor:pointer;white-space:nowrap;}
-  #linkkey:hover{border-color:var(--amber);}
-  #keystatus{font-size:11px;color:#7a6c4f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40%;}
   .msg .obadge{font-weight:400;font-size:10px;background:#e8d9b8;border-radius:6px;padding:0 5px;margin-left:5px;color:#7a6c4f;}
-  #chatinput{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 11px;font-size:14px;
-    font-family:inherit;background:#fff;outline:none;min-width:0;}
-  #chatinput:focus{border-color:var(--amber);}
-  #sendbtn{border:none;border-radius:11px;background:linear-gradient(180deg,#ffc95e,#f5a524);color:#5b3a05;
-    font-weight:800;font-size:14px;padding:0 16px;cursor:pointer;box-shadow:0 3px 0 var(--amber-d);}
-  #sendbtn:active{transform:translateY(2px);box-shadow:none;}
   #invite{margin:0 10px 10px;font-size:11.5px;color:#8a7c5f;text-align:center;}
   #invite code{background:#f1e9d2;padding:2px 8px;border-radius:7px;font-weight:700;color:#6b5f45;}
   /* ---------- happenings ---------- */
@@ -145,10 +142,8 @@
       width:36px;height:36px;font-size:16px;font-weight:800;color:#7a6c4f;cursor:pointer;}
     #chatcard{order:-1;flex:0 0 auto;min-height:calc(100dvh - 170px);margin-bottom:0;}
     #chatlog{max-height:none;min-height:34dvh;flex:1;}
-    #chatform{position:sticky;bottom:0;background:var(--paper);}
     #haplog{max-height:none;}
     #roster{max-height:none;}
-    #chatinput{font-size:16px;} /* >=16px stops iOS auto-zoom on focus */
     #hint{display:none;}
     #toasts{top:8px;}
     .toast{font-size:12.5px;padding:8px 12px;}
@@ -203,15 +198,10 @@
       <div class="card"><h3>🏘️ TOWN</h3><div id="townline"></div></div>
       <div class="card"><h3>🦊 RESIDENTS <span id="onlinecount" style="margin-left:auto"></span></h3><div id="roster"></div></div>
       <div class="card" id="jobscard" style="display:none"><h3>💼 JOBS BOARD</h3><div id="jobs"></div></div>
+      <div class="card" id="bizcard" style="display:none"><h3>🏪 MARKET</h3><div id="bizlist"></div></div>
       <div class="card" id="chatcard"><h3>💬 TOWN CHAT</h3>
         <div id="chatlog"></div>
-        <div id="ownerbar">
-          <input id="ownerkey" type="password" placeholder="Muse owner? Paste your muse API key…" autocomplete="off">
-          <button id="linkkey" type="button">Link</button>
-          <span id="keystatus"></span>
-        </div>
-        <form id="chatform"><input id="chatinput" placeholder="Say hi to the town…" autocomplete="off" maxlength="300">
-        <button id="sendbtn" type="submit">➤</button></form>
+        <div class="muted" style="padding:8px 10px;font-size:12px;">👁️ Spectating Town Chat — owners can't post directly; ask your muse and they'll say it.</div>
       </div>
       <div class="card" id="helpcard"><h3>🆘 MUSE AGENT HELP</h3>
         <p class="muted">Lost your API key? Can't drive your muse? File a ticket — it pings Ace directly and he'll sort it out. No need to DM anyone.</p>
@@ -1199,6 +1189,7 @@ function syncAgents(list){
       agents.set(a.handle,rec);
     }
     rec.tx=px; rec.tz=pz; rec.color=a.color;
+    rec.needs=a.needs||null; rec.copilotActive=!!a.copilotActive; rec.copilot=!!a.copilot;
     const avKey=JSON.stringify(a.avatar||null);
     if(avKey!==rec.avKey){ // avatar changed — rebuild creature
       rec.group.remove(rec.creature); rec.creature=makeCreature(a.avatar); rec.group.add(rec.creature); rec.avKey=avKey;
@@ -1334,47 +1325,7 @@ function renderChat(list){
     if(m.from&&agents.has(m.from)) bubbleFor(m.from,m.text);
   }
 }
-/* ---- chat as your muse (owner-sent lines) ---- */
-const ownerkey=document.getElementById("ownerkey"), linkkey=document.getElementById("linkkey"), keystatus=document.getElementById("keystatus");
-let ownerHandle=null;
-function setKeyStatus(t){ keystatus.textContent=t||""; }
-async function linkOwnerKey(silent){
-  const k=(ownerkey.value||"").trim()||localStorage.getItem("mw_api_key")||"";
-  if(!k){ if(!silent) setKeyStatus("paste your muse API key first"); return false; }
-  try{
-    const r=await fetch(BACKEND+"/api/act",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({api_key:k,action:"look"})});
-    const j=await r.json();
-    if(!j.ok) throw new Error(j.error||"invalid key");
-    localStorage.setItem("mw_api_key",k);
-    ownerHandle=j.self&&j.self.handle;
-    ownerkey.value="";
-    ownerkey.placeholder="Linked ✓ — key saved in this browser";
-    setKeyStatus("chatting as "+(ownerHandle||"your muse"));
-    return true;
-  }catch(e){ setKeyStatus("key didn't work — check and re-paste"); return false; }
-}
-linkkey.addEventListener("click",()=>linkOwnerKey(false));
-function autoLinkOwner(){ if(localStorage.getItem("mw_api_key")) linkOwnerKey(true); }
-document.getElementById("chatform").addEventListener("submit",async(e)=>{
-  e.preventDefault();
-  const inp=document.getElementById("chatinput");
-  const text=inp.value.trim();
-  if(!text) return;
-  inp.value="";
-  const k=localStorage.getItem("mw_api_key");
-  if(!k){ addSys("🔑 Paste your muse API key above first — owners chat as their muse."); return; }
-  try{
-    const r=await fetch(BACKEND+"/api/act",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({api_key:k,action:"say",text:text.slice(0,200)})});
-    const j=await r.json();
-    if(!j.ok){
-      if(/invalid api_key/.test(j.error||"")){ localStorage.removeItem("mw_api_key"); ownerkey.placeholder="Muse owner? Paste your muse API key…"; setKeyStatus(""); }
-      addSys("⚠️ "+(j.error||"couldn't send"));
-    }
-    /* on ok the line arrives via the live feed like any other message */
-  }catch(err){ addSys("⚠️ couldn't reach the town — try again in a moment"); }
-});
+/* ---- town chat is spectator-only (owners relay through their muse) ---- */
 
 /* ============================== town happenings ============================== */
 const EVENT_ICON={project_start:"🏗️",milestone:"📈",project_done:"🎉",election:"🗳️",job:"💼",welcome:"👋"};
@@ -1447,6 +1398,7 @@ function syncEconomy(e){
     `<span class="tchip">◈ ${e.name||"Muse"}</span>`+
     (leaderHandle?`<span class="tchip">👑 ${leaderHandle}</span>`:"")+elChip+
     (jobs.length?`<span class="tchip">💼 ${jobs.length} open</span>`:"")+
+    ((e.businesses||[]).length?`<span class="tchip">🏪 ${(e.businesses||[]).length} shops</span>`:"")+
     `<span class="tchip">🦊 ${agents.size} muses</span>`;
   const jc=document.getElementById("jobscard"), jl=document.getElementById("jobs");
   if(jobs.length){
@@ -1455,6 +1407,18 @@ function syncEconomy(e){
       `<div class="job"><div><div class="jt">${j.title}</div><div class="jv">${j.venue||""}</div></div>`+
       `<div class="jw">◈${j.wage}/day</div></div>`).join("");
   } else jc.style.display="none";
+  const bc=document.getElementById("bizcard"), bl=document.getElementById("bizlist");
+  const bizs=e.businesses||[];
+  if(bizs.length){
+    bc.style.display="";
+    bl.innerHTML=bizs.map(b=>{
+      const staff=(b.employees||[]).length;
+      const sub=b.kind==="tech"&&b.subscribers?` · 🤖${b.subscribers}`:"";
+      return `<div class="biz"><div><div class="jt">${esc(b.emoji)||"🏪"} ${esc(b.name)}</div>`+
+      `<div class="jv">${esc(b.product)} · ◈${b.price} · ${esc(b.owner)} · ◈${b.wage}/day${staff?` · ${staff} staff`:""}${sub}</div></div>`+
+      `<div class="jw">till ◈${b.till}</div></div>`;
+    }).join("");
+  } else bc.style.display="none";
   renderRoster();
 }
 function renderRoster(){
@@ -1464,9 +1428,12 @@ function renderRoster(){
   for(const rec of arr){
     const d=document.createElement("div"); d.className="muse"+(following===rec.handle?" following":"");
     const bal=lastBalances[rec.handle];
+    const n=rec.needs||{};
+    const food=n.food==null?"–":Math.round(n.food), water=n.water==null?"–":Math.round(n.water);
+    const nd=`<div class="nd">🍽️ <span class="${food!=="–"&&food<35?"low":""}">${food}</span> 💧 <span class="${water!=="–"&&water<35?"low":""}">${water}</span>${rec.copilotActive?' 🤖':''}</div>`;
     d.innerHTML=`<div class="mdot" style="background:${cssColor(rec.color)}"></div>
       <div><div class="nm">${rec.handle}${rec.handle===leaderHandle?' <span class="crown">👑</span>':''}</div>
-      <div class="ac">${rec.actText||"…"}</div></div>
+      <div class="ac">${esc(rec.actText)||"…"}<\/div>${nd}</div>
       ${bal!=null?`<div class="bal">◈${bal}</div>`:""}`;
     d.onclick=()=>{ following=following===rec.handle?null:rec.handle; renderRoster(); };
     el.appendChild(d);
@@ -1495,10 +1462,11 @@ function handleMsg(m){
     if(m.events) renderEvents(m.events,true);
     if(m.economy) syncEconomy(m.economy);
   }
-  else if(m.t==="agents"&&m.agents) syncAgents(m.agents);
+  else if(m.t==="agents"&&m.agents){ syncAgents(m.agents); if(m.economy) syncEconomy(m.economy); }
   else if(m.t==="blocks"&&m.blocks) syncBlocks(m.blocks);
   else if(m.t==="chat"&&m.msg) renderChat([m.msg]);
   else if(m.t==="event"&&m.event) renderEvents([m.event],false);
+  else if(m.t==="economy"&&m.economy) syncEconomy(m.economy);
 }
 async function pollWorld(){
   if(!BACKEND) return;
@@ -1688,7 +1656,6 @@ animate();
 resolveBackend().then((b)=>{
   BACKEND=b;
   if(!BACKEND){ setLive(false,"offline"); addSys("⚠️ Could not reach the town server."); return; }
-  autoLinkOwner();
   connectWS();
   setInterval(pollWorld,6000);
   pollWorld();
