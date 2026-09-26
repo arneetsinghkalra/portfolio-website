@@ -689,6 +689,25 @@ function makeTower(x,z,r){
   scene.add(g);
 }
 
+/* ---------- fish in the river ---------- */
+const fishes=[];
+{
+  const r=mulberry32(4242), cols=[0xff8c42,0x5fb4ff,0xffd166,0x7ae0a8];
+  for(let i=0;i<8;i++){
+    const g=new THREE.Group(), c=cols[i%cols.length];
+    const body=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.35,0.3),
+      new THREE.MeshBasicMaterial({color:c}));
+    g.add(body);
+    const tail=new THREE.Mesh(new THREE.BoxGeometry(0.35,0.5,0.12),
+      new THREE.MeshBasicMaterial({color:c}));
+    tail.position.x=-0.55; g.add(tail);
+    const fx=-70+r()*140;
+    g.userData={fx, off:r()*6.28, sp:0.5+r()*0.8, dir:r()<0.5?1:-1, tail};
+    g.position.set(fx, 0.4, riverZ(fx));
+    scene.add(g); fishes.push(g);
+  }
+}
+
 /* ---------- butterflies ---------- */
 const butterflies=[];
 {
@@ -990,9 +1009,17 @@ function syncEconomy(e){
   if(e.leader&&e.leader.handle) leaderHandle=e.leader.handle; else if(e.leader===null) leaderHandle=null;
   lastBalances=e.balances||{};
   const jobs=e.openJobs||[];
+  let elChip="";
+  if(e.nextElection){
+    const ms=e.nextElection-Date.now();
+    if(ms>0){
+      const h=Math.floor(ms/3600000), m=Math.floor(ms%3600000/60000);
+      elChip=`<span class="tchip">🗳️ ${h}h ${m}m</span>`;
+    }
+  }
   document.getElementById("townline").innerHTML=
     `<span class="tchip">◈ ${e.name||"Muse"}</span>`+
-    (leaderHandle?`<span class="tchip">👑 ${leaderHandle}</span>`:"")+
+    (leaderHandle?`<span class="tchip">👑 ${leaderHandle}</span>`:"")+elChip+
     (jobs.length?`<span class="tchip">💼 ${jobs.length} open</span>`:"")+
     `<span class="tchip">🦊 ${agents.size} muses</span>`;
   const jc=document.getElementById("jobscard"), jl=document.getElementById("jobs");
@@ -1097,6 +1124,17 @@ window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDis
     bf.rotation.y=s.a;
     const flap=0.35+Math.abs(Math.sin(t*14+s.p))*0.65;
     bf.children[0].rotation.y=flap; bf.children[1].rotation.y=-flap;
+  }
+  // fish swimming in the river
+  for(const f of fishes){
+    const s=f.userData;
+    s.fx+=s.dir*s.sp*dt*3;
+    if(s.fx>80) { s.fx=80; s.dir=-1; } if(s.fx<-80) { s.fx=-80; s.dir=1; }
+    f.position.x=s.fx+Math.sin(t*1.5+s.off)*0.8;
+    f.position.z=riverZ(s.fx)+Math.cos(t+s.off)*0.7;
+    f.position.y=0.4+Math.sin(t*2+s.off)*0.15;
+    f.rotation.y=s.dir>0?0:Math.PI;
+    s.tail.rotation.y=Math.sin(t*10+s.off)*0.5;
   }
   const now=performance.now();
   for(const rec of agents.values()){
