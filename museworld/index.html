@@ -35,6 +35,12 @@
   #scene canvas{display:block;width:100%;height:100%;}
   #hint{position:absolute;left:12px;bottom:10px;color:#ffffffcc;font-size:12px;font-weight:600;
     background:#00000055;padding:6px 10px;border-radius:10px;pointer-events:none;}
+  #navchips{position:absolute;left:50%;transform:translateX(-50%);bottom:44px;z-index:5;display:flex;
+    gap:6px;max-width:calc(100% - 24px);overflow-x:auto;padding:4px;scrollbar-width:none;}
+  #navchips::-webkit-scrollbar{display:none;}
+  #navchips button{flex:0 0 auto;border:2px solid #2c3655;background:#10182add;color:#fff;font-size:12px;
+    font-weight:700;border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap;}
+  #navchips button:active{transform:scale(0.95);}
   /* ---------- side panel ---------- */
   aside{width:320px;flex:0 0 auto;background:var(--cream);border-left:3px solid var(--line);
     display:flex;flex-direction:column;min-height:0;z-index:4;}
@@ -190,7 +196,7 @@
   </header>
   <div id="ticker"><span class="tic">⚡ LIVE</span><span id="tickertext">The town is waking up…</span></div>
   <div id="main">
-    <div id="scene"><div id="toasts"></div><div id="hint">drag to orbit · scroll to zoom · tap a muse to follow</div></div>
+    <div id="scene"><div id="toasts"></div><div id="navchips"></div><div id="hint">drag to orbit · scroll to zoom · tap a muse to follow · double-tap to travel</div></div>
     <aside id="panel">
       <div id="panelhead">💬 Town Chat<button class="x" id="panelclose" aria-label="Close">✕</button></div>
       <div class="card" id="hapcard"><h3>⚡ TOWN HAPPENINGS</h3><div id="haplog"></div></div>
@@ -285,6 +291,36 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0, 4);
 controls.enableDamping = true; controls.dampingFactor = 0.06;
 controls.maxPolarAngle = Math.PI * 0.46; controls.minDistance = 28; controls.maxDistance = 380;
+
+/* ---------- camera fly-to: district quick-jump + double-tap to travel ---------- */
+let camTween=null;
+function flyTo(x,z,dist=70){
+  if(typeof following!=="undefined") following=null;
+  const dir=new THREE.Vector3().subVectors(camera.position, controls.target);
+  const d=Math.max(dir.length(),1); dir.normalize();
+  const toT=new THREE.Vector3(x,2,z);
+  const toP=toT.clone().add(dir.multiplyScalar(Math.min(d,140))).add(new THREE.Vector3(0,dist*0.5,0));
+  camTween={fromT:controls.target.clone(), toT, fromP:camera.position.clone(), toP,
+    t0:performance.now(), dur:900};
+}
+controls.addEventListener("start", ()=>{ camTween=null; });
+const _ray=new THREE.Raycaster(), _ptr=new THREE.Vector2(),
+      _ground=new THREE.Plane(new THREE.Vector3(0,1,0),0), _hit=new THREE.Vector3();
+function focusAt(cx,cy){
+  const r=renderer.domElement.getBoundingClientRect();
+  _ptr.x=((cx-r.left)/r.width)*2-1; _ptr.y=-((cy-r.top)/r.height)*2+1;
+  _ray.setFromCamera(_ptr, camera);
+  if(_ray.ray.intersectPlane(_ground,_hit)) flyTo(_hit.x,_hit.z,60);
+}
+renderer.domElement.addEventListener("dblclick", e=>focusAt(e.clientX,e.clientY));
+let _lastTap=0,_lastTapX=0,_lastTapY=0;
+renderer.domElement.addEventListener("touchend", e=>{
+  if(e.changedTouches.length!==1) return;
+  const t=e.changedTouches[0], n=performance.now();
+  const dx=t.clientX-_lastTapX, dy=t.clientY-_lastTapY;
+  if(n-_lastTap<350 && dx*dx+dy*dy<900) focusAt(t.clientX,t.clientY);
+  _lastTap=n; _lastTapX=t.clientX; _lastTapY=t.clientY;
+}, {passive:true});
 
 addEventListener("resize", ()=>{
   camera.aspect = container.clientWidth/container.clientHeight;
@@ -684,6 +720,8 @@ const clouds=[];
 const VENUE_POS = {
   plaza:{x:0,z:10}, cafe:{x:-14,z:-36}, park:{x:-56,z:-44}, market:{x:-8,z:22},
   workshop:{x:34,z:22}, bank:{x:42,z:8}, arena:{x:-48,z:-8},
+  harbor:{x:58,z:50}, farm:{x:66,z:-34}, observatory:{x:-64,z:-58},
+  library:{x:-6,z:-54}, amphitheater:{x:34,z:-58},
 };
 const HOME_SPOTS = [[-70,-10],[-60,10],[-70,15],[-45,15],[-75,0],[-5,45],[16,45],[45,45]];
 function clearOf(x,z,m=6){
@@ -828,6 +866,113 @@ function makeTower(x,z,r){
   vxl(g, 0,8.4,0, 5,1.2,4, 0xc9a53d, {glow:true, glowColor:0xffd97a});                                 // gold crest
   vxl(g, 0,1.6,4.32, 2.2,3.2,0.2, 0x3d3226, {shadow:false});
   venueLabel("🏦 Meridian Bank", x, z);
+  scene.add(g);
+}
+
+/* ---------- Harbor Docks ---------- */
+const boats=[]; // harbor boats bobbing at the pier (animated in the main loop)
+{
+  const {x,z}=VENUE_POS.harbor, g=new THREE.Group(); g.position.set(x,0,z);
+  // main pier reaching toward the river (north, +z)
+  vxl(g, 0,0.7,7, 3.4,0.5,15, 0x8a6a42);
+  for(const [px,pz] of [[-1.4,1],[-1.4,7],[-1.4,13],[1.4,1],[1.4,7],[1.4,13]])
+    vxl(g, px,-0.6,pz, 0.7,3.4,0.7, 0x6e5233);
+  vxl(g, -5,0.7,3, 6,0.5,3.4, 0x8a6a42); // side finger
+  for(let k=0;k<4;k++) vxl(g, -4.5-k*1.1,1.15,3, 0.28,0.14,3.2, 0x5a4128, {shadow:false}); // plank seams
+  // crates + rope coils
+  vxl(g, -4.5,1.3,-3, 1.8,1.6,1.8, 0x9a7448); vxl(g, -4.3,2.6,-3.2, 1.3,1,1.3, 0x8a6a42);
+  vxl(g, 4.6,1,-2.5, 1.4,0.5,1.4, 0xc9a53d, {shadow:false});
+  // two little boats bobbing at the pier
+  for(const [bx,bz] of [[7,9],[-8,11]]){
+    const b=new THREE.Group(); b.position.set(bx,0,bz); b.userData.bob=true; boats.push(b);
+    vxl(b, 0,0.55,0, 3,1.1,5.4, 0x7a5c38);
+    vxl(b, 0,1.25,0, 2.2,0.5,4.4, 0x5a4128, {shadow:false});
+    vxl(b, 0,2.6,0.8, 0.35,3.4,0.35, 0x6e5233);
+    vxl(b, 0.3,3.1,-0.9, 0.18,2.6,2.6, 0xf5f0e6, {shadow:false});
+    g.add(b);
+  }
+  venueLabel("⚓ Harbor Docks", x, z);
+  scene.add(g);
+}
+
+/* ---------- Sunny Acres Farm ---------- */
+{
+  const {x,z}=VENUE_POS.farm, g=new THREE.Group(); g.position.set(x,0,z);
+  const fr=mulberry32(404);
+  // red barn
+  vxl(g, 0,3,0, 11,6,8, 0xb8452f);
+  vxl(g, 0,6.9,0, 12,1.6,9, 0xf0e8d8);
+  vxl(g, 0,7.9,0, 8,1.2,6.5, 0xd8cdb8, {shadow:false});
+  vxl(g, 0,1.8,4.06, 3,3.6,0.18, 0x5a3a26, {shadow:false});
+  vxl(g, 0,4.4,4.06, 3.2,0.3,0.2, 0xf0e8d8, {shadow:false});
+  // silo
+  vxl(g, 9,3.5,-2, 3.4,7,3.4, 0xb9c0c7); vxl(g, 9,7.6,-2, 3.8,1.2,3.8, 0x8a9098);
+  // crop rows
+  for(let r=0;r<4;r++){
+    vxl(g, -14,0.3,2+r*3.4, 10,0.6,2.2, 0x6e4f30);
+    for(let k=0;k<6;k++) vxl(g, -18+k*1.7,1,2+r*3.4, 0.55,0.9,0.55, pick(fr,[0x5daa52,0x7ac74f,0xe0c53d]), {shadow:false});
+  }
+  // hay bales + fence
+  for(const [hx,hz] of [[-12,-6],[10,6],[-8,10]]) vxl(g, hx,0.9,hz, 1.6,1.4,1.6, 0xe0c53d);
+  for(let k=0;k<=8;k++){ vxl(g, -20+k*5,0.8,-8, 0.5,1.6,0.5, 0x8a6a42); vxl(g, -20+k*5,0.8,14, 0.5,1.6,0.5, 0x8a6a42); }
+  vxl(g, 0,1.2,-8, 40,0.25,0.25, 0x8a6a42, {shadow:false}); vxl(g, 0,1.2,14, 40,0.25,0.25, 0x8a6a42, {shadow:false});
+  venueLabel("🌾 Sunny Acres Farm", x, z);
+  scene.add(g);
+}
+
+/* ---------- Starlight Observatory ---------- */
+{
+  const {x,z}=VENUE_POS.observatory, g=new THREE.Group(); g.position.set(x,0,z);
+  vxl(g, 0,1,0, 9,2,9, 0x9aa0a8);
+  vxl(g, 0,4,0, 7,4,7, 0xb9c0c7);
+  vxl(g, 0,6.6,0, 7.6,1.2,7.6, 0x8a9098);
+  // dome
+  const dome=new THREE.Mesh(new THREE.SphereGeometry(3.6, 18, 12, 0, Math.PI*2, 0, Math.PI/2),
+    new THREE.MeshStandardMaterial({color:0xe8eef4, roughness:0.5, metalness:0.25}));
+  dome.position.set(0,7.2,0); dome.castShadow=true; g.add(dome);
+  vxl(g, 0,8.6,-2.6, 2.2,2.2,2.6, 0x3d4450, {shadow:false}); // slit
+  // telescope peeking out
+  const scope=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.7,4.4,10),
+    new THREE.MeshStandardMaterial({color:0xc9a53d, roughness:0.4, metalness:0.6}));
+  scope.position.set(0,9.6,-3.4); scope.rotation.x=Math.PI/3.2; scope.castShadow=true; g.add(scope);
+  // star chart stones
+  const sr=mulberry32(77);
+  for(let k=0;k<5;k++) vxl(g, -8+k*4,0.5,7+sr()*2, 1.6,1,1.6, 0x8a9098, {ry:sr()*0.8});
+  venueLabel("🔭 Starlight Observatory", x, z, 13);
+  scene.add(g);
+}
+
+/* ---------- The Athenaeum ---------- */
+{
+  const {x,z}=VENUE_POS.library, g=new THREE.Group(); g.position.set(x,0,z);
+  vxl(g, 0,0.4,0, 15,0.8,12, 0xb9b2a2);
+  vxl(g, 0,0.9,6.5, 15,0.5,3, 0xa8a191, {shadow:false}); // steps
+  vxl(g, 0,4,0, 13,7,10, 0xe3dccb);
+  for(let k=0;k<6;k++) vxl(g, -5.4+k*2.16,3.4,5.6, 1,6.8,1, 0xf5f0e6); // columns
+  vxl(g, 0,8.2,0, 14,1.6,11, 0x8a8474);
+  vxl(g, 0,9.6,0, 9,1.6,7, 0x9a9484, {shadow:false});
+  vxl(g, 0,10.9,0, 4,1.4,3, 0xc9a53d, {glow:true, glowColor:0xffd97a}); // crest
+  for(const wx of [-4,0,4]) vxl(g, wx,3.6,5.06, 1.6,2.6,0.18, 0xffe9a8, {glow:true, glowColor:0xffe9a8, shadow:false});
+  vxl(g, 0,1.9,5.06, 2.4,3.8,0.2, 0x3d3226, {shadow:false});
+  venueLabel("📚 The Athenaeum", x, z, 13);
+  scene.add(g);
+}
+
+/* ---------- Echo Amphitheater ---------- */
+{
+  const {x,z}=VENUE_POS.amphitheater, g=new THREE.Group(); g.position.set(x,0,z);
+  const stone=new THREE.MeshStandardMaterial({color:0xb9b2a2, roughness:0.9});
+  for(let r=0;r<3;r++){
+    const rad=10+r*3.4;
+    // south-half bowl (z>0) facing the stage on the north side
+    const step=new THREE.Mesh(new THREE.CylinderGeometry(rad+3.4, rad+3.4, 1.1, 24, 1, false, Math.PI*1.5, Math.PI), stone);
+    step.position.set(0, 0.55+r*1.1, 0); step.receiveShadow=true; step.castShadow=true; g.add(step);
+  }
+  vxl(g, 0,0.8,-2, 12,1.6,7, 0x9a9484); // stage
+  vxl(g, -5.4,3.4,-4.4, 1,5,1, 0x6e5233); vxl(g, 5.4,3.4,-4.4, 1,5,1, 0x6e5233); // posts
+  vxl(g, 0,6.2,-4.4, 13,1,2.4, 0xb85c38); // canopy
+  vxl(g, 0,2.2,-4.4, 10,0.25,0.25, 0xffe9a8, {glow:true, glowColor:0xffd97a, shadow:false}); // footlights
+  venueLabel("🎭 Echo Amphitheater", x, z, 12);
   scene.add(g);
 }
 
@@ -1111,9 +1256,56 @@ function syncBlocks(obj){
     const [x,y,z]=k.split(",").map(Number);
     const mesh=new THREE.Mesh(vbox(1,1,1), vmat(BLOCK_HEX[v.color]??0xffffff));
     mesh.position.set(x,y+0.5,z); mesh.castShadow=true; mesh.receiveShadow=true;
+    // freshly placed blocks pop in so construction is visible as it happens
+    mesh.userData.born=performance.now();
+    mesh.scale.setScalar(0.2);
     scene.add(mesh); blocks.set(k,mesh);
   }
   document.getElementById("blockcount").textContent=blocks.size;
+}
+
+/* ---------- active build-site marker: the project you see is the project being built ---------- */
+let buildSiteGroup=null, activeProject=null;
+function syncProjects(list){
+  activeProject=(list||[]).find(p=>p.status==="active")||null;
+  if(buildSiteGroup){ scene.remove(buildSiteGroup); buildSiteGroup=null; }
+  const chip=document.getElementById("chip-build");
+  if(!activeProject){ if(chip) chip.style.display="none"; return; }
+  const g=new THREE.Group(); g.position.set(activeProject.site.x,0,activeProject.site.z);
+  // translucent foundation pad over the 3x3 footprint
+  const pad=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.25,3.6),
+    new THREE.MeshStandardMaterial({color:0xffd97a, transparent:true, opacity:0.35}));
+  pad.position.y=0.15; g.add(pad);
+  // scaffold posts at the corners
+  for(const [px,pz] of [[-2.2,-2.2],[2.2,-2.2],[-2.2,2.2],[2.2,2.2]])
+    vxl(g, px,2.5,pz, 0.5,5,0.5, 0x8a6a42);
+  vxl(g, 0,4.6,-2.2, 4.9,0.4,0.4, 0x8a6a42, {shadow:false});
+  vxl(g, 0,4.6,2.2, 4.9,0.4,0.4, 0x8a6a42, {shadow:false});
+  // striped warning barrier
+  const br=mulberry32(99);
+  for(let k=0;k<6;k++) vxl(g, -2.6+k*1.05,0.7,3.1, 0.9,0.5,0.25, k%2?0xd94f3d:0xffffff, {shadow:false, ry:0.1*(br()-0.5)});
+  const lbl=makeLabel("🚧 "+activeProject.name,{size:13,bg:"rgba(120,60,10,0.88)"});
+  lbl.position.set(0,8,0); g.add(lbl);
+  scene.add(g); buildSiteGroup=g;
+  if(chip){ chip.style.display=""; chip.textContent=`🚧 ${activeProject.name}`; }
+}
+
+/* ============================== district quick-jump ============================== */
+const NAV_SPOTS=[["⛲","Plaza","plaza"],["🏪","Market","market"],["🌳","Park","park"],["☕","Café","cafe"],
+  ["🔨","Workshop","workshop"],["🏦","Bank","bank"],["🏒","Arena","arena"],["⚓","Harbor","harbor"],
+  ["🌾","Farm","farm"],["🔭","Observatory","observatory"],["📚","Library","library"],["🎭","Amphitheater","amphitheater"]];
+{
+  const bar=document.getElementById("navchips");
+  for(const [emoji,name,key] of NAV_SPOTS){
+    const b=document.createElement("button");
+    b.textContent=`${emoji} ${name}`;
+    b.onclick=()=>{ const v=VENUE_POS[key]; if(v) flyTo(v.x,v.z,60); };
+    bar.appendChild(b);
+  }
+  const bb=document.createElement("button");
+  bb.id="chip-build"; bb.style.display="none"; bb.style.borderColor="#f5a524";
+  bb.onclick=()=>{ if(activeProject) flyTo(activeProject.site.x,activeProject.site.z,45); };
+  bar.appendChild(bb);
 }
 
 /* ============================== chat + roster + town ============================== */
@@ -1298,6 +1490,7 @@ function handleMsg(m){
   if(m.t==="full"||!m.t){
     if(m.agents) syncAgents(m.agents);
     if(m.blocks) syncBlocks(m.blocks);
+    if(m.projects) syncProjects(m.projects);
     if(m.chat) renderChat(m.chat);
     if(m.events) renderEvents(m.events,true);
     if(m.economy) syncEconomy(m.economy);
@@ -1372,6 +1565,12 @@ window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDis
     f.rotation.y=s.dir>0?0:Math.PI;
     s.tail.rotation.y=Math.sin(t*10+s.off)*0.5;
   }
+  // harbor boats bobbing gently
+  for(const b of boats){
+    b.position.y=Math.sin(t*1.3+b.position.x)*0.25;
+    b.rotation.z=Math.sin(t*0.9+b.position.z)*0.04;
+    b.rotation.x=Math.sin(t*1.1+b.position.x)*0.03;
+  }
   const now=performance.now();
   for(const rec of agents.values()){
     const dx=rec.tx-rec.x, dz=rec.tz-rec.z, d=Math.hypot(dx,dz);
@@ -1383,8 +1582,23 @@ window.__museworld={scene,camera,renderer,controls,stars,starMat,sunDisc,moonDis
     rec.group.position.x=rec.x; rec.group.position.z=rec.z;
     if(rec.bubble&&now>rec.bubbleUntil){ rec.group.remove(rec.bubble); rec.bubble=null; }
   }
+  // freshly placed blocks pop in with a little bounce
+  for(const mesh of blocks.values()){
+    const born=mesh.userData.born;
+    if(!born) continue;
+    const age=(now-born)/650;
+    if(age>=1){ mesh.scale.setScalar(1); mesh.userData.born=0; continue; }
+    const c1=1.70158, c3=c1+1, x=age-1;
+    mesh.scale.setScalar(0.2+0.8*(1+c3*x*x*x+c1*x*x));
+  }
   if(following&&agents.has(following)){
     const r=agents.get(following); _v.set(r.x,2.5,r.z); controls.target.lerp(_v,0.08);
+  }
+  if(camTween){
+    const k=Math.min(1,(now-camTween.t0)/camTween.dur), e=1-Math.pow(1-k,3);
+    controls.target.lerpVectors(camTween.fromT,camTween.toT,e);
+    camera.position.lerpVectors(camTween.fromP,camTween.toP,e);
+    if(k>=1) camTween=null;
   }
   controls.update();
   renderer.render(scene,camera);
