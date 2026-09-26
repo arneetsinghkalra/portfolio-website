@@ -101,12 +101,34 @@
     display:flex;gap:9px;align-items:center;}
   .toast.out{opacity:0;transform:translateY(-8px);transition:all .5s;}
   @keyframes toastin{from{opacity:0;transform:translateY(-10px) scale(.97);}to{opacity:1;transform:none;}}
+  /* ---------- mobile ---------- */
   @media (max-width:760px){
-    aside{position:absolute;right:0;top:0;bottom:0;width:min(300px,84vw);transform:translateX(100%);
-      transition:transform .25s;box-shadow:-8px 0 24px #0008;}
+    #app{height:100vh;height:100dvh;}
+    header{padding:calc(6px + env(safe-area-inset-top, 0px)) 8px 6px;gap:6px;}
+    header>*{min-width:0;flex-shrink:0;}
+    .title{flex-shrink:1 !important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .logo{width:30px;height:30px;font-size:17px;border-radius:8px;}
+    .title{font-size:15px;}
+    .title small{display:none;}
+    .pill{padding:3px 8px;font-size:11px;}
+    #paneltoggle{display:inline-flex !important;font-size:12px;}
+    #etclock .p{display:none;}
+    #etclock .t{font-size:13px;}
+    #blockpill{display:none;}
+    #ticker{font-size:12px;padding:6px 10px;}
+    #main{position:relative;}
+    aside{position:absolute;right:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(105%);
+      transition:transform .25s;box-shadow:-8px 0 24px #0008;
+      display:block;overflow-y:auto;-webkit-overflow-scrolling:touch;
+      padding-bottom:env(safe-area-inset-bottom, 0px);}
     body.panel-open aside{transform:none;}
-    #paneltoggle{display:inline-flex !important;}
+    #haplog{max-height:none;}
+    #roster{max-height:none;}
+    #chatlog{max-height:300px;}
+    #chatinput{font-size:16px;} /* >=16px stops iOS auto-zoom on focus */
     #hint{display:none;}
+    #toasts{top:8px;}
+    .toast{font-size:12.5px;padding:8px 12px;}
   }
   #paneltoggle{display:none;margin-left:6px;}
   button{font-family:inherit;}
@@ -117,10 +139,10 @@
   <header>
     <div class="logo">🧊</div>
     <div class="title">Museworld<small>A LIVING VOXEL TOWN</small></div>
-    <button id="paneltoggle" class="pill">💬 Muses</button>
+    <button id="paneltoggle" class="pill" aria-label="Toggle town panel">💬</button>
     <div id="etclock"><div class="t">--:--</div><div class="p">…</div></div>
     <div class="pill"><span id="livedot" class="dot"></span><span id="liveword">connecting</span></div>
-    <div class="pill">🧊 <span id="blockcount">–</span></div>
+    <div class="pill" id="blockpill">🧊 <span id="blockcount">–</span></div>
   </header>
   <div id="ticker"><span class="tic">⚡ LIVE</span><span id="tickertext">The town is waking up…</span></div>
   <div id="main">
@@ -183,7 +205,11 @@ addEventListener("resize", ()=>{
   camera.updateProjectionMatrix();
   renderer.setSize(container.clientWidth, container.clientHeight);
 });
-document.getElementById("paneltoggle").onclick = ()=>document.body.classList.toggle("panel-open");
+const panelToggle = document.getElementById("paneltoggle");
+panelToggle.onclick = ()=>{
+  const open = document.body.classList.toggle("panel-open");
+  panelToggle.innerHTML = open ? "✕" : "💬";
+};
 
 /* ============================== voxel kit ============================== */
 const vgeoCache = new Map();
